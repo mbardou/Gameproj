@@ -11,6 +11,31 @@ fenetre=pygame.display.set_mode((largeur,hauteur))
 
 # lecture de l'image du perso
 #Dico des images---------------------------------------------------------
+
+#blob---------------------------------------------------------------------------
+imagesBlob = {}
+
+imagesBlob["left"]=[]
+imagesBlob["right"]=[]
+
+temp = pygame.image.load("blobframes/idle/blob01.png").convert_alpha()
+imagesBlob["left"].append(temp)
+temp = pygame.image.load("blobframes/idle/blob02.png").convert_alpha()
+imagesBlob["left"].append(temp)
+temp = pygame.image.load("blobframes/idle/blob03.png").convert_alpha()
+imagesBlob["left"].append(temp)
+temp = pygame.image.load("blobframes/idle/blob04.png").convert_alpha()
+imagesBlob["left"].append(temp)
+temp = pygame.image.load("blobframes/idle/blob05.png").convert_alpha()
+imagesBlob["left"].append(temp)
+temp = pygame.image.load("blobframes/idle/blob06.png").convert_alpha()
+imagesBlob["left"].append(temp)
+temp = pygame.image.load("blobframes/idle/blob07.png").convert_alpha()
+imagesBlob["left"].append(temp)
+temp = pygame.image.load("blobframes/idle/blob08.png").convert_alpha()
+imagesBlob["left"].append(temp)
+#-------------------------------------------------------------------------------
+#animations perso---------------------------------------------------------------------
 imagesPerso = {}
 
 imagesPerso["right"]=[]
@@ -54,10 +79,15 @@ imagesPerso["up"].append(temp)
 imageSword = pygame.image.load("sword1.png").convert_alpha()
 
 imageGrille = pygame.image.load("GrilleComplete.png").convert_alpha()
+ianimeblob = 0
 ianime = 0
+imageblob = imagesBlob["left"][ianime]
 imagePerso = imagesPerso["up"][ianime]
 
 # creation d'un rectangle pour positioner l'image du personnage
+rectBlob = imageblob.get_rect()
+rectBlob.x = 240
+rectBlob.y = 120
 rectPerso = imagePerso.get_rect()
 rectPerso.x = hauteur/2
 rectPerso.y = largeur/2
@@ -97,7 +127,8 @@ horloge = pygame.time.Clock()
 # la boucle infinie dans laquelle on reste coince
 i=1;
 continuer=1
-upstairs=0
+upstairsperso = 0
+upstairsblob = 0
 vartour = -1
 while continuer:
 
@@ -144,7 +175,7 @@ while continuer:
         if i%5==0 :
             ianime = (ianime+1)%len(imagesPerso["left"])
             imagePerso = imagesPerso["left"][ianime]
-        if rectPerso.x > 700 and rectPerso.x < 710 and rectPerso.y > 5 and rectPerso.y < 200 and upstairs==0:
+        if rectPerso.x > 700 and rectPerso.x < 710 and rectPerso.y > 5 and rectPerso.y < 200 and upstairsperso==0:
             rectPerso.x = 710
         if rectPerso.x < 45:
            rectPerso.x = 44
@@ -154,11 +185,11 @@ while continuer:
         if i%5==0 :
             ianime = (ianime+1)%len(imagesPerso["right"])
             imagePerso = imagesPerso["right"][ianime]
-        if rectPerso.x > 462 and rectPerso.x < 470 and rectPerso.y > 70 and upstairs==1:
+        if rectPerso.x > 462 and rectPerso.x < 470 and rectPerso.y > 70 and upstairsperso==1:
             rectPerso.x = 461
         if rectPerso.x > 918:
             rectPerso.x = 919
-        if rectPerso.x > 590 and rectPerso.x < 600 and rectPerso.y > -1 and rectPerso.y < 200 and upstairs==0:
+        if rectPerso.x > 590 and rectPerso.x < 600 and rectPerso.y > -1 and rectPerso.y < 200 and upstairsperso==0:
             rectPerso.x = 591
         else :
             rectPerso.x = rectPerso.x + 8
@@ -177,19 +208,47 @@ while continuer:
     fenetre.blit(imageSword, rectSword)
     #Affichage grille
     if ((rectPerso.x >700 and rectPerso.x < 710) and (rectPerso.y >-1 and rectPerso.y < 163) and (vartour+1 < i) and (touches[pygame.K_LEFT] or touches[pygame.K_RIGHT] or touches[pygame.K_UP] or touches[pygame.K_DOWN])):
-        upstairs=(upstairs+1)%2
-        #Pour réguler upstairs
+        upstairsperso=(upstairsperso+1)%2
+        #Pour réguler upstairsperso
         vartour = i
-    if upstairs==1 :
+#TEST UPSTAIRSBLOB
+    # if i%10==0:
+    #     upstairsblob=(upstairsblob+1)%2
+    #     print("upstairsblob= ", upstairsblob)
+    #     print("upstairsperso= ", upstairsperso)
+
+    if upstairsperso==1 and upstairsblob==1 :
         fenetre.blit(imageGrille, rectGrille)
         fenetre.blit(imagePerso, rectPerso)
-    else:
-        # Affichage Perso
+        fenetre.blit(imageblob, rectBlob)
+    elif upstairsperso==1 and upstairsblob==0:
+        fenetre.blit(imageblob, rectBlob)
+        fenetre.blit(imageGrille, rectGrille)
+        fenetre.blit(imagePerso, rectPerso)
+    elif upstairsperso==0 and upstairsblob==0:
+        fenetre.blit(imageblob, rectBlob)
         fenetre.blit(imagePerso, rectPerso)
         fenetre.blit(imageGrille, rectGrille)
+    elif upstairsperso==0 and upstairsblob==1:
+        fenetre.blit(imagePerso, rectPerso)
+        fenetre.blit(imageGrille, rectGrille)
+        fenetre.blit(imageblob, rectBlob)
+
+
+    if i%3==0 :
+        ianimeblob = (ianimeblob+1)%len(imagesBlob["left"])
+        imageblob = imagesBlob["left"][ianimeblob]
+
+    # if upstairsblob==1 :
+    #     fenetre.blit(imageGrille, rectGrille)
+    #     fenetre.blit(imageblob, rectBlob)
+    # else:
+    #         # Affichage Perso
+    #     fenetre.blit(imageblob, rectBlob)
+    #     fenetre.blit(imageGrille, rectGrille)
     # rafraichissement
     pygame.display.flip()
-    print ( upstairs)
+    #print ( upstairsperso)
 
 
     # Si on a clique sur le bouton de fermeture on sortira
