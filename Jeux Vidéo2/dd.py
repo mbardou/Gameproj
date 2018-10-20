@@ -43,42 +43,42 @@ imagesPerso["left"]=[]
 imagesPerso["down"]=[]
 imagesPerso["up"]=[]
 
-temp = pygame.image.load("perso1.png").convert_alpha()
+temp = pygame.image.load("persoframes/perso1.png").convert_alpha()
 imagesPerso["right"].append(temp)
-temp = pygame.image.load("persoright02.png").convert_alpha()
+temp = pygame.image.load("persoframes/persoright02.png").convert_alpha()
 imagesPerso["right"].append(temp)
-temp = pygame.image.load("persoright03.png").convert_alpha()
+temp = pygame.image.load("persoframes/persoright03.png").convert_alpha()
 imagesPerso["right"].append(temp)
-temp = pygame.image.load("persoright04.png").convert_alpha()
+temp = pygame.image.load("persoframes/persoright04.png").convert_alpha()
 imagesPerso["right"].append(temp)
-temp = pygame.image.load("persoleft.png").convert_alpha()
+temp = pygame.image.load("persoframes/persoleft.png").convert_alpha()
 imagesPerso["left"].append(temp)
-temp = pygame.image.load("persoleft02.png").convert_alpha()
+temp = pygame.image.load("persoframes/persoleft02.png").convert_alpha()
 imagesPerso["left"].append(temp)
-temp = pygame.image.load("persoleft03.png").convert_alpha()
+temp = pygame.image.load("persoframes/persoleft03.png").convert_alpha()
 imagesPerso["left"].append(temp)
-temp = pygame.image.load("persoleft04.png").convert_alpha()
+temp = pygame.image.load("persoframes/persoleft04.png").convert_alpha()
 imagesPerso["left"].append(temp)
-temp = pygame.image.load("persoface.png").convert_alpha()
+temp = pygame.image.load("persoframes/persoface.png").convert_alpha()
 imagesPerso["down"].append(temp)
-temp = pygame.image.load("persodown02.png").convert_alpha()
+temp = pygame.image.load("persoframes/persodown02.png").convert_alpha()
 imagesPerso["down"].append(temp)
-temp = pygame.image.load("persodown03.png").convert_alpha()
+temp = pygame.image.load("persoframes/persodown03.png").convert_alpha()
 imagesPerso["down"].append(temp)
-temp = pygame.image.load("persodown04.png").convert_alpha()
+temp = pygame.image.load("persoframes/persodown04.png").convert_alpha()
 imagesPerso["down"].append(temp)
-temp = pygame.image.load("persoup.png").convert_alpha()
+temp = pygame.image.load("persoframes/persoup.png").convert_alpha()
 imagesPerso["up"].append(temp)
-temp = pygame.image.load("persoup02.png").convert_alpha()
+temp = pygame.image.load("persoframes/persoup02.png").convert_alpha()
 imagesPerso["up"].append(temp)
-temp = pygame.image.load("persoup03.png").convert_alpha()
+temp = pygame.image.load("persoframes/persoup03.png").convert_alpha()
 imagesPerso["up"].append(temp)
-temp = pygame.image.load("persoup04.png").convert_alpha()
+temp = pygame.image.load("persoframes/persoup04.png").convert_alpha()
 imagesPerso["up"].append(temp)
 #fin du dico --------------------------------------------------------------
-imageSword = pygame.image.load("sword1.png").convert_alpha()
+imageSword = pygame.image.load("swordpics/sword1.png").convert_alpha()
 
-imageGrille = pygame.image.load("GrilleComplete.png").convert_alpha()
+imageGrille = pygame.image.load("gridpics/GrilleComplete.png").convert_alpha()
 ianimeblob = 0
 ianime = 0
 imageblob = imagesBlob["left"][ianime]
@@ -211,6 +211,24 @@ while continuer:
         upstairsperso=(upstairsperso+1)%2
         #Pour réguler upstairsperso
         vartour = i
+    #changement upstairsblob
+    if ((rectBlob.x >700 and rectBlob.x < 710) and (rectBlob.y >-1 and rectBlob.y < 163) and (vartour+1 < i) and (upstairsblob!=upstairsperso)):
+        upstairsblob=(upstairsblob+1)%2
+        vartour = i
+#DEPLACEMENT BLOB TEST 1________________________________________________________
+
+
+
+
+
+
+
+
+
+
+
+
+#________________________________________________________________________________
 #TEST UPSTAIRSBLOB
     # if i%10==0:
     #     upstairsblob=(upstairsblob+1)%2
