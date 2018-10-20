@@ -9,8 +9,6 @@ largeur = 1024
 hauteur = 768
 fenetre=pygame.display.set_mode((largeur,hauteur))
 
-print("VP was here")
-
 # lecture de l'image du perso
 #Dico des images---------------------------------------------------------
 #boneproj---------------------------------------------------------------
@@ -223,6 +221,7 @@ while continuer:
         fenetre.blit(imageSword, rectSword)
         rectSword.x = rectPerso.x
         rectSword.y = rectPerso.y
+        fenetre.blit(imageSword, rectSword)
     if touches[pygame.K_SPACE] :
         rectbone.x = rectPerso.x
         rectbone.y = rectPerso.y
@@ -307,7 +306,6 @@ while continuer:
             fenetre.blit(imagebone, rectbone)
         fenetre.blit(imageGrille, rectGrille)
         fenetre.blit(imageblob, rectBlob)
-
 
     if i%3==0 :
         ianimeblob = (ianimeblob+1)%len(imagesBlob["left"])
