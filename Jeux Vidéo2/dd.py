@@ -9,6 +9,8 @@ largeur = 1024
 hauteur = 768
 fenetre=pygame.display.set_mode((largeur,hauteur))
 
+print("VP was here")
+
 # lecture de l'image du perso
 #Dico des images---------------------------------------------------------
 #boneproj---------------------------------------------------------------
