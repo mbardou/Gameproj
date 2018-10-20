@@ -11,6 +11,7 @@ hauteur = 768
 fenetre=pygame.display.set_mode((largeur,hauteur))
 
 # lecture de l'image du perso
+#Dico des images---------------------------------------------------------
 imagesPerso = {}
 
 imagesPerso["right"]=[]
@@ -20,12 +21,12 @@ imagesPerso["up"]=[]
 
 temp = pygame.image.load("perso1.png").convert_alpha()
 imagesPerso["right"].append(temp)
-temp = pygame.image.load("persoright02.png").convert_alpha()
-imagesPerso["right"].append(temp)
-temp = pygame.image.load("persoright03.png").convert_alpha()
-imagesPerso["right"].append(temp)
-temp = pygame.image.load("persoright04.png").convert_alpha()
-imagesPerso["right"].append(temp)
+# temp = pygame.image.load("persoright02.png").convert_alpha()
+# imagesPerso["right"].append(temp)
+# temp = pygame.image.load("persoright03.png").convert_alpha()
+# imagesPerso["right"].append(temp)
+# temp = pygame.image.load("persoright04.png").convert_alpha()
+# imagesPerso["right"].append(temp)
 temp = pygame.image.load("persoleft.png").convert_alpha()
 imagesPerso["left"].append(temp)
 # temp = pygame.image.load("persoleft02.png").convert_alpha()
@@ -36,11 +37,11 @@ imagesPerso["left"].append(temp)
 # imagesPerso["left"].append(temp)
 temp = pygame.image.load("persoface.png").convert_alpha()
 imagesPerso["down"].append(temp)
-# temp = pygame.image.load("persoface02.png").convert_alpha()
+# temp = pygame.image.load("persodown02.png").convert_alpha()
 # imagesPerso["down"].append(temp)
-# temp = pygame.image.load("persoface03.png").convert_alpha()
+# temp = pygame.image.load("persodown03.png").convert_alpha()
 # imagesPerso["down"].append(temp)
-# temp = pygame.image.load("persoface04.png").convert_alpha()
+# temp = pygame.image.load("persodown04.png").convert_alpha()
 # imagesPerso["down"].append(temp)
 temp = pygame.image.load("persoup.png").convert_alpha()
 imagesPerso["up"].append(temp)
@@ -50,6 +51,7 @@ imagesPerso["up"].append(temp)
 # imagesPerso["up"].append(temp)
 # temp = pygame.image.load("persoup04.png").convert_alpha()
 # imagesPerso["up"].append(temp)
+#fin du dico --------------------------------------------------------------
 imageSword = pygame.image.load("sword1.png").convert_alpha()
 
 
