@@ -1,4 +1,3 @@
-
 import os
 import pygame
 #redblobgames
@@ -21,40 +20,40 @@ imagesPerso["up"]=[]
 
 temp = pygame.image.load("perso1.png").convert_alpha()
 imagesPerso["right"].append(temp)
-# temp = pygame.image.load("persoright02.png").convert_alpha()
-# imagesPerso["right"].append(temp)
-# temp = pygame.image.load("persoright03.png").convert_alpha()
-# imagesPerso["right"].append(temp)
-# temp = pygame.image.load("persoright04.png").convert_alpha()
-# imagesPerso["right"].append(temp)
+temp = pygame.image.load("persoright02.png").convert_alpha()
+imagesPerso["right"].append(temp)
+temp = pygame.image.load("persoright03.png").convert_alpha()
+imagesPerso["right"].append(temp)
+temp = pygame.image.load("persoright04.png").convert_alpha()
+imagesPerso["right"].append(temp)
 temp = pygame.image.load("persoleft.png").convert_alpha()
 imagesPerso["left"].append(temp)
-# temp = pygame.image.load("persoleft02.png").convert_alpha()
-# imagesPerso["left"].append(temp)
-# temp = pygame.image.load("persoleft03.png").convert_alpha()
-# imagesPerso["left"].append(temp)
-# temp = pygame.image.load("persoleft04.png").convert_alpha()
-# imagesPerso["left"].append(temp)
+temp = pygame.image.load("persoleft02.png").convert_alpha()
+imagesPerso["left"].append(temp)
+temp = pygame.image.load("persoleft03.png").convert_alpha()
+imagesPerso["left"].append(temp)
+temp = pygame.image.load("persoleft04.png").convert_alpha()
+imagesPerso["left"].append(temp)
 temp = pygame.image.load("persoface.png").convert_alpha()
 imagesPerso["down"].append(temp)
-# temp = pygame.image.load("persodown02.png").convert_alpha()
-# imagesPerso["down"].append(temp)
-# temp = pygame.image.load("persodown03.png").convert_alpha()
-# imagesPerso["down"].append(temp)
-# temp = pygame.image.load("persodown04.png").convert_alpha()
-# imagesPerso["down"].append(temp)
+temp = pygame.image.load("persodown02.png").convert_alpha()
+imagesPerso["down"].append(temp)
+temp = pygame.image.load("persodown03.png").convert_alpha()
+imagesPerso["down"].append(temp)
+temp = pygame.image.load("persodown04.png").convert_alpha()
+imagesPerso["down"].append(temp)
 temp = pygame.image.load("persoup.png").convert_alpha()
 imagesPerso["up"].append(temp)
-# temp = pygame.image.load("persoup02.png").convert_alpha()
-# imagesPerso["up"].append(temp)
-# temp = pygame.image.load("persoup03.png").convert_alpha()
-# imagesPerso["up"].append(temp)
-# temp = pygame.image.load("persoup04.png").convert_alpha()
-# imagesPerso["up"].append(temp)
+temp = pygame.image.load("persoup02.png").convert_alpha()
+imagesPerso["up"].append(temp)
+temp = pygame.image.load("persoup03.png").convert_alpha()
+imagesPerso["up"].append(temp)
+temp = pygame.image.load("persoup04.png").convert_alpha()
+imagesPerso["up"].append(temp)
 #fin du dico --------------------------------------------------------------
 imageSword = pygame.image.load("sword1.png").convert_alpha()
 
-
+imageGrille = pygame.image.load("GrilleComplete.png").convert_alpha()
 ianime = 0
 imagePerso = imagesPerso["up"][ianime]
 
@@ -67,6 +66,9 @@ rectSword = imageSword.get_rect()
 rectSword.x = 2000
 rectSword.y = 2000
 
+rectGrille = imageGrille.get_rect()
+rectGrille.x = 0
+rectGrille.y = 0
 # lecture de l'image du fond
 imageFond = pygame.image.load("fond1.png").convert()
 
@@ -95,13 +97,15 @@ horloge = pygame.time.Clock()
 # la boucle infinie dans laquelle on reste coince
 i=1;
 continuer=1
+upstairs=0
+vartour = -10
 while continuer:
 
 
     horloge.tick(30)
 
     i= i+1;
-    print (i)
+    #print (i)
     # on recupere l'etat du clavier
     touches = pygame.key.get_pressed();
 
@@ -122,10 +126,10 @@ while continuer:
         if i%5==0 :
             ianime = (ianime+1)%len(imagesPerso["up"])
             imagePerso = imagesPerso["up"][ianime]
-        if rectPerso.y < 60 :
-           rectPerso.y = 59
+        if rectPerso.y < 1 :
+           rectPerso.y = 0
         else :
-            rectPerso.y = rectPerso.y - 5
+            rectPerso.y = rectPerso.y - 8
 
     elif touches[pygame.K_DOWN] :
         if i%5==0 :
@@ -135,7 +139,7 @@ while continuer:
             rectPerso.y = 617
 
         else :
-           rectPerso.y = rectPerso.y + 5
+           rectPerso.y = rectPerso.y + 8
     elif touches[pygame.K_LEFT] :
         if i%5==0 :
             ianime = (ianime+1)%len(imagesPerso["left"])
@@ -143,15 +147,17 @@ while continuer:
         if rectPerso.x < 45:
            rectPerso.x = 44
         else :
-            rectPerso.x = rectPerso.x - 5
+            rectPerso.x = rectPerso.x - 8
     elif touches[pygame.K_RIGHT] :
         if i%5==0 :
             ianime = (ianime+1)%len(imagesPerso["right"])
             imagePerso = imagesPerso["right"][ianime]
         if rectPerso.x > 918:
             rectPerso.x = 919
+        if rectPerso.x > 645 and rectPerso.x < 655 and rectPerso.y > 5 and rectPerso.y < 200 and upstairs==0:
+            rectPerso.x = 646
         else :
-            rectPerso.x = rectPerso.x + 5
+            rectPerso.x = rectPerso.x + 8
 
     elif touches[pygame.K_SPACE] :
         rectSword.x = rectPerso.x
@@ -165,12 +171,21 @@ while continuer:
     fenetre.blit(imageFond, rectFond)
     #Affichage de l'épée
     fenetre.blit(imageSword, rectSword)
-    # Affichage Perso
-    fenetre.blit(imagePerso, rectPerso)
-
+    #Affichage grille
+    if ((rectPerso.x >700 and rectPerso.x < 710) and (rectPerso.y >0 and rectPerso.y < 163) and (vartour+10 < i)):
+        upstairs=(upstairs+1)%2
+        #Pour réguler upstairs
+        vartour = i
+    if upstairs==1 :
+        fenetre.blit(imageGrille, rectGrille)
+        fenetre.blit(imagePerso, rectPerso)
+    else:
+        # Affichage Perso
+        fenetre.blit(imagePerso, rectPerso)
+        fenetre.blit(imageGrille, rectGrille)
     # rafraichissement
     pygame.display.flip()
-
+    print ( upstairs)
 
 
     # Si on a clique sur le bouton de fermeture on sortira
