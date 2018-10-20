@@ -11,6 +11,24 @@ fenetre=pygame.display.set_mode((largeur,hauteur))
 
 # lecture de l'image du perso
 #Dico des images---------------------------------------------------------
+#boneproj---------------------------------------------------------------
+imagesbone = {}
+
+imagesbone["proj"]=[]
+temp = pygame.image.load("boneframes/femur.png").convert_alpha()
+imagesbone["proj"].append(temp)
+temp = pygame.image.load("boneframes/femur02.png").convert_alpha()
+imagesbone["proj"].append(temp)
+temp = pygame.image.load("boneframes/femur03.png").convert_alpha()
+imagesbone["proj"].append(temp)
+temp = pygame.image.load("boneframes/femur04.png").convert_alpha()
+imagesbone["proj"].append(temp)
+
+
+
+
+
+
 
 #blob---------------------------------------------------------------------------
 imagesBlob = {}
@@ -77,11 +95,12 @@ temp = pygame.image.load("persoframes/persoup04.png").convert_alpha()
 imagesPerso["up"].append(temp)
 #fin du dico --------------------------------------------------------------
 imageSword = pygame.image.load("swordpics/sword1.png").convert_alpha()
-
+imagebone = pygame.image.load("boneframes/femur.png").convert_alpha()
 imageGrille = pygame.image.load("gridpics/GrilleComplete.png").convert_alpha()
 ianimeblob = 0
 ianime = 0
-imageblob = imagesBlob["left"][ianime]
+ianimebone = 0
+imageblob = imagesBlob["left"][ianimeblob]
 imagePerso = imagesPerso["up"][ianime]
 
 # creation d'un rectangle pour positioner l'image du personnage
@@ -91,10 +110,12 @@ rectBlob.y = 120
 rectPerso = imagePerso.get_rect()
 rectPerso.x = hauteur/2
 rectPerso.y = largeur/2
-
 rectSword = imageSword.get_rect()
-rectSword.x = 2000
-rectSword.y = 2000
+rectbone = imagebone.get_rect()
+
+# rectSword = imageSword.get_rect()
+# rectSword.x = 2000
+# rectSword.y = 2000
 
 rectGrille = imageGrille.get_rect()
 rectGrille.x = 0
@@ -130,6 +151,7 @@ continuer=1
 upstairsperso = 0
 upstairsblob = 0
 vartour = -1
+dirbone = -1
 while continuer:
 
 
@@ -195,17 +217,41 @@ while continuer:
             rectPerso.x = rectPerso.x + 8
 
     elif touches[pygame.K_SPACE] :
+        #Affichage de l'épée
+        fenetre.blit(imageSword, rectSword)
         rectSword.x = rectPerso.x
         rectSword.y = rectPerso.y
+    if touches[pygame.K_SPACE] :
+        rectbone.x = rectPerso.x
+        rectbone.y = rectPerso.y
+        if touches[pygame.K_UP] :
+            dirbone = 0
+        elif touches[pygame.K_RIGHT] :
+            dirbone = 1
+        elif touches[pygame.K_DOWN] :
+            dirbone = 2
+        elif touches[pygame.K_LEFT] :
+            dirbone = 3
+        else :
+            dirbone = 4
+    if dirbone < 4 :
+        if dirbone == 0:
+            rectbone.y = rectbone.y - 50
+        if dirbone == 1:
+            rectbone.x = rectbone.x + 50
+        if dirbone == 2:
+            rectbone.y = rectbone.y+ 50
+        if dirbone == 3:
+            rectbone.x = rectbone.x - 50
 
-    else:
-        imagePerso = imagesPerso["right"][0]
+    # else:
+    #     imagePerso = imagesPerso["right"][0]
 
 
     # Affichage du fond
     fenetre.blit(imageFond, rectFond)
-    #Affichage de l'épée
-    fenetre.blit(imageSword, rectSword)
+
+    #affichage os
     #Affichage grille
     if ((rectPerso.x >700 and rectPerso.x < 710) and (rectPerso.y >-1 and rectPerso.y < 163) and (vartour+1 < i) and (touches[pygame.K_LEFT] or touches[pygame.K_RIGHT] or touches[pygame.K_UP] or touches[pygame.K_DOWN])):
         upstairsperso=(upstairsperso+1)%2
@@ -239,16 +285,24 @@ while continuer:
         fenetre.blit(imageGrille, rectGrille)
         fenetre.blit(imagePerso, rectPerso)
         fenetre.blit(imageblob, rectBlob)
+        if dirbone > -1:
+            fenetre.blit(imagebone, rectbone)
     elif upstairsperso==1 and upstairsblob==0:
         fenetre.blit(imageblob, rectBlob)
         fenetre.blit(imageGrille, rectGrille)
         fenetre.blit(imagePerso, rectPerso)
+        if dirbone > -1:
+            fenetre.blit(imagebone, rectbone)
     elif upstairsperso==0 and upstairsblob==0:
         fenetre.blit(imageblob, rectBlob)
         fenetre.blit(imagePerso, rectPerso)
+        if dirbone > -1:
+            fenetre.blit(imagebone, rectbone)
         fenetre.blit(imageGrille, rectGrille)
     elif upstairsperso==0 and upstairsblob==1:
         fenetre.blit(imagePerso, rectPerso)
+        if dirbone > -1:
+            fenetre.blit(imagebone, rectbone)
         fenetre.blit(imageGrille, rectGrille)
         fenetre.blit(imageblob, rectBlob)
 
@@ -256,6 +310,8 @@ while continuer:
     if i%3==0 :
         ianimeblob = (ianimeblob+1)%len(imagesBlob["left"])
         imageblob = imagesBlob["left"][ianimeblob]
+        ianimebone = (ianimebone+1)%len(imagesbone["proj"])
+        imagebone = imagesbone["proj"][ianimebone]
 
     # if upstairsblob==1 :
     #     fenetre.blit(imageGrille, rectGrille)
