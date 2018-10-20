@@ -98,7 +98,7 @@ horloge = pygame.time.Clock()
 i=1;
 continuer=1
 upstairs=0
-vartour = -10
+vartour = -1
 while continuer:
 
 
@@ -144,6 +144,8 @@ while continuer:
         if i%5==0 :
             ianime = (ianime+1)%len(imagesPerso["left"])
             imagePerso = imagesPerso["left"][ianime]
+        if rectPerso.x > 700 and rectPerso.x < 710 and rectPerso.y > 5 and rectPerso.y < 200 and upstairs==0:
+            rectPerso.x = 710
         if rectPerso.x < 45:
            rectPerso.x = 44
         else :
@@ -152,10 +154,12 @@ while continuer:
         if i%5==0 :
             ianime = (ianime+1)%len(imagesPerso["right"])
             imagePerso = imagesPerso["right"][ianime]
+        if rectPerso.x > 462 and rectPerso.x < 470 and rectPerso.y > 70 and upstairs==1:
+            rectPerso.x = 461
         if rectPerso.x > 918:
             rectPerso.x = 919
-        if rectPerso.x > 645 and rectPerso.x < 655 and rectPerso.y > 5 and rectPerso.y < 200 and upstairs==0:
-            rectPerso.x = 646
+        if rectPerso.x > 590 and rectPerso.x < 600 and rectPerso.y > -1 and rectPerso.y < 200 and upstairs==0:
+            rectPerso.x = 591
         else :
             rectPerso.x = rectPerso.x + 8
 
@@ -172,7 +176,7 @@ while continuer:
     #Affichage de l'épée
     fenetre.blit(imageSword, rectSword)
     #Affichage grille
-    if ((rectPerso.x >700 and rectPerso.x < 710) and (rectPerso.y >0 and rectPerso.y < 163) and (vartour+10 < i)):
+    if ((rectPerso.x >700 and rectPerso.x < 710) and (rectPerso.y >-1 and rectPerso.y < 163) and (vartour+1 < i) and (touches[pygame.K_LEFT] or touches[pygame.K_RIGHT] or touches[pygame.K_UP] or touches[pygame.K_DOWN])):
         upstairs=(upstairs+1)%2
         #Pour réguler upstairs
         vartour = i
