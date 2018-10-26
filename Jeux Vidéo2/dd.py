@@ -25,8 +25,7 @@ temp = pygame.image.load("boneframes/femur04.png").convert_alpha()
 imagesbone["proj"].append(temp)
 
 
-
-
+print("here I am")
 
 
 
