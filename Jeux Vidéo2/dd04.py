@@ -137,6 +137,10 @@ perso["direction"]="right"
 perso["canshoot"]=True
 perso["cooldown"]=0
 
+blob = {}
+blob["rect"]=rectBlob
+blob["img"]=imagesBlob
+
 # creation d'un rectangle pour positioner l'image du personnage
 rectBlob = imageblob.get_rect()
 rectBlob.x = 240
