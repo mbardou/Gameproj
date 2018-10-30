@@ -1,4 +1,4 @@
-import os
+0import os
 import sys, math, random, pygame
 from pygame.locals import *
 from pygame import *
@@ -45,6 +45,28 @@ rectPont1.y = 300
 # rectBoat1.y = 250
 
 horloge = pygame.time.Clock()
+#TEST PATHFINDER-------------------------------------------------------
+grillePath = []
+grillePath.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+grillePath.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+grillePath.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+grillePath.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+grillePath.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+grillePath.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+grillePath.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+grillePath.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+grillePath.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+grillePath.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+grillePath.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+grillePath.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+grillePath.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+
+
+
+
+
+
+#_____________________________________________________
 
 
 grille = []
@@ -86,6 +108,12 @@ while continuer:
     #fenetre.blit(imagePont03, rectPont3)
     #fenetre.blit(imagePont04, rectPont4)
     # fenetre.blit(imageBoat, rectBoat1)
+    for i in range(TabBlob): #tableau d ennemi PRESENT SUR LA CARTE a créer
+        grillePath[(((LARGEUR_ECRAN(EN PIXEL))+rectBlob)/100(=taille case))-7(=taille carte en case)][...pareil en hauteur...]='B'
+            #pour exemple ci dessus, ecran 700px, 1case =100px, 7cases de large. compact:
+                #grillePath[((700+rectBlob)/100)-7][pareil en j]
+                    #si rectblob en 200x(=3eme case): 700+200/100=9-7=2; 3eme case: grillePath[0,1,2]
+
 
     for i in range(len(grille)) :
         for j in range(len(grille[i])) :
