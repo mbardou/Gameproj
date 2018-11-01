@@ -7,6 +7,8 @@ pygame.init()
 
 largeur = 1024
 hauteur = 768
+LargeurPerso = 30
+HauteurPerso = 50
 fontChat = pygame.font.SysFont("monospace", 15)
 # fenetre=pygame.display.set_mode((largeur,hauteur))
 fenetre=pygame.display.set_mode((largeur,hauteur), RESIZABLE)
@@ -45,9 +47,61 @@ imagePnj01 = pygame.image.load("pictures/pnj1.png").convert_alpha()
 imagePnj02 = pygame.image.load("pictures/pnj2.png").convert_alpha()
 imagePnj03 = pygame.image.load("pictures/pnj3.png").convert_alpha()
 imagePnj04 = pygame.image.load("pictures/pnj4.png").convert_alpha()
+#Dico d'images perso_____________________________________________________________________
+imagesPerso = {}
 
+imagesPerso["right"]=[]
+imagesPerso["left"]=[]
+imagesPerso["down"]=[]
+imagesPerso["up"]=[]
 
+temp = pygame.image.load("pictures/persoframes/prot088.png").convert_alpha()
+imagesPerso["right"].append(temp)
+temp = pygame.image.load("pictures/persoframes/prot089.png").convert_alpha()
+imagesPerso["right"].append(temp)
+temp = pygame.image.load("pictures/persoframes/prot090.png").convert_alpha()
+imagesPerso["right"].append(temp)
+temp = pygame.image.load("pictures/persoframes/prot091.png").convert_alpha()
+imagesPerso["right"].append(temp)
+temp = pygame.image.load("pictures/persoframes/prot070.png").convert_alpha()
+imagesPerso["left"].append(temp)
+temp = pygame.image.load("pictures/persoframes/prot071.png").convert_alpha()
+imagesPerso["left"].append(temp)
+temp = pygame.image.load("pictures/persoframes/prot072.png").convert_alpha()
+imagesPerso["left"].append(temp)
+temp = pygame.image.load("pictures/persoframes/prot073.png").convert_alpha()
+imagesPerso["left"].append(temp)
+temp = pygame.image.load("pictures/persoframes/prot079.png").convert_alpha()
+imagesPerso["down"].append(temp)
+temp = pygame.image.load("pictures/persoframes/prot080.png").convert_alpha()
+imagesPerso["down"].append(temp)
+temp = pygame.image.load("pictures/persoframes/prot081.png").convert_alpha()
+imagesPerso["down"].append(temp)
+temp = pygame.image.load("pictures/persoframes/prot082.png").convert_alpha()
+imagesPerso["down"].append(temp)
+temp = pygame.image.load("pictures/persoframes/prot061.png").convert_alpha()
+imagesPerso["up"].append(temp)
+temp = pygame.image.load("pictures/persoframes/prot062.png").convert_alpha()
+imagesPerso["up"].append(temp)
+temp = pygame.image.load("pictures/persoframes/prot063.png").convert_alpha()
+imagesPerso["up"].append(temp)
+temp = pygame.image.load("pictures/persoframes/prot064.png").convert_alpha()
+imagesPerso["up"].append(temp)
+#_______________________________________________________________________________
 
+ianime = 0
+imagePerso = imagesPerso["down"][ianime]
+rectPerso = imagePerso.get_rect()
+
+perso = {}
+perso["rect"]=rectPerso
+perso["img"]=imagePerso
+perso["direction"]="right"
+perso["canshoot"]=True
+perso["cooldown"]=0
+
+perso["rect"].x= largeur/2
+perso["rect"].y= hauteur/2
 horloge = pygame.time.Clock()
 
 #Initialisation du tableau de l'eau
@@ -139,14 +193,52 @@ largeurcaseTable = 65
 hauteurcaseTable = 60
 Chat = ''
 continuer=1
+timer=1;
 while continuer:
-
     horloge.tick(30)
-
+    timer+=1
     touches = pygame.key.get_pressed();
 
     if touches[pygame.K_ESCAPE] :
         continuer=0
+#Zone test ____________________________________________________________________
+    print(str(timer))
+
+
+# Deplacements du perso
+    if touches[pygame.K_UP] :
+        if timer%5==0 :
+            ianime = (ianime+1)%len(imagesPerso["up"])
+            imagePerso = imagesPerso["up"][ianime]
+        if not(grillePlateforme[int((perso["rect"].y)/hauteurCase)][int((perso["rect"].x)/largeurCase)]==0) :
+            perso["rect"].y-=5
+        #else: perso["rect"].y=perso["rect"].y
+
+    if touches[pygame.K_DOWN] :
+        if timer%5==0 :
+            ianime = (ianime+1)%len(imagesPerso["down"])
+            imagePerso = imagesPerso["down"][ianime]
+        if not(grillePlateforme[int((perso["rect"].y+HauteurPerso)/hauteurCase)][int((perso["rect"].x)/largeurCase)]==0) :
+            perso["rect"].y+=5
+        #else: perso["rect"].y=perso["rect"].y
+
+
+    if touches[pygame.K_RIGHT] :
+        if timer%5==0 :
+            ianime = (ianime+1)%len(imagesPerso["right"])
+            imagePerso = imagesPerso["right"][ianime]
+        if not(grillePlateforme[int((perso["rect"].y)/hauteurCase)][int((perso["rect"].x+LargeurPerso)/largeurCase)]==0) :
+            perso["rect"].x+=5
+        #else: perso["rect"].x=perso["rect"].x
+
+    if touches[pygame.K_LEFT] :
+        if timer%5==0 :
+            ianime = (ianime+1)%len(imagesPerso["left"])
+            imagePerso = imagesPerso["left"][ianime]
+        if not(grillePlateforme[int((perso["rect"].y)/hauteurCase)][int((perso["rect"].x-2)/largeurCase)]==0) :
+            perso["rect"].x-=5
+        #else: perso["rect"].x=perso["rect"].x
+
 
 # On Attribut un chiffre à une image qu'on placera dans une case dans la grille initialisé ci-dessus
 
@@ -158,6 +250,7 @@ while continuer:
                 rectMachin1.x = l*largeurCaseEau
                 rectMachin1.y = k*largeurCaseEau
                 fenetre.blit(imageFond, rectMachin1)
+
     #PLATEFORMES
     for i in range(len(grillePlateforme)) :
         for j in range(len(grillePlateforme[i])) :
@@ -322,8 +415,17 @@ while continuer:
                 rectTable4.x = t1*largeurcaseTable
                 rectTable4.y = t*largeurcaseTable
                 fenetre.blit(imagefish02, rectTable4)
-    if touches[pygame.K_RETURN] :
+    fenetre.blit(imagePerso, perso["rect"])
+
+
+    if touches[pygame.K_RETURN] and perso["rect"].colliderect(rectDecors19) :
         Chat = 'Salut, bienvenu a mon échoppe !'
+    elif touches[pygame.K_RETURN] and perso["rect"].colliderect(rectDecors20) :
+        Chat = 'Hey, tu viens chasser avec moi ?'
+    elif touches[pygame.K_RETURN] and perso["rect"].colliderect(rectDecors21) :
+        Chat = 'Je connais une bonne taverne !'
+    elif touches[pygame.K_RETURN] and perso["rect"].colliderect(rectDecors22) :
+        Chat = 'bonjour petite! une friandise ?'
     label = fontChat.render(Chat, 1, (255,255,255))
     fenetre.blit(imageChatbox, rectChatbox)
     fenetre.blit(label, (rectChatbox.x+10, rectChatbox.y+50))
