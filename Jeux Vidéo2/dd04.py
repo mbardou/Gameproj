@@ -138,10 +138,6 @@ perso["direction"]="right"
 perso["canshoot"]=True
 perso["cooldown"]=0
 
-# bones = {}
-# bones["rectos"] = rectbone
-# bones["img"] = imagesbone
-# bones["canhit"] = True
 
 
 # creation d'un rectangle pour positioner l'image du personnage
@@ -373,6 +369,7 @@ while continuer:
 
 
         tir = {}
+        tir["canhit"] = True
         tir["rect"] = rectbone
         tir["direction"] = dirbone
 
@@ -380,7 +377,6 @@ while continuer:
         tirs.append(tir)
         perso["canshoot"] = False
         perso["cooldown"] = 0
-        # bones["canhit"] = True
 
     if perso["canshoot"] == False:
         perso["cooldown"] += 1
@@ -471,8 +467,11 @@ while continuer:
     if maskPerso.overlap(maskBlob, (rectBlob.left - perso["rect"].left, rectBlob.top - perso["rect"].top)) != None:
         fenetre.blit(imageText,rectText)
     #Affiche le score en bas à droite quand le projectil et le blob ce touche
-    if rectbone.colliderect(rectBlob) :
-        pvblob -= 1
+    for t in tirs:
+        if t["rect"].colliderect(rectBlob) :
+            if t["canhit"] == True:
+                pvblob -= 10
+            t["canhit"] = False
         # fenetre.blit(imageFond, rectFond)
         # display.update(rectBlob)
         #modification du score
