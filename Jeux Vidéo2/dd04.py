@@ -24,6 +24,7 @@ bones = []
 bonestir = []
 tirs=[]
 
+
 imagesbone = {}
 
 imagesbone["proj"]=[]
@@ -123,12 +124,12 @@ imageTree = pygame.image.load("tree1.png").convert_alpha()
 ianimeblob = 0
 ianime = 0
 ianimebone = 0
-points = 0
+pvblob = 50
 imageblob = imagesBlob["left"][ianimeblob]
 imagePerso = imagesPerso["up"][ianime]
 
 rectPerso = imagePerso.get_rect()
-
+rectbone = imagebone.get_rect()
 
 perso = {}
 perso["rect"]=rectPerso
@@ -137,9 +138,11 @@ perso["direction"]="right"
 perso["canshoot"]=True
 perso["cooldown"]=0
 
-blob = {}
-blob["rect"]=rectBlob
-blob["img"]=imagesBlob
+# bones = {}
+# bones["rectos"] = rectbone
+# bones["img"] = imagesbone
+# bones["canhit"] = True
+
 
 # creation d'un rectangle pour positioner l'image du personnage
 rectBlob = imageblob.get_rect()
@@ -148,7 +151,7 @@ rectBlob.y = 120
 perso["rect"].x = hauteur/2
 perso["rect"].y = largeur/2
 rectSword = imageSword.get_rect()
-rectbone = imagebone.get_rect()
+
 rectHacheDeZoo = imageHacheDeZoo.get_rect()
 rectHacheDeZoo.x = 684
 rectHacheDeZoo.y = 480
@@ -189,7 +192,7 @@ maskPerso = pygame.mask.from_surface(imagePerso)
 maskBlob = pygame.mask.from_surface(imageblob)
 
 # Positionnement de la surface pour le score
-score_surface = score_font.render("Score : {:6d} points".format(points), 1, couleur_font)
+score_surface = score_font.render("Pvblob : {:6d} pv".format(pvblob), 1, couleur_font)
 score_rect = score_surface.get_rect()
 score_rect.bottomright = rectFenetre.bottomright
 
@@ -208,10 +211,12 @@ dirbone = -1
 Pressed = 0
 inwater = 0
 hit = 0
+canhit = True
 canshoot = True
 cooldown = 0
+
 while continuer:
-    print("je peux tirer ? "+str(perso["canshoot"]))
+    # print("je peux tirer ? "+str(perso["canshoot"]))
 
     horloge.tick(30)
 
@@ -227,12 +232,48 @@ while continuer:
     if perso["rect"].x > 624 and perso["rect"].y > 390 :
         inwater = 1
     else : inwater = 0
+#DEPLACE BLOB____________________________________________________________
+    if rectPerso.x > rectBlob.x:
+        rectBlob.x += 5
+    if rectPerso.x < rectBlob.x :
+        rectBlob.x -= 5
+    if rectPerso.y > rectBlob.y:
+        rectBlob.y += 5
+    if rectPerso.y < rectBlob.y:
+        rectBlob.y -= 5
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#______________________________________________________________________
 
         # rafraichissement
     # Affichage du Texte
     fenetre.blit(imageText, rectText)
-
 
 
     if touches[pygame.K_UP] :
@@ -247,7 +288,7 @@ while continuer:
             else :
                 perso["rect"].y = perso["rect"].y - 8
 
-    elif touches[pygame.K_DOWN] :
+    if touches[pygame.K_DOWN] :
         if i%5==0 :
             ianime = (ianime+1)%len(imagesPerso["down"])
             imagePerso = imagesPerso["down"][ianime]
@@ -273,7 +314,7 @@ while continuer:
                 perso["rect"].y = perso["rect"].y + 5
             else :
                 perso["rect"].y = perso["rect"].y + 8
-    elif touches[pygame.K_LEFT] :
+    if touches[pygame.K_LEFT] :
         if i%5==0 :
             ianime = (ianime+1)%len(imagesPerso["left"])
             imagePerso = imagesPerso["left"][ianime]
@@ -292,7 +333,7 @@ while continuer:
                 perso["rect"].x = perso["rect"].x - 5
             else:
                 perso["rect"].x = perso["rect"].x - 8
-    elif touches[pygame.K_RIGHT] :
+    if touches[pygame.K_RIGHT] :
         if i%5==0 :
             ianime = (ianime+1)%len(imagesPerso["right"])
             imagePerso = imagesPerso["right"][ianime]
@@ -335,9 +376,11 @@ while continuer:
         tir["rect"] = rectbone
         tir["direction"] = dirbone
 
+
         tirs.append(tir)
         perso["canshoot"] = False
         perso["cooldown"] = 0
+        # bones["canhit"] = True
 
     if perso["canshoot"] == False:
         perso["cooldown"] += 1
@@ -368,8 +411,11 @@ while continuer:
                 t["rect"].y += + 20
         if t["direction"] == 3:
                 t["rect"].x += - 20
-
-    print("nb Bones"+ str(len(bones)))
+        # if t["rectos"].colliderect(rectBlob) and t["canhit"]:
+        #     t["canhit"] == False
+        #     pvblob -= 5
+        # print("je peux toucher"+str(t[canhit]))
+    # print("nb Bones"+ str(len(bones)))
     tempTab = []
     for t in tirs:
         if not(t["rect"].x > 1024 or t["rect"].x < 0 or t["rect"].y > 768 or t["rect"].y<0) :
@@ -395,13 +441,16 @@ while continuer:
         vartour = i
 #DEPLACEMENT BLOB TEST 1________________________________________________________
 
-    if rectbone.colliderect(rectBlob):
-        hit += 1
-        print(hit)
+    # if rectbone.colliderect(rectBlob):
+    #     hit += 1
+    #     print(hit)
+    #
+    # if perso["rect"].colliderect(rectBlob):
+    #     hit += 1
+    #     print(hit)
 
-    if perso["rect"].colliderect(rectBlob):
-        hit += 1
-        print(hit)
+
+
 
 #deplacer le blob avec le curseur
     # for event in pygame.event.get():
@@ -422,12 +471,15 @@ while continuer:
     if maskPerso.overlap(maskBlob, (rectBlob.left - perso["rect"].left, rectBlob.top - perso["rect"].top)) != None:
         fenetre.blit(imageText,rectText)
     #Affiche le score en bas à droite quand le projectil et le blob ce touche
-    if rectbone.colliderect(rectBlob):
-        points += 1
+    if rectbone.colliderect(rectBlob) :
+        pvblob -= 1
+        # fenetre.blit(imageFond, rectFond)
+        # display.update(rectBlob)
         #modification du score
-        score_surface = score_font.render("Score : {:5d} points".format(points), 1, couleur_font)
+    #     score_surface = score_font.render("Score : {:5d} points".format(points), 1, couleur_font)
 
 
+    score_surface = score_font.render("Pvblob : {:5d} Pvblob".format(pvblob), 1, couleur_font)
 
 
 
@@ -441,7 +493,7 @@ while continuer:
     # if i%10==0:
     #     upstairsblob=(upstairsblob+1)%2
     #     print("upstairsblob= ", upstairsblob)
-    print("upstairsperso= ", upstairsperso)
+    # print("upstairsperso= ", upstairsperso)
 
     if upstairsperso==1 and upstairsblob==1 :
         fenetre.blit(imageGrille, rectGrille)
