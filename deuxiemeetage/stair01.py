@@ -7,11 +7,13 @@ pygame.init()
 
 largeur = 1024
 hauteur = 768
-
+fontChat = pygame.font.SysFont("monospace", 15)
 # fenetre=pygame.display.set_mode((largeur,hauteur))
 fenetre=pygame.display.set_mode((largeur,hauteur), RESIZABLE)
 rectFenetre = fenetre.get_rect()
-
+imageChatbox = pygame.image.load("pictures/FenetreChat1.png").convert_alpha()
+rectChatbox = imageChatbox.get_rect()
+rectChatbox.y = 624
 imageFond = pygame.image.load("pictures/eau.png").convert_alpha()
 imagePont01 = pygame.image.load("pictures/pont01.png").convert_alpha()
 imageMarketplace01 = pygame.image.load("pictures/marketplace.png").convert_alpha()
@@ -132,7 +134,7 @@ grilletable.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0])
 
 largeurcaseTable = 65
 hauteurcaseTable = 60
-
+Chat = ''
 continuer=1
 while continuer:
 
@@ -307,7 +309,11 @@ while continuer:
                 rectTable4.x = t1*largeurcaseTable
                 rectTable4.y = t*largeurcaseTable
                 fenetre.blit(imagefish02, rectTable4)
-
+    if touches[pygame.K_RETURN] :
+        Chat = 'Salut, bienvenu a mon échoppe !'
+    label = fontChat.render(Chat, 1, (255,255,255))
+    fenetre.blit(imageChatbox, rectChatbox)
+    fenetre.blit(label, (rectChatbox.x+10, rectChatbox.y+50))
     pygame.display.flip()
 
     for event in pygame.event.get():
