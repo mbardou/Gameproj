@@ -43,6 +43,9 @@ imageChariot01 = pygame.image.load("pictures/chariot1.png").convert_alpha()
 imageChariot02 = pygame.image.load("pictures/chariot2.png").convert_alpha()
 imagePnj01 = pygame.image.load("pictures/pnj1.png").convert_alpha()
 imagePnj02 = pygame.image.load("pictures/pnj2.png").convert_alpha()
+imagePnj03 = pygame.image.load("pictures/pnj3.png").convert_alpha()
+imagePnj04 = pygame.image.load("pictures/pnj4.png").convert_alpha()
+
 
 
 horloge = pygame.time.Clock()
@@ -101,7 +104,7 @@ hauteurCase = 60
 
 #Initialisation du tableau des décors
 # 1 puit 2bigboat 3 boat1 4 boat2 5 horloge 6 market1 7 market2 8 wheatbag1 9 rondin 10 banc 11 lampe 12 tonneau
-# 13 Forge 14 Greatmarket 15 barrier 19 pnj1 20 pnj2
+# 13 Forge 14 Greatmarket 15 barrier 19 pnj1 20 pnj2 21 pnj3 22 pnj4
 grilledecors = []
 grilledecors.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0])
 grilledecors.append([0,0,0,0,3,0,0,0,0,0,0,0,0,0])
@@ -110,7 +113,7 @@ grilledecors.append([0,0,0,0,11,0,0,14,0,0,11,0,11,0])
 grilledecors.append([0,0,0,0,18,0,0,0,20,10,8,10,0,0])
 grilledecors.append([0,0,0,0,8,0,0,0,5,0,0,0,19,0])
 grilledecors.append([0,0,0,0,0,0,0,13,0,0,0,6,0,0])
-grilledecors.append([0,0,0,0,0,0,0,0,0,0,0,7,0,0])
+grilledecors.append([0,0,0,0,22,0,21,0,0,0,0,7,0,0])
 grilledecors.append([0,0,0,0,11,16,16,0,11,0,0,0,0,0])
 grilledecors.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0])
 grilledecors.append([0,0,0,0,0,0,0,4,0,0,0,0,0,0])
@@ -286,6 +289,16 @@ while continuer:
                 rectDecors20.x = o*largeurcaseDecors
                 rectDecors20.y = p*largeurcaseDecors
                 fenetre.blit(imagePnj02, rectDecors20)
+            if grilledecors[p][o] == 21 :
+                rectDecors21 = imagePnj03.get_rect()
+                rectDecors21.x = o*largeurcaseDecors
+                rectDecors21.y = p*largeurcaseDecors
+                fenetre.blit(imagePnj03, rectDecors21)
+            if grilledecors[p][o] == 22 :
+                rectDecors22 = imagePnj04.get_rect()
+                rectDecors22.x = o*largeurcaseDecors
+                rectDecors22.y = p*largeurcaseDecors
+                fenetre.blit(imagePnj04, rectDecors22)
 
     for t in range(len(grilletable)) :
         for t1 in range(len(grilletable[t])) :
