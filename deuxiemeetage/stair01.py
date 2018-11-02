@@ -48,6 +48,13 @@ imagePnj02 = pygame.image.load("pictures/pnj2.png").convert_alpha()
 imagePnj03 = pygame.image.load("pictures/pnj3.png").convert_alpha()
 imagePnj04 = pygame.image.load("pictures/pnj4.png").convert_alpha()
 imageCarquois = pygame.image.load("pictures/Carquois.png").convert_alpha()
+imageIconeBag = pygame.image.load("pictures/BagIcon.png").convert_alpha()
+rectIconeBag = imageIconeBag.get_rect()
+imageInventory = pygame.image.load("pictures/Inventory.png").convert_alpha()
+rectInventory = imageInventory.get_rect()
+rectInventory.y = 624
+imageIconeChat = pygame.image.load("pictures/ChatIcon.png").convert_alpha()
+rectIconeChat = imageIconeChat.get_rect()
 #Dico d'images perso_____________________________________________________________________
 imagesPerso = {}
 
@@ -196,6 +203,8 @@ chatcd = 20
 continuer=1
 timer=1;
 RangerQuest = 0
+cdinv = 20
+CurrentWindow = 'Chat'
 while continuer:
     horloge.tick(30)
     timer+=1
@@ -204,7 +213,7 @@ while continuer:
     if touches[pygame.K_ESCAPE] :
         continuer=0
 #Zone test ____________________________________________________________________
-    print(str(timer))
+
 
 
 # Deplacements du perso
@@ -248,8 +257,17 @@ while continuer:
             if not(grillePlateforme[int((perso["rect"].y)/hauteurCase)+1][int((perso["rect"].x-6)/largeurCase)]==0) :
                 perso["rect"].x-=5
         #else: perso["rect"].x=perso["rect"].x
-
-
+    if CurrentWindow == 'Chat' and cdinv == 20 and pygame.mouse.get_pressed() == (True,False,False):
+        if (rectIconeBag).collidepoint(pygame.mouse.get_pos()):
+            CurrentWindow = 'Bag'
+            cdinv = 0
+    elif CurrentWindow == 'Bag' and cdinv == 20 and pygame.mouse.get_pressed() == (True,False,False):
+        if (rectIconeChat).collidepoint(pygame.mouse.get_pos()):
+            CurrentWindow = 'Chat'
+            cdinv = 0
+    print(str(cdinv))
+    if cdinv < 20 :
+        cdinv+=1
 # On Attribut un chiffre à une image qu'on placera dans une case dans la grille initialisé ci-dessus
 
     #EAU
@@ -548,21 +566,21 @@ de vies que tu ne l'imagines..."""
 
     if chatcd < 21 :
         chatcd +=1
-
-    label = fontChat.render(Chat, 1, (255,255,255))
-    fenetre.blit(imageChatbox, rectChatbox)
-    x,y = rectChatbox.x+10,rectChatbox.y+20
-    for ligne in Chat.splitlines():
-         x,y = fenetre.blit(fontChat.render(ligne,1,(255,255,255)),(x,y)).bottomleft
-        # fenetre.blit(label, (rectChatbox.x+10, rectChatbox.y+50))
-
-    # phrase = """salut,
-    # je suis une bulle,
-    # je fais parler les personnages."""
-    # x,y = rectChatbox.topleft
-    # for ligne in phrase.splitlines():
-    #      x,y = fenetre.blit(fontChat.render(ligne,1,(255,255,255)),(x,y)).bottomleft
-
+    if CurrentWindow == 'Chat':
+        rectIconeBag.x = rectChatbox.x+274
+        rectIconeBag.y = rectChatbox.y+30
+        label = fontChat.render(Chat, 1, (255,255,255))
+        fenetre.blit(imageChatbox, rectChatbox)
+        x,y = rectChatbox.x+10,rectChatbox.y+20
+        fenetre.blit(imageIconeBag, rectIconeBag)
+        for ligne in Chat.splitlines():
+            x,y = fenetre.blit(fontChat.render(ligne,1,(255,255,255)),(x,y)).bottomleft
+            # fenetre.blit(label, (rectChatbox.x+10, rectChatbox.y+50))
+    elif CurrentWindow == 'Bag':
+        rectIconeChat.x = rectInventory.x+274
+        rectIconeChat.y = rectInventory.y+30
+        fenetre.blit(imageInventory, rectInventory)
+        fenetre.blit(imageIconeChat, rectIconeChat)
     pygame.display.flip()
 
     for event in pygame.event.get():
