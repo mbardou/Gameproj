@@ -55,6 +55,8 @@ rectInventory = imageInventory.get_rect()
 rectInventory.y = 624
 imageIconeChat = pygame.image.load("pictures/ChatIcon.png").convert_alpha()
 rectIconeChat = imageIconeChat.get_rect()
+imageHealthPot01 = pygame.image.load("pictures/pt01.png").convert_alpha()
+rectInv01 = imageHealthPot01.get_rect()
 #Dico d'images perso_____________________________________________________________________
 imagesPerso = {}
 
@@ -101,6 +103,8 @@ ianime = 0
 imagePerso = imagesPerso["down"][ianime]
 rectPerso = imagePerso.get_rect()
 
+
+
 perso = {}
 perso["rect"]=rectPerso
 perso["img"]=imagePerso
@@ -111,6 +115,23 @@ perso["cooldown"]=0
 perso["rect"].x= largeur/2
 perso["rect"].y= hauteur/2
 horloge = pygame.time.Clock()
+
+objet = {}
+objet["CodeItem"] = 0
+objet["nbItem"] = 0
+
+objets = []
+#place dans la grille d inventaire
+objet["i"] = -1
+objet["j"] = -1
+objet["rect"] = rectInv01
+
+grilleInventaire = []
+grilleInventaire.append([0,0,0,0,0,0])
+grilleInventaire.append([0,0,0,0,0,0])
+
+largeurCaseInv = 45
+hauteurCaseInv = 60
 
 #Initialisation du tableau de l'eau
 
@@ -199,7 +220,26 @@ grilletable.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0])
 largeurcaseTable = 65
 hauteurcaseTable = 60
 
+def getReward(nbItem,CodeItem):
+    # ajoutReussi = False
+    for i in range(len(grilleInventaire)) :
+        for j in range(len(grilleInventaire[i])) :
+            if grilleInventaire[i][j] == 0 :
+                grilleInventaire[i][j] = CodeItem
+                objet["nbItem"] = nbItem
+                # nbItem -= 1
+                objet["CodeItem"] = CodeItem
+                objets.append(objet)
 
+            # if nbItem == 0:
+            #     ajoutReussi = True
+                return
+    # Chat = 'Vous avez besoin de plus de place !'
+    # return
+
+
+
+Heal = 0
 Chat = ''
 chatcd = 20
 continuer=1
@@ -209,6 +249,7 @@ cdinv = 20
 CurrentWindow = 'Chat'
 hpBarMax = 200
 hp = 200
+hpHealed = 0
 while continuer:
     horloge.tick(30)
     timer+=1
@@ -218,7 +259,7 @@ while continuer:
 #Zone test ____________________________________________________________________
     if touches[pygame.K_F1] and hp > 0 :
         hp -= 1
-    print(str(hp))
+
 # Deplacements du perso
     if touches[pygame.K_UP] :
         if timer%5==0 :
@@ -271,6 +312,29 @@ while continuer:
         if (rectIconeChat).collidepoint(pygame.mouse.get_pos()):
             CurrentWindow = 'Chat'
             cdinv = 0
+#Utilisation potion
+    tempTab = []
+    if pygame.mouse.get_pressed() == (True,False,False):
+        if (objet["rect"]).collidepoint(pygame.mouse.get_pos()):
+            print(str(hp))
+            done = False
+            for objet in objets :
+                if not(done) and objet["CodeItem"] == 1 and objet["nbItem"] > 0 :
+                    Heal = 50
+                    done = True
+                    grilleInventaire[objet["i"]][objet["j"]] = 0
+                    objet["nbItem"] -= 1
+                if objet["nbItem"] > 0 :
+                    tempTab.append(objet)
+            objets = tempTab
+
+    if Heal > 0 :
+        Heal -= 1
+        # hpHealed = 50
+        # if hpHealed > 0 :
+        hpHealed-=1
+        if hp < 200:
+            hp = hp+1
     # print(str(cdinv))
 
     if touches[pygame.K_RCTRL] and CurrentWindow == 'Bag' and cdinv == 20:
@@ -444,6 +508,7 @@ while continuer:
                 if touches[pygame.K_RETURN] and perso["rect"].colliderect(rectCarquois) :
                     RangerQuest = 1
                     grilledecors[p][o] = 0
+                    getReward(1,2)
 
     for t in range(len(grilletable)) :
         for t1 in range(len(grilletable[t])) :
@@ -467,6 +532,8 @@ while continuer:
                 rectTable4.x = t1*largeurcaseTable
                 rectTable4.y = t*largeurcaseTable
                 fenetre.blit(imagefish02, rectTable4)
+
+
 
     if touches[pygame.K_RETURN] and perso["rect"].colliderect(rectDecors19) :
             RanChat = random.randint(1,10)
@@ -524,7 +591,9 @@ n'est-ce pas ?"""
         if RangerQuest == 1:
             chatcd = 0
             Chat = """Merci !!! Tu viens de sauver plus
-de vies que tu ne l'imagines..."""
+de vies que tu ne l'imagines...
+Vous obtenez 1 potion de santé"""
+            getReward(1,1)
             RangerQuest = 2
         else:
             if RanChat == 1 and chatcd > 20 :
@@ -597,7 +666,36 @@ de vies que tu ne l'imagines..."""
         fenetre.blit(imageInventory, rectInventory)
         fenetre.blit(imageIconeChat, rectIconeChat)
 
+        for i in range(len(grilleInventaire)) :
+            for j in range(len(grilleInventaire[i])) :
+                if grilleInventaire[i][j] == 1 :
+                    for objet in objets :
+                        if objet["CodeItem"] == 1:
 
+                            objet["rect"] = imageHealthPot01.get_rect()
+                            objet["i"] = i
+                            objet["j"] = j
+                            objet["rect"].x = 10+(j*largeurCaseInv)
+                            objet["rect"].y = (rectInventory.y+20)+(i*hauteurCaseInv)
+                            fenetre.blit(imageHealthPot01, objet["rect"])
+                # elif grilleInventaire[i][j] == 2 :
+                #     for objet in objets :
+                #         if objet["CodeItem"] == 2:
+                #             print(str(grilleInventaire[0][0]))
+                #
+                #             objet["rect"] = imageCarquois.get_rect()
+                #             objet["i"] = i
+                #             objet["j"] = j
+                #             objet["rect"].x = 10+(j*largeurCaseInv)
+                #             objet["rect"].y = (rectInventory.y+20)+(i*hauteurCaseInv)
+                #             fenetre.blit(imageCarquois, objet["rect"])
+                elif grilleInventaire[i][j] == 2 :
+                    rectCarquois = imageCarquois.get_rect()
+                    objet["i"] = i
+                    objet["j"] = j
+                    rectCarquois.x = 10+(j*largeurCaseInv)
+                    rectCarquois.y = (rectInventory.y+20)+(i*hauteurCaseInv)
+                    fenetre.blit(imageCarquois, rectCarquois)
 #Health Bar contour
     pygame.draw.rect(fenetre, (200, 0,255), pygame.Rect(largeur-233, hauteur-42, hpBarMax+4, 14),4)
     #HealthBar
