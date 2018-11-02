@@ -198,6 +198,8 @@ grilletable.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0])
 
 largeurcaseTable = 65
 hauteurcaseTable = 60
+
+
 Chat = ''
 chatcd = 20
 continuer=1
@@ -205,17 +207,18 @@ timer=1;
 RangerQuest = 0
 cdinv = 20
 CurrentWindow = 'Chat'
+hpBarMax = 200
+hp = 200
 while continuer:
     horloge.tick(30)
     timer+=1
-    touches = pygame.key.get_pressed();
-
+    touches = pygame.key.get_pressed()
     if touches[pygame.K_ESCAPE] :
         continuer=0
 #Zone test ____________________________________________________________________
-
-
-
+    if touches[pygame.K_F1] and hp > 0 :
+        hp -= 1
+    print(str(hp))
 # Deplacements du perso
     if touches[pygame.K_UP] :
         if timer%5==0 :
@@ -593,6 +596,12 @@ de vies que tu ne l'imagines..."""
         rectIconeChat.y = rectInventory.y+30
         fenetre.blit(imageInventory, rectInventory)
         fenetre.blit(imageIconeChat, rectIconeChat)
+
+
+#Health Bar contour
+    pygame.draw.rect(fenetre, (200, 0,255), pygame.Rect(largeur-233, hauteur-42, hpBarMax+4, 14),4)
+    #HealthBar
+    pygame.draw.rect(fenetre, (255, 0, 0), pygame.Rect(largeur-230, hauteur-40, hp, 10))
     pygame.display.flip()
 
     for event in pygame.event.get():
