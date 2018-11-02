@@ -257,6 +257,9 @@ while continuer:
             if not(grillePlateforme[int((perso["rect"].y)/hauteurCase)+1][int((perso["rect"].x-6)/largeurCase)]==0) :
                 perso["rect"].x-=5
         #else: perso["rect"].x=perso["rect"].x
+
+
+#Changement fenetre chat/Inventory
     if CurrentWindow == 'Chat' and cdinv == 20 and pygame.mouse.get_pressed() == (True,False,False):
         if (rectIconeBag).collidepoint(pygame.mouse.get_pos()):
             CurrentWindow = 'Bag'
@@ -265,9 +268,18 @@ while continuer:
         if (rectIconeChat).collidepoint(pygame.mouse.get_pos()):
             CurrentWindow = 'Chat'
             cdinv = 0
-    print(str(cdinv))
+    # print(str(cdinv))
+
+    if touches[pygame.K_RCTRL] and CurrentWindow == 'Bag' and cdinv == 20:
+        CurrentWindow = 'Chat'
+        cdinv = 0
+    elif touches[pygame.K_RCTRL] and CurrentWindow == 'Chat' and cdinv == 20:
+        CurrentWindow = 'Bag'
+        cdinv = 0
+
     if cdinv < 20 :
         cdinv+=1
+
 # On Attribut un chiffre à une image qu'on placera dans une case dans la grille initialisé ci-dessus
 
     #EAU
