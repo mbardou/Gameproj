@@ -210,7 +210,7 @@ while continuer:
         if timer%5==0 :
             ianime = (ianime+1)%len(imagesPerso["up"])
             imagePerso = imagesPerso["up"][ianime]
-        if not(grillePlateforme[int((perso["rect"].y)/hauteurCase)][int((perso["rect"].x)/largeurCase)]==0) :
+        if not(grillePlateforme[int((perso["rect"].y+HauteurPerso/2)/hauteurCase)][int((perso["rect"].x)/largeurCase)]==0) :
             perso["rect"].y-=5
         #else: perso["rect"].y=perso["rect"].y
 
@@ -227,16 +227,24 @@ while continuer:
         if timer%5==0 :
             ianime = (ianime+1)%len(imagesPerso["right"])
             imagePerso = imagesPerso["right"][ianime]
-        if not(grillePlateforme[int((perso["rect"].y)/hauteurCase)][int((perso["rect"].x+LargeurPerso)/largeurCase)]==0) :
-            perso["rect"].x+=5
+        if int(perso["rect"].y) > int(hauteur/2) :
+            if not(grillePlateforme[int((perso["rect"].y)/hauteurCase)][int((perso["rect"].x+LargeurPerso)/largeurCase)]==0) :
+                perso["rect"].x+=5
+        else:
+            if not(grillePlateforme[int((perso["rect"].y)/hauteurCase)+1][int((perso["rect"].x+LargeurPerso)/largeurCase)]==0) :
+                perso["rect"].x+=5
         #else: perso["rect"].x=perso["rect"].x
 
     if touches[pygame.K_LEFT] :
         if timer%5==0 :
             ianime = (ianime+1)%len(imagesPerso["left"])
             imagePerso = imagesPerso["left"][ianime]
-        if not(grillePlateforme[int((perso["rect"].y)/hauteurCase)][int((perso["rect"].x-2)/largeurCase)]==0) :
-            perso["rect"].x-=5
+        if int(perso["rect"].y) > int(hauteur/2) :
+            if not(grillePlateforme[int((perso["rect"].y)/hauteurCase)][int((perso["rect"].x-6)/largeurCase)]==0) :
+                perso["rect"].x-=5
+        else:
+            if not(grillePlateforme[int((perso["rect"].y)/hauteurCase)+1][int((perso["rect"].x-6)/largeurCase)]==0) :
+                perso["rect"].x-=5
         #else: perso["rect"].x=perso["rect"].x
 
 
