@@ -2,7 +2,7 @@ import os
 import sys, math, random, pygame
 from pygame.locals import *
 from pygame import *
-
+import random
 pygame.init()
 
 largeur = 1024
@@ -47,6 +47,7 @@ imagePnj01 = pygame.image.load("pictures/pnj1.png").convert_alpha()
 imagePnj02 = pygame.image.load("pictures/pnj2.png").convert_alpha()
 imagePnj03 = pygame.image.load("pictures/pnj3.png").convert_alpha()
 imagePnj04 = pygame.image.load("pictures/pnj4.png").convert_alpha()
+imageCarquois = pygame.image.load("pictures/Carquois.png").convert_alpha()
 #Dico d'images perso_____________________________________________________________________
 imagesPerso = {}
 
@@ -159,6 +160,7 @@ hauteurCase = 60
 #Initialisation du tableau des décors
 # 1 puit 2bigboat 3 boat1 4 boat2 5 horloge 6 market1 7 market2 8 wheatbag1 9 rondin 10 banc 11 lampe 12 tonneau
 # 13 Forge 14 Greatmarket 15 barrier 19 pnj1 20 pnj2 21 pnj3 22 pnj4
+
 grilledecors = []
 grilledecors.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0])
 grilledecors.append([0,0,0,0,3,0,0,0,0,0,0,0,0,0])
@@ -166,13 +168,11 @@ grilledecors.append([0,0,0,0,0,0,0,0,0,2,0,0,0,0])
 grilledecors.append([0,0,0,0,11,0,0,14,0,0,11,0,11,0])
 grilledecors.append([0,0,0,0,18,0,0,0,20,10,8,10,0,0])
 grilledecors.append([0,0,0,0,8,0,0,0,5,0,0,0,19,0])
-grilledecors.append([0,0,0,0,0,0,0,13,0,0,0,6,0,0])
+grilledecors.append([0,0,0,0,0,'C',0,13,0,0,0,6,0,0])
 grilledecors.append([0,0,0,0,22,0,21,0,0,0,0,7,0,0])
 grilledecors.append([0,0,0,0,11,16,16,0,11,0,0,0,0,0])
 grilledecors.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0])
 grilledecors.append([0,0,0,0,0,0,0,4,0,0,0,0,0,0])
-
-
 
 largeurcaseDecors = 65
 hauteurcaseDecors = 60
@@ -192,8 +192,10 @@ grilletable.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0])
 largeurcaseTable = 65
 hauteurcaseTable = 60
 Chat = ''
+chatcd = 20
 continuer=1
 timer=1;
+RangerQuest = 0
 while continuer:
     horloge.tick(30)
     timer+=1
@@ -287,6 +289,7 @@ while continuer:
                 rectBidon5.x = j*largeurCase
                 rectBidon5.y = i*hauteurCase
                 fenetre.blit(imagePontvertical01,rectBidon5)
+            fenetre.blit(imagePerso, perso["rect"])
     #DECORS
     for p in range(len(grilledecors)) :
         for o in range(len(grilledecors[p])) :
@@ -400,6 +403,14 @@ while continuer:
                 rectDecors22.x = o*largeurcaseDecors
                 rectDecors22.y = p*largeurcaseDecors
                 fenetre.blit(imagePnj04, rectDecors22)
+            if grilledecors[p][o] == 'C' :
+                rectCarquois = imageCarquois.get_rect()
+                rectCarquois.x = o*largeurcaseDecors
+                rectCarquois.y = p*largeurcaseDecors
+                fenetre.blit(imageCarquois, rectCarquois)
+                if touches[pygame.K_RETURN] and perso["rect"].colliderect(rectCarquois) :
+                    RangerQuest = 1
+                    grilledecors[p][o] = 0
 
     for t in range(len(grilletable)) :
         for t1 in range(len(grilletable[t])) :
@@ -423,20 +434,135 @@ while continuer:
                 rectTable4.x = t1*largeurcaseTable
                 rectTable4.y = t*largeurcaseTable
                 fenetre.blit(imagefish02, rectTable4)
-    fenetre.blit(imagePerso, perso["rect"])
-
 
     if touches[pygame.K_RETURN] and perso["rect"].colliderect(rectDecors19) :
-        Chat = 'Salut, bienvenu a mon échoppe !'
+            RanChat = random.randint(1,10)
+            if RanChat == 1 and chatcd > 20 :
+                Chat = """bienvenue a mon échoppe !"""
+                chatcd = 0
+            elif RanChat == 2 and chatcd > 20 :
+                Chat = """fruits & légumes frais ! !"""
+                chatcd = 0
+            elif RanChat == 3 and chatcd > 20 :
+                Chat = """Le maire du bourg est étrange
+en ce moment... Tu devrais
+peut-êtreparler avec sa fille."""
+                chatcd = 0
+            elif RanChat == 4 and chatcd > 20 :
+                Chat = """La mer est calme, Les légumes
+arrivent encore frais en
+ce moment ! Pourvu que ça
+dure..."""
+                chatcd = 0
+            elif RanChat == 5 and chatcd > 20 :
+                Chat = """Les DJ ont le sens de l'esthétique
+n'est-ce pas ?"""
+                chatcd = 0
+            elif RanChat == 6 and chatcd > 20 :
+                Chat = """Mes tomates sont bien rouges !
+moins de 10% de peinture
+garanti !"""
+                chatcd = 0
+            elif RanChat == 7 and chatcd > 20 :
+                Chat = """Si on m'avait prévenue que de
+tenir une échope dans un jeu
+était si difficile..."""
+                chatcd = 0
+            elif RanChat == 8 and chatcd > 20 :
+                Chat = """Avant, j'étais décoratrice
+d'intérieur. Puis j'ai
+reçu une flèche dans
+le genou..."""
+                chatcd = 0
+            elif RanChat == 9 and chatcd > 20 :
+                Chat = """Pssst... N'achètes pas de
+poisson a ce type là-bas...
+soit sa marchandise n'est pas
+fraîche, soit c'est le marchand
+..."""
+                chatcd = 0
+            elif RanChat == 10 and chatcd > 20 :
+                Chat = """Tu est nouveau dans ce bourg
+n'est-ce pas ?"""
+                chatcd = 0
+
     elif touches[pygame.K_RETURN] and perso["rect"].colliderect(rectDecors20) :
-        Chat = 'Hey, tu viens chasser avec moi ?'
+        RanChat = random.randint(1,10)
+        if RangerQuest == 1:
+            chatcd = 0
+            Chat = """Merci !!! Tu viens de sauver plus
+de vies que tu ne l'imagines..."""
+            RangerQuest = 2
+        else:
+            if RanChat == 1 and chatcd > 20 :
+                Chat = """..."""
+                chatcd = 0
+            elif RanChat == 2 and chatcd > 20 :
+                Chat = """Tu le sens aussi, n'est-ce pas ?
+Quelquechose flotte dans l'air..."""
+                chatcd = 0
+            elif RanChat == 3 and chatcd > 20 :
+                Chat = """ne juge pas sur les apparences,
+la mer a beau être calme,
+elle est toujours prête a se
+déchainer"""
+                chatcd = 0
+            elif RanChat == 4 and chatcd > 20 :
+                Chat = """J'espère pouvoir enfin
+me reposer, avant que les choses
+ne dégénèrent encore..."""
+                chatcd = 0
+            elif RanChat == 5 and chatcd > 20 :
+                Chat = """Je viens d'un endroit lointain;
+des forêts luxurieuses y
+couvrent les plaines gelées...
+Ah, ma maison, ma famille..."""
+                chatcd = 0
+            elif RanChat == 6 and chatcd > 20 :
+                Chat = """Profites du calme de ce bourg
+tant que tu le peux..."""
+                chatcd = 0
+            elif RanChat == 7 and chatcd > 20 :
+                Chat = """..."""
+                chatcd = 0
+            elif RanChat == 8 and chatcd > 20 :
+                Chat = """Hey, toi, tu pourrais me ramener
+mon carquois ? je l'ai oublié aux
+abords de la cité alors que je
+campais !"""
+                chatcd = 0
+            elif RanChat == 9 and chatcd > 20 :
+                Chat = """Le ciel est dégagé aujourd'hui.
+Au moins, nous vivrons un jour
+de plus."""
+                chatcd = 0
+            elif RanChat == 10 and chatcd > 20 and RangerQuest >= 1:
+                Chat = """Merci !!! Tu viens de sauver plus
+de vies que tu ne l'imagines..."""
+                chatcd = 0
     elif touches[pygame.K_RETURN] and perso["rect"].colliderect(rectDecors21) :
         Chat = 'Je connais une bonne taverne !'
     elif touches[pygame.K_RETURN] and perso["rect"].colliderect(rectDecors22) :
         Chat = 'bonjour petite! une friandise ?'
+
+
+    if chatcd < 21 :
+        chatcd +=1
+
     label = fontChat.render(Chat, 1, (255,255,255))
     fenetre.blit(imageChatbox, rectChatbox)
-    fenetre.blit(label, (rectChatbox.x+10, rectChatbox.y+50))
+    x,y = rectChatbox.x+10,rectChatbox.y+20
+    for ligne in Chat.splitlines():
+         x,y = fenetre.blit(fontChat.render(ligne,1,(255,255,255)),(x,y)).bottomleft
+        # fenetre.blit(label, (rectChatbox.x+10, rectChatbox.y+50))
+
+    # phrase = """salut,
+    # je suis une bulle,
+    # je fais parler les personnages."""
+    # x,y = rectChatbox.topleft
+    # for ligne in phrase.splitlines():
+    #      x,y = fenetre.blit(fontChat.render(ligne,1,(255,255,255)),(x,y)).bottomleft
+
     pygame.display.flip()
 
     for event in pygame.event.get():
