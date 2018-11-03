@@ -4,16 +4,16 @@ from pygame.locals import *
 from pygame import *
 import random
 pygame.init()
-
 largeur = 1920
 hauteur = 1080
+modeecran = 0
+cdecran = 50
 LargeurPerso = 30
 HauteurPerso = 50
 fontChat = pygame.font.SysFont("monospace", 15)
 # fenetre=pygame.display.set_mode((largeur,hauteur))
-fenetre=pygame.display.set_mode((largeur,hauteur), FULLSCREEN)
 # fenetre=pygame.display.set_mode((largeur,hauteur), RESIZABLE)
-
+fenetre=pygame.display.set_mode((largeur,hauteur), FULLSCREEN)
 rectFenetre = fenetre.get_rect()
 imageChatbox = pygame.image.load("pictures/FenetreChat1.png").convert_alpha()
 rectChatbox = imageChatbox.get_rect()
@@ -284,6 +284,20 @@ while continuer:
     horloge.tick(30)
     timer+=1
     touches = pygame.key.get_pressed()
+    if touches[pygame.K_TAB] and cdecran ==50 :
+        cdcdecran =0
+        modeecran = (modeecran + 1)%2
+        if modeecran == 0 :
+            fenetre=pygame.display.set_mode((1024,768), RESIZABLE)
+        else :
+            fenetre=pygame.display.set_mode((largeur,hauteur), FULLSCREEN)
+
+
+
+
+
+    if cdecran<50 :
+        cdecran+=1
     if touches[pygame.K_ESCAPE] :
         continuer=0
 #Zone test ____________________________________________________________________
@@ -562,7 +576,7 @@ while continuer:
                 rectTable4.x = t1*largeurcaseTable
                 rectTable4.y = t*largeurcaseTable
                 fenetre.blit(imagefish02, rectTable4)
-
+    # if rectCarquois.get_rect().collidepoint(pygame.mouse.get_pos()) and :
 
 
     if touches[pygame.K_RETURN] and perso["rect"].colliderect(rectDecors19) :
@@ -727,9 +741,9 @@ de vies que tu ne l'imagines..."""
                     rectCarquois.y = (rectInventory.y+20)+(i*hauteurCaseInv)
                     fenetre.blit(imageCarquois, rectCarquois)
 #Health Bar contour
-    pygame.draw.rect(fenetre, (200, 0,255), pygame.Rect(largeur-233, hauteur-42, hpBarMax+4, 14),4)
+    pygame.draw.rect(fenetre, (200, 0,255), pygame.Rect(largeur-233, hauteur-(hauteur-35), hpBarMax+4, 14),4)
     #HealthBar
-    pygame.draw.rect(fenetre, (255, 0, 0), pygame.Rect(largeur-230, hauteur-40, hp, 10))
+    pygame.draw.rect(fenetre, (255, 0, 0), pygame.Rect(largeur-230, hauteur-(hauteur-38), hp, 10))
     pygame.display.flip()
 
     for event in pygame.event.get():
