@@ -4,14 +4,16 @@ from pygame.locals import *
 from pygame import *
 import random
 pygame.init()
-
 largeur = 1920
 hauteur = 1080
+modeecran = 0
+cdecran = 50
 LargeurPerso = 30
 HauteurPerso = 50
 fontChat = pygame.font.SysFont("monospace", 15)
 # fenetre=pygame.display.set_mode((largeur,hauteur))
-fenetre=pygame.display.set_mode((largeur,hauteur), RESIZABLE)
+# fenetre=pygame.display.set_mode((largeur,hauteur), RESIZABLE)
+fenetre=pygame.display.set_mode((largeur,hauteur), FULLSCREEN)
 rectFenetre = fenetre.get_rect()
 imageChatbox = pygame.image.load("pictures/FenetreChat1.png").convert_alpha()
 rectChatbox = imageChatbox.get_rect()
@@ -276,6 +278,20 @@ while continuer:
     horloge.tick(30)
     timer+=1
     touches = pygame.key.get_pressed()
+    if touches[pygame.K_TAB] and cdecran ==50 :
+        cdcdecran =0
+        modeecran = (modeecran + 1)%2
+        if modeecran == 0 :
+            fenetre=pygame.display.set_mode((1024,768), RESIZABLE)
+        else :
+            fenetre=pygame.display.set_mode((largeur,hauteur), FULLSCREEN)
+
+
+
+
+
+    if cdecran<50 :
+        cdecran+=1
     if touches[pygame.K_ESCAPE] :
         continuer=0
 #Zone test ____________________________________________________________________
@@ -554,7 +570,7 @@ while continuer:
                 rectTable4.x = t1*largeurcaseTable
                 rectTable4.y = t*largeurcaseTable
                 fenetre.blit(imagefish02, rectTable4)
-
+    # if rectCarquois.get_rect().collidepoint(pygame.mouse.get_pos()) and :
 
 
     if touches[pygame.K_RETURN] and perso["rect"].colliderect(rectDecors19) :
