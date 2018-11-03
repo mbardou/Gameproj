@@ -719,9 +719,9 @@ de vies que tu ne l'imagines..."""
                     rectCarquois.y = (rectInventory.y+20)+(i*hauteurCaseInv)
                     fenetre.blit(imageCarquois, rectCarquois)
 #Health Bar contour
-    pygame.draw.rect(fenetre, (200, 0,255), pygame.Rect(largeur-233, hauteur-42, hpBarMax+4, 14),4)
+    pygame.draw.rect(fenetre, (200, 0,255), pygame.Rect(largeur-233, hauteur-(hauteur-35), hpBarMax+4, 14),4)
     #HealthBar
-    pygame.draw.rect(fenetre, (255, 0, 0), pygame.Rect(largeur-230, hauteur-40, hp, 10))
+    pygame.draw.rect(fenetre, (255, 0, 0), pygame.Rect(largeur-230, hauteur-(hauteur-38), hp, 10))
     pygame.display.flip()
 
     for event in pygame.event.get():
