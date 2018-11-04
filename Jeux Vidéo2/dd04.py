@@ -149,15 +149,28 @@ blob["pv"] = pvblob
 blob["rect"] = rectBlob
 blob["upstairs"] = 0
 blob["nbBlob"] = 2
+blob["vitesse"] = 4
 
 
-
+# rectBlob2 = imageblob.get_rect()
+# blob2 = {}
+#
+#
+# blob2["pv"] = pvblob
+# blob2["rect"] = rectBlob2
+# blob2["upstairs"] = 0
+# blob2["nbBlob"] = 2
+# blob2["vitesse"] = 4
 
 #_______________________________________________________________________________
 # creation d'un rectangle pour positioner l'image du personnage
 blob["rect"].x = 240
 blob["rect"].y = 120
 blobs.append(blob)
+
+# blob2["rect"].x = 500
+# blob2["rect"].y = 120
+# blobs.append(blob2)
 
 
 
@@ -243,7 +256,8 @@ dedouble = 0
 newblobx = 0
 newbloby = 0
 newnbBlob = 0
-
+rectBlob01 = imageblob.get_rect()
+rectBlob02 = imageblob.get_rect()
 while continuer:
     # print("je peux tirer ? "+str(perso["canshoot"]))
 
@@ -264,15 +278,15 @@ while continuer:
 #DEPLACE BLOB____________________________________________________________
 
 
-    for blob in blobs :
-        if rectPerso.x > blob["rect"].x:
-            blob["rect"].x += 5
-        if rectPerso.x < blob["rect"].x :
-            blob["rect"].x -= 5
-        if rectPerso.y > blob["rect"].y:
-            blob["rect"].y += 5
-        if rectPerso.y < blob["rect"].y:
-            blob["rect"].y -= 5
+    for b in blobs :
+        if rectPerso.x > b["rect"].x:
+            b["rect"].x += b["vitesse"]
+        if rectPerso.x < b["rect"].x :
+            b["rect"].x -= b["vitesse"]
+        if rectPerso.y > b["rect"].y:
+            b["rect"].y += b["vitesse"]
+        if rectPerso.y < b["rect"].y:
+            b["rect"].y -= b["vitesse"]
 
 
 
@@ -476,30 +490,38 @@ while continuer:
                     blob["pv"] -= 10
                     t["canhit"] = False
     temptablob = []
-    for blob in blobs :
-        if blob["pv"] <= 0 :
-            blob["nbBlob"] -= 1
-            if blob["nbBlob"] >=1:
+    for b in blobs :
+        if b["pv"] <= 0 :
+            b["nbBlob"] -= 1
+            if b["nbBlob"] >=1:
                 dedouble = 1
 
     if dedouble == 1 :
-        for blob in blobs:
-            if blob["pv"] <= 0  and blob["nbBlob"] >= 1:
-                newblobx = blob["rect"].x + 20
-                newbloby = blob["rect"].y + 20
-                newnbBlob = blob["nbBlob"]
-        blob["rect"].x = newblobx
-        blob["rect"].y = newbloby
-        blob["nbBlob"] = newnbBlob
-        blob["pv"] = 50
-        temptablob.append(blob)
+        for b in blobs:
+            if b["pv"] <= 0  and b["nbBlob"] >= 1:
+                newblobx = b["rect"].x + 20
+                newbloby = b["rect"].y + 20
+                newnbBlob = b["nbBlob"]
+        b01 = {}
+        b01["upstairs"] = 0
+        b01["rect"] = rectBlob01
+        b01["rect"].x = newblobx
+        b01["rect"].y = newbloby
+        b01["nbBlob"] = newnbBlob
+        b01["pv"] = 80
+        b01["vitesse"] = 2
+        blobs.append(b01)
 
-        blob["rect"].x = newblobx -30
-        blob["rect"].y = newbloby -30
-        blob["nbBlob"] = newnbBlob
-        blob["pv"] = 50
-        temptablob.append(blob)
-        
+        b02 = {}
+        b02["upstairs"] = 0
+        b02["rect"] = rectBlob02
+        b02["rect"].x = newblobx-30
+        b02["rect"].y = newbloby-30
+        b02["nbBlob"] = newnbBlob
+        b02["pv"] = 40
+        b02["vitesse"] = 6
+        blobs.append(b02)
+
         print(str(blobs))
 
     dedouble = 0
