@@ -15,6 +15,8 @@ rectFenetre = fenetre.get_rect()
 
 score_font = pygame.font.Font(None, 30)
 couleur_font = (255,0,0)
+
+fontChat = pygame.font.SysFont("monospace", 15)
 # lecture de l'image du perso
 #Dico des images---------------------------------------------------------
 #boneproj---------------------------------------------------------------
@@ -121,6 +123,23 @@ imagebone = pygame.image.load("boneframes/femur.png").convert_alpha()
 imageGrille = pygame.image.load("gridpics/GrilleComplete.png").convert_alpha()
 imageHacheDeZoo = pygame.image.load("HacheDeZoo2.png").convert_alpha()
 imageTree = pygame.image.load("tree1.png").convert_alpha()
+
+#images inv chat_____________________________________________________________________
+imageIconeBag = pygame.image.load("pictures/BagIcon.png").convert_alpha()
+rectIconeBag = imageIconeBag.get_rect()
+imageInventory = pygame.image.load("pictures/Inventory.png").convert_alpha()
+rectInventory = imageInventory.get_rect()
+rectInventory.y = 624
+imageIconeChat = pygame.image.load("pictures/ChatIcon.png").convert_alpha()
+rectIconeChat = imageIconeChat.get_rect()
+imageHealthPot01 = pygame.image.load("pictures/pt01.png").convert_alpha()
+rectInv01 = imageHealthPot01.get_rect()
+
+imageChatbox = pygame.image.load("pictures/FenetreChat1.png").convert_alpha()
+rectChatbox = imageChatbox.get_rect()
+rectChatbox.x = 0
+rectChatbox.y = 624
+
 ianimeblob = 0
 ianime = 0
 ianimebone = 0
@@ -230,6 +249,39 @@ score_rect.bottomright = rectFenetre.bottomright
 # servira a regler l'horloge du jeu
 horloge = pygame.time.Clock()
 
+
+objet = {}
+objet["CodeItem"] = 0
+objet["nbItem"] = 0
+
+objets = []
+#place dans la grille d inventaire
+objet["i"] = -1
+objet["j"] = -1
+objet["rect"] = rectInv01
+
+grilleInventaire = []
+grilleInventaire.append([0,0,0,0,0,0])
+grilleInventaire.append([0,0,0,0,0,0])
+
+largeurCaseInv = 45
+hauteurCaseInv = 60
+#fct GET REWARD
+def getReward(nbItem,CodeItem):
+    # ajoutReussi = False
+    for i in range(len(grilleInventaire)) :
+        for j in range(len(grilleInventaire[i])) :
+            if grilleInventaire[i][j] == 0 :
+                grilleInventaire[i][j] = CodeItem
+                objet["nbItem"] = nbItem
+                # nbItem -= 1
+                objet["CodeItem"] = CodeItem
+                objets.append(objet)
+
+            # if nbItem == 0:
+            #     ajoutReussi = True
+                return
+
 # la boucle infinie dans laquelle on reste coince
 i=1
 continuer=1
@@ -258,6 +310,21 @@ newbloby = 0
 newnbBlob = 0
 rectBlob01 = imageblob.get_rect()
 rectBlob02 = imageblob.get_rect()
+#ajoute 2 potions a l inventaire (pour tester)
+donnepotion = 0
+#compte les Hp pour la potion
+Heal = 0
+#initialise str a mettre dans chat
+Chat = ''
+#switch fenetre
+CurrentWindow = 'Chat'
+#cd chat
+chatcd = 20
+#compte hp pour potion
+hpHealed = 0
+#cd inventaire
+cdinv = 20
+cdpot = 50
 while continuer:
     # print("je peux tirer ? "+str(perso["canshoot"]))
 
@@ -363,7 +430,56 @@ while continuer:
                 perso["rect"].x = perso["rect"].x + 5
             else:
                 perso["rect"].x = perso["rect"].x + 12
+    #Changement fenetre chat/Inventory__________________________________________
+    if CurrentWindow == 'Chat' and cdinv == 20 and pygame.mouse.get_pressed() == (True,False,False):
+        if (rectIconeBag).collidepoint(pygame.mouse.get_pos()):
+            CurrentWindow = 'Bag'
+            cdinv = 0
+    elif CurrentWindow == 'Bag' and cdinv == 20 and pygame.mouse.get_pressed() == (True,False,False):
+        if (rectIconeChat).collidepoint(pygame.mouse.get_pos()):
+            CurrentWindow = 'Chat'
+            cdinv = 0
 
+
+#Utilisation potion_____________________________________________________________
+    tempTab = []
+    if pygame.mouse.get_pressed() == (True,False,False)and cdpot == 50:
+        if (objet["rect"]).collidepoint(pygame.mouse.get_pos()):
+            cdpot = 0
+            done = False
+            for objet in objets :
+                if not(done) and objet["CodeItem"] == 1 and objet["nbItem"] > 0 :
+                    Heal = 50
+                    done = True
+                    # grilleInventaire[objet["i"]][objet["j"]] = 0
+                    objet["nbItem"] -= 1
+                    print(str(objet["nbItem"]))
+                if objet["nbItem"] > 0 :
+                    tempTab.append(objet)
+                else:
+                    grilleInventaire[objet["i"]][objet["j"]] = 0
+            objets = tempTab
+
+    if Heal > 0 :
+        Heal -= 1
+        # hpHealed = 50
+        # if hpHealed > 0 :
+        hpHealed-=1
+        if hp < 200:
+            hp = hp+1
+    if cdpot < 50 :
+        cdpot +=1
+#-----------------------CD INV--------------------------------------------------
+    if touches[pygame.K_RCTRL] and CurrentWindow == 'Bag' and cdinv == 20:
+        CurrentWindow = 'Chat'
+        cdinv = 0
+    elif touches[pygame.K_RCTRL] and CurrentWindow == 'Chat' and cdinv == 20:
+        CurrentWindow = 'Bag'
+        cdinv = 0
+
+    if cdinv < 20 :
+        cdinv+=1
+#_______________________________________________________________________________
     # elif touches[pygame.K_SPACE] :
     #     #Affichage de l'épée
     #     fenetre.blit(imageSword, rectSword)
@@ -609,6 +725,11 @@ while continuer:
             if t["direction"] > -1:
                 fenetre.blit(imagebone, t["rect"])
 
+#AJOUT POTIONS POUR TESTER !!!_______________________________________________________
+    if touches[pygame.K_t] and donnepotion == 0:
+        getReward(2,1)
+        donnepotion = 1
+
 
 #plongeon
     # if touches[pygame.K_c]:
@@ -647,6 +768,57 @@ while continuer:
     # rafraichissement
     fenetre.blit(imageTree, rectTree)
     fenetre.blit(score_surface, score_rect)
+
+    #______________________________INV+CHAT_____________________________________
+    if CurrentWindow == 'Chat':
+        rectIconeBag.x = rectChatbox.x+274
+        rectIconeBag.y = rectChatbox.y+30
+        label = fontChat.render(Chat, 1, (255,255,255))
+        fenetre.blit(imageChatbox, rectChatbox)
+        x,y = rectChatbox.x+10,rectChatbox.y+20
+        fenetre.blit(imageIconeBag, rectIconeBag)
+        for ligne in Chat.splitlines():
+            x,y = fenetre.blit(fontChat.render(ligne,1,(255,255,255)),(x,y)).bottomleft
+            # fenetre.blit(label, (rectChatbox.x+10, rectChatbox.y+50))
+    elif CurrentWindow == 'Bag':
+        rectIconeChat.x = rectInventory.x+274
+        rectIconeChat.y = rectInventory.y+30
+        fenetre.blit(imageInventory, rectInventory)
+        fenetre.blit(imageIconeChat, rectIconeChat)
+
+        for s in range(len(grilleInventaire)) :
+            for j in range(len(grilleInventaire[s])) :
+                if grilleInventaire[s][j] == 1 :
+                    for objet in objets :
+                        if objet["CodeItem"] == 1:
+
+                            objet["rect"] = imageHealthPot01.get_rect()
+                            objet["i"] = s
+                            objet["j"] = j
+                            objet["rect"].x = 10+(j*largeurCaseInv)
+                            objet["rect"].y = (rectInventory.y+20)+(s*hauteurCaseInv)
+                            fenetre.blit(imageHealthPot01, objet["rect"])
+                # elif grilleInventaire[i][j] == 2 :
+                #     for objet in objets :
+                #         if objet["CodeItem"] == 2:
+                #             print(str(grilleInventaire[0][0]))
+                #
+                #             objet["rect"] = imageCarquois.get_rect()
+                #             objet["i"] = i
+                #             objet["j"] = j
+                #             objet["rect"].x = 10+(j*largeurCaseInv)
+                #             objet["rect"].y = (rectInventory.y+20)+(i*hauteurCaseInv)
+                #             fenetre.blit(imageCarquois, objet["rect"])
+                elif grilleInventaire[s][j] == 2 :
+                    rectCarquois = imageCarquois.get_rect()
+                    objet["i"] = s
+                    objet["j"] = j
+                    rectCarquois.x = 10+(j*largeurCaseInv)
+                    rectCarquois.y = (rectInventory.y+20)+(i*hauteurCaseInv)
+                    fenetre.blit(imageCarquois, rectCarquois)
+#_______________________________________________________________________________
+
+
     #Health Bar contour
     pygame.draw.rect(fenetre, (200, 0,255), pygame.Rect(largeur-233, hauteur-(hauteur-35), hpBarMax+4, 14),4)
     #HealthBar

@@ -17,8 +17,8 @@ fenetre=pygame.display.set_mode((largeur,hauteur), FULLSCREEN)
 rectFenetre = fenetre.get_rect()
 imageChatbox = pygame.image.load("pictures/FenetreChat1.png").convert_alpha()
 rectChatbox = imageChatbox.get_rect()
-rectChatbox.x = 200
-rectChatbox.y = 750
+rectChatbox.x = 0
+rectChatbox.y = (hauteur)-(rectChatbox.h)
 imageFond = pygame.image.load("pictures/eau.png").convert_alpha()
 imageFond02 = pygame.image.load("pictures/sol/solpierre9.png").convert_alpha()
 imageFond03 = pygame.image.load("pictures/sol/solterre11.png").convert_alpha()
@@ -72,7 +72,7 @@ imageIconeBag = pygame.image.load("pictures/BagIcon.png").convert_alpha()
 rectIconeBag = imageIconeBag.get_rect()
 imageInventory = pygame.image.load("pictures/Inventory.png").convert_alpha()
 rectInventory = imageInventory.get_rect()
-rectInventory.y = 624
+rectInventory.y = (hauteur)-(rectInventory.h)
 imageIconeChat = pygame.image.load("pictures/ChatIcon.png").convert_alpha()
 rectIconeChat = imageIconeChat.get_rect()
 imageHealthPot01 = pygame.image.load("pictures/pt01.png").convert_alpha()
@@ -309,8 +309,16 @@ while continuer:
         cdcdecran =0
         modeecran = (modeecran + 1)%2
         if modeecran == 0 :
-            fenetre=pygame.display.set_mode((1024,768), RESIZABLE)
+            largeur = 1024
+            hauteur = 768
+            rectInventory.y = (hauteur)-(rectInventory.h)
+            rectChatbox.y = (hauteur)-(rectChatbox.h)
+            fenetre=pygame.display.set_mode((largeur,hauteur), RESIZABLE)
         else :
+            largeur = 1920
+            hauteur = 1080
+            rectInventory.y = (hauteur)-(rectInventory.h)
+            rectChatbox.y = (hauteur)-(rectChatbox.h)
             fenetre=pygame.display.set_mode((largeur,hauteur), FULLSCREEN)
 
 
@@ -387,10 +395,11 @@ while continuer:
                 if not(done) and objet["CodeItem"] == 1 and objet["nbItem"] > 0 :
                     Heal = 50
                     done = True
-                    grilleInventaire[objet["i"]][objet["j"]] = 0
+                    # grilleInventaire[objet["i"]][objet["j"]] = 0
                     objet["nbItem"] -= 1
                 if objet["nbItem"] > 0 :
                     tempTab.append(objet)
+                else : grilleInventaire[objet["i"]][objet["j"]] = 0
             objets = tempTab
 
     if Heal > 0 :
