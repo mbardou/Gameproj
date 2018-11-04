@@ -26,6 +26,7 @@ bones = []
 bonestir = []
 tirs=[]
 blobs = []
+tirsblob = []
 
 imagesbone = {}
 
@@ -39,6 +40,13 @@ imagesbone["proj"].append(temp)
 temp = pygame.image.load("boneframes/femur04.png").convert_alpha()
 imagesbone["proj"].append(temp)
 
+imagesCGblob = {}
+
+imagesCGblob["proj"]=[]
+temp = pygame.image.load("pictures/CGblob01.png").convert_alpha()
+imagesCGblob["proj"].append(temp)
+temp = pygame.image.load("pictures/CG02.png").convert_alpha()
+imagesCGblob["proj"].append(temp)
 
 
 
@@ -67,6 +75,31 @@ temp = pygame.image.load("blobframes/idle/blob07.png").convert_alpha()
 imagesBlob["left"].append(temp)
 temp = pygame.image.load("blobframes/idle/blob08.png").convert_alpha()
 imagesBlob["left"].append(temp)
+
+
+
+
+imagesBlobf = {}
+
+imagesBlobf["left"]=[]
+imagesBlobf["right"]=[]
+
+temp = pygame.image.load("blobframes/idle/blobf01.png").convert_alpha()
+imagesBlobf["left"].append(temp)
+temp = pygame.image.load("blobframes/idle/blobf02.png").convert_alpha()
+imagesBlobf["left"].append(temp)
+temp = pygame.image.load("blobframes/idle/blobf03.png").convert_alpha()
+imagesBlobf["left"].append(temp)
+temp = pygame.image.load("blobframes/idle/blobf04.png").convert_alpha()
+imagesBlobf["left"].append(temp)
+temp = pygame.image.load("blobframes/idle/blobf05.png").convert_alpha()
+imagesBlobf["left"].append(temp)
+temp = pygame.image.load("blobframes/idle/blobf06.png").convert_alpha()
+imagesBlobf["left"].append(temp)
+temp = pygame.image.load("blobframes/idle/blobf07.png").convert_alpha()
+imagesBlobf["left"].append(temp)
+temp = pygame.image.load("blobframes/idle/blobf08.png").convert_alpha()
+imagesBlobf["left"].append(temp)
 #-------------------------------------------------------------------------------
 #animations perso---------------------------------------------------------------------
 imagesPersoH20 = {}
@@ -123,7 +156,7 @@ imagebone = pygame.image.load("boneframes/femur.png").convert_alpha()
 imageGrille = pygame.image.load("gridpics/GrilleComplete.png").convert_alpha()
 imageHacheDeZoo = pygame.image.load("HacheDeZoo2.png").convert_alpha()
 imageTree = pygame.image.load("tree1.png").convert_alpha()
-
+imageCGblob = pygame.image.load("pictures/CGblob01.png").convert_alpha()
 #images inv chat_____________________________________________________________________
 imageIconeBag = pygame.image.load("pictures/BagIcon.png").convert_alpha()
 rectIconeBag = imageIconeBag.get_rect()
@@ -139,16 +172,20 @@ imageChatbox = pygame.image.load("pictures/FenetreChat1.png").convert_alpha()
 rectChatbox = imageChatbox.get_rect()
 rectChatbox.x = 0
 rectChatbox.y = 624
-
+ianimeblobf = 0
 ianimeblob = 0
+ianimeblobCG = 0
 ianime = 0
 ianimebone = 0
+ianimeblobf = 0
 pvblob = 50
 imageblob = imagesBlob["left"][ianimeblob]
+imageblobf = imagesBlobf["left"][ianimeblobf]
 imagePerso = imagesPerso["up"][ianime]
 
 rectPerso = imagePerso.get_rect()
 rectbone = imagebone.get_rect()
+rectCGblob = imageCGblob.get_rect()
 
 perso = {}
 perso["rect"]=rectPerso
@@ -163,7 +200,7 @@ perso["cooldown"]=0
 rectBlob = imageblob.get_rect()
 blob = {}
 
-
+blob["nom"] = "Bob"
 blob["pv"] = pvblob
 blob["rect"] = rectBlob
 blob["upstairs"] = 0
@@ -281,7 +318,8 @@ def getReward(nbItem,CodeItem):
             # if nbItem == 0:
             #     ajoutReussi = True
                 return
-
+cdblob = 20
+dirblob = 0
 # la boucle infinie dans laquelle on reste coince
 i=1
 continuer=1
@@ -543,7 +581,31 @@ while continuer:
         if t["direction"] == 3:
                 t["rect"].x += - 20
 
+    for ti in tirsblob :
+        if ti["direction"] == 4:
+                ti["rect"].y -=  20
+        if ti["direction"] == 5:
+                ti["rect"].x +=  15
+                ti["rect"].y -= 15
+        if ti["direction"] == 6:
+                ti["rect"].x += 20
+        if ti["direction"] == 7:
+                ti["rect"].x +=  15
+                ti["rect"].y += 15
+        if ti["direction"] == 8:
+                ti["rect"].y += 20
+        if ti["direction"] == 9:
+                ti["rect"].x -=  15
+                ti["rect"].y += 15
+        if ti["direction"] == 10:
+                ti["rect"].x -= 20
+        if ti["direction"] == 11:
+                ti["rect"].x -=  15
+                ti["rect"].y -= 15
 
+    for t in tirsblob :
+        if t["rect"].colliderect(perso["rect"]):
+            hp-=10
 
 
 
@@ -552,6 +614,58 @@ while continuer:
         if not(t["rect"].x > 1024 or t["rect"].x < 0 or t["rect"].y > 768 or t["rect"].y<0) :
             tempTab.append(t)
     tirs = tempTab
+
+    tempTablob = []
+    for ti in tirsblob:
+        if not(ti["rect"].x > 1024 or ti["rect"].x < 0 or ti["rect"].y > 768 or ti["rect"].y<0) :
+            tempTablob.append(ti)
+    tirsblob = tempTablob
+
+
+
+
+    #Blob turret :
+    for b in blobs :
+        if  cdblob == 20 and b["nom"] == "fürher":
+            if ((perso["rect"].x > b["rect"].x and (perso["rect"].x - b["rect"].x) < 300) or (perso["rect"].x < b["rect"].x and (b["rect"].x - perso["rect"].x) < 300)) :
+                cdblob = 0
+                rectbone = imageCGblob.get_rect()
+                rectbone.x = b["rect"].x
+                rectbone.y = b["rect"].y
+                if perso["rect"].x < b["rect"].x and perso["rect"].y < b["rect"].y:
+                    dirblob = 11
+                if perso["rect"].x < b["rect"].x and perso["rect"].y == b["rect"].y:
+                    dirblob = 10
+                if perso["rect"].x < b["rect"].x and perso["rect"].y > b["rect"].y:
+                    dirblob = 9
+                if perso["rect"].x == b["rect"].x and perso["rect"].y > b["rect"].y:
+                    dirblob = 8
+                if perso["rect"].x > b["rect"].x and perso["rect"].y > b["rect"].y:
+                    dirblob = 7
+                if perso["rect"].x > b["rect"].x and perso["rect"].y == b["rect"].y:
+                    dirblob = 6
+                if perso["rect"].x > b["rect"].x and perso["rect"].y < b["rect"].y:
+                    dirblob = 5
+                if perso["rect"].x == b["rect"].x and perso["rect"].y < b["rect"].y:
+                    dirblob = 4
+
+                tirblob = {}
+                tirblob["canhit"] = True
+                tirblob["rect"] = rectbone
+                tirblob["direction"] = dirblob
+
+
+
+                tirsblob.append(tirblob)
+
+
+
+
+
+    if cdblob < 20 :
+        cdblob +=1
+
+
     # else:
     #     imagePerso = imagesPerso["right"][0]
 
@@ -619,6 +733,7 @@ while continuer:
                 newbloby = b["rect"].y + 20
                 newnbBlob = b["nbBlob"]
         b01 = {}
+        b01["nom"] = "fürher"
         b01["upstairs"] = 0
         b01["rect"] = rectBlob01
         b01["rect"].x = newblobx
@@ -629,6 +744,7 @@ while continuer:
         blobs.append(b01)
 
         b02 = {}
+        b02["nom"] = "Blobby"
         b02["upstairs"] = 0
         b02["rect"] = rectBlob02
         b02["rect"].x = newblobx-30
@@ -703,7 +819,10 @@ while continuer:
 #_______________________NOUVEL AFFICHAGE________________________________________
     for blob in blobs :
         if blob["upstairs"] == 0 :
-            fenetre.blit(imageblob, blob["rect"])
+            if blob["nom"] == "fürher" :
+                fenetre.blit(imageblobf, blob["rect"])
+            else :
+                fenetre.blit(imageblob, blob["rect"])
 
 
     if upstairsperso == 0 :
@@ -711,19 +830,28 @@ while continuer:
         for t in tirs:
             if t["direction"] > -1:
                 fenetre.blit(imagebone, t["rect"])
+        for ti in tirsblob:
+            if ti["direction"] > -1:
+                fenetre.blit(imageCGblob, ti["rect"])
 
     fenetre.blit(imageGrille, rectGrille)
     fenetre.blit(imageHacheDeZoo, rectHacheDeZoo)
 
     for blob in blobs :
         if blob["upstairs"] == 1 :
-            fenetre.blit(imageblob, blob["rect"])
+            if blob["nom"] == "fürher" :
+                fenetre.blit(imageblobf, blob["rect"])
+            else :
+                fenetre.blit(imageblob, blob["rect"])
 
     if upstairsperso == 1 :
         fenetre.blit(imagePerso, perso["rect"])
         for t in tirs:
             if t["direction"] > -1:
                 fenetre.blit(imagebone, t["rect"])
+        for ti in tirsblob:
+            if ti["direction"] > -1:
+                fenetre.blit(imageCGblob, ti["rect"])
 
 #AJOUT POTIONS POUR TESTER !!!_______________________________________________________
     if touches[pygame.K_t] and donnepotion == 0:
@@ -755,8 +883,12 @@ while continuer:
     if i%3==0 :
         ianimeblob = (ianimeblob+1)%len(imagesBlob["left"])
         imageblob = imagesBlob["left"][ianimeblob]
+        ianimeblobCG = (ianimeblobCG+1)%len(imagesCGblob["proj"])
+        imageCGblob = imagesCGblob["proj"][ianimeblobCG]
         ianimebone = (ianimebone+1)%len(imagesbone["proj"])
         imagebone = imagesbone["proj"][ianimebone]
+        ianimeblobf = (ianimeblobf+1)%len(imagesBlobf["left"])
+        imageblobf = imagesBlobf["left"][ianimeblobf]
 
     # if upstairsblob==1 :
     #     fenetre.blit(imageGrille, rectGrille)
