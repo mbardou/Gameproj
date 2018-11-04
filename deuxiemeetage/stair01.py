@@ -77,7 +77,31 @@ imageIconeChat = pygame.image.load("pictures/ChatIcon.png").convert_alpha()
 rectIconeChat = imageIconeChat.get_rect()
 imageHealthPot01 = pygame.image.load("pictures/pt01.png").convert_alpha()
 rectInv01 = imageHealthPot01.get_rect()
+
+# animation de l'ouverture du coffre_____________________________________________________
+
+imagesCoffre = {}
+
+imagesCoffre["fermer"]=[]
+imagesCoffre["ouvert"]=[]
+
+temp = pygame.image.load("pictures/coffre1.png").convert_alpha()
+imagesCoffre["fermer"].append(temp)
+temp = pygame.image.load("pictures/coffre2.png").convert_alpha()
+imagesCoffre["ouvert"].append(temp)
+# temp = pygame.image.load("pictures/coffre3.png").convert_alpha()
+# imagesCoffre["ouvert"].append(temp)
+
+icoffre = 0
+
+imageCoffre = imagesCoffre["fermer"][icoffre]
+
+coffre = {}
+
+coffre["img"] = imageCoffre
+
 #Dico d'images perso_____________________________________________________________________
+
 imagesPerso = {}
 
 imagesPerso["right"]=[]
@@ -220,7 +244,7 @@ hauteurCase = 33
 # 1 puit 2bigboat 3 boat1 4 boat2 5 horloge 6 market1 7 market2 8 wheatbag1 9 rondin 10 banc 11 lampe 12 tonneau
 # 13 Forge 14 Greatmarket 15 barrier 16 tablegrande 17chariot1 18 chariot2 19 pnj1 20 pnj2 21 pnj3 22 pnj4 'C' carquois
 # 23 Nenu1 24 Nenu2 25 Nenu3 26 market3 27 buisson2 28 supplies1 29 pnj4bas 30 pnj5 31 pnj4left 32 pnj6 33 cadavre1
-# 34 potdefleur 35 litpaille1
+# 34 potdefleur 35 litpaille1 36 coffre
 
 grilledecors = []
 grilledecors.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
@@ -235,9 +259,9 @@ grilledecors.append([0,0,0,0,0,0,0,0,0,0,0,0,0,20,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 grilledecors.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,13,0,0,0,0,34,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
 grilledecors.append([0,0,0,0,0,27,27,27,27,0,0,0,0,0,0,'C',0,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
 grilledecors.append([0,0,0,0,0,27,27,27,27,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,31,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
-grilledecors.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,0,0,11,0,23,0,0,24,0,0,0,35,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+grilledecors.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,36,0,0,0,7,0,0,11,0,23,0,0,24,0,0,0,35,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
 grilledecors.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,19,0,0,0,0,0,0,25,0,0,25,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
-grilledecors.append([0,0,0,0,0,0,0,0,0,0,0,0,0,21,0,0,0,0,0,0,0,0,0,0,6,0,0,0,0,24,0,0,0,23,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+grilledecors.append([0,0,0,0,0,0,0,0,0,0,0,0,0,21,0,0,0,0,0,0,0,0,0,0,6,0,0,0,0,24,0,0,0,23,0,0,17,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
 grilledecors.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,16,16,0,0,0,0,0,0,0,0,0,0,0,0,0,0,23,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
 grilledecors.append([0,0,0,0,0,27,27,27,27,0,22,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,32,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
 grilledecors.append([0,0,0,0,0,27,27,27,27,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
@@ -376,6 +400,7 @@ while continuer:
         #else: perso["rect"].x=perso["rect"].x
 
 
+
 #Changement fenetre chat/Inventory
     if CurrentWindow == 'Chat' and cdinv == 20 and pygame.mouse.get_pressed() == (True,False,False):
         if (rectIconeBag).collidepoint(pygame.mouse.get_pos()):
@@ -399,7 +424,8 @@ while continuer:
                     objet["nbItem"] -= 1
                 if objet["nbItem"] > 0 :
                     tempTab.append(objet)
-                else : grilleInventaire[objet["i"]][objet["j"]] = 0
+                else :
+                    grilleInventaire[objet["i"]][objet["j"]] = 0     
             objets = tempTab
 
     if Heal > 0 :
@@ -451,30 +477,30 @@ while continuer:
     for i in range(len(grillePlateforme)) :
         for j in range(len(grillePlateforme[i])) :
             if grillePlateforme[i][j] == 1 :
-                rectBidon1 = imagePont01.get_rect()
-                rectBidon1.x = j*largeurCase
-                rectBidon1.y = i*hauteurCase
-                fenetre.blit(imagePont01,rectBidon1)
+                rectPlateforme1 = imagePont01.get_rect()
+                rectPlateforme1.x = j*largeurCase
+                rectPlateforme1.y = i*hauteurCase
+                fenetre.blit(imagePont01,rectPlateforme1)
             if grillePlateforme[i][j] == 2 :
-                rectBidon2 = imageMarketplace01.get_rect()
-                rectBidon2.x = j*largeurCase
-                rectBidon2.y = i*hauteurCase
-                fenetre.blit(imageMarketplace01,rectBidon2)
+                rectPlateforme2 = imageMarketplace01.get_rect()
+                rectPlateforme2.x = j*largeurCase
+                rectPlateforme2.y = i*hauteurCase
+                fenetre.blit(imageMarketplace01,rectPlateforme2)
             if grillePlateforme[i][j] == 3 :
-                rectBidon3 = imageMarketplace01.get_rect()
-                rectBidon3.x = j*largeurCase
-                rectBidon3.y = i*hauteurCase
-                fenetre.blit(imageMarketplace02,rectBidon3)
+                rectPlateforme3 = imageMarketplace01.get_rect()
+                rectPlateforme3.x = j*largeurCase
+                rectPlateforme3.y = i*hauteurCase
+                fenetre.blit(imageMarketplace02,rectPlateforme3)
             if grillePlateforme[i][j] == 4 :
-                rectBidon4 = imageFond.get_rect()
-                rectBidon4.x = j*largeurCase
-                rectBidon4.y = i*hauteurCase
-                fenetre.blit(imageFond,rectBidon4)
+                rectPlateforme4 = imageFond.get_rect()
+                rectPlateforme4.x = j*largeurCase
+                rectPlateforme4.y = i*hauteurCase
+                fenetre.blit(imageFond,rectPlateforme4)
             if grillePlateforme[i][j] == 5 :
-                rectBidon5 = imagePontvertical01.get_rect()
-                rectBidon5.x = j*largeurCase
-                rectBidon5.y = i*hauteurCase
-                fenetre.blit(imagePontvertical01,rectBidon5)
+                rectPlateforme5 = imagePontvertical01.get_rect()
+                rectPlateforme5.x = j*largeurCase
+                rectPlateforme5.y = i*hauteurCase
+                fenetre.blit(imagePontvertical01,rectPlateforme5)
             fenetre.blit(imagePerso, perso["rect"])
     #DECORS
     for p in range(len(grilledecors)) :
@@ -654,6 +680,17 @@ while continuer:
                 rectDecors35.x = o*largeurcaseDecors
                 rectDecors35.y = p*largeurcaseDecors
                 fenetre.blit(imageLitpaille01, rectDecors35)
+            if grilledecors[p][o] == 36 :
+                rectDecors36 = imageCoffre.get_rect()
+                rectDecors36.x = o*largeurcaseDecors
+                rectDecors36.y = p*largeurcaseDecors
+                fenetre.blit(imageCoffre, rectDecors36)
+                if touches[pygame.K_SPACE] and perso["rect"].colliderect(rectDecors36) :
+                    if timer%2==0:
+                        icoffre = (icoffre+1)%len(imagesCoffre["ouvert"])
+                        imageCoffre = imagesCoffre["ouvert"][icoffre]
+                elif not(perso["rect"].colliderect(rectDecors36)) :
+                    imageCoffre = imagesCoffre["fermer"][icoffre]
             if grilledecors[p][o] == 'C' :
                 rectCarquois = imageCarquois.get_rect()
                 rectCarquois.x = o*largeurcaseDecors
