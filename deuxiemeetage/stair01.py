@@ -71,6 +71,7 @@ imagePnj06 = pygame.image.load("pictures/pnj6.png").convert_alpha()
 imageCadavre01 = pygame.image.load("pictures/cadavre1.png").convert_alpha()
 imageLitpaille01 = pygame.image.load("pictures/litpaille1.png").convert_alpha()
 imageCarquois = pygame.image.load("pictures/Carquois.png").convert_alpha()
+imageCane = pygame.image.load("pictures/Cane.png").convert_alpha()
 imageIconeBag = pygame.image.load("pictures/BagIcon.png").convert_alpha()
 rectIconeBag = imageIconeBag.get_rect()
 imageInventory = pygame.image.load("pictures/Inventory.png").convert_alpha()
@@ -245,7 +246,7 @@ hauteurCase = 33
 
 #Initialisation du tableau des décors
 # 1 puit 2bigboat 3 boat1 4 boat2 5 horloge 6 market1 7 market2 8 wheatbag1 9 rondin 10 banc 11 lampe 12 tonneau
-# 13 Forge 14 Greatmarket 15 barrier 16 tablegrande 17chariot1 18 chariot2 19 pnj1 20 pnj2 21 pnj3 22 pnj4 'C' carquois
+# 13 Forge 14 Greatmarket 15 barrier 16 tablegrande 17chariot1 18 chariot2 19 pnj1 20 pnj2 21 pnj3 22 pnj4 'C' carquois "Cane" Cane
 # 23 Nenu1 24 Nenu2 25 Nenu3 26 market3 27 buisson2 28 supplies1 29 pnj4bas 30 pnj5 31 pnj4left 32 pnj6 33 cadavre1
 # 34 potdefleur 35 litpaille1 36 coffre 37 treespooky1
 
@@ -257,7 +258,7 @@ grilledecors.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 grilledecors.append([0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
 grilledecors.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
 grilledecors.append([0,0,0,0,0,0,0,0,0,0,11,0,14,0,0,0,0,29,0,0,0,0,0,0,0,0,0,11,0,0,0,0,0,0,0,0,11,0,26,0,0,0,0,0,11,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
-grilledecors.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,0,8,0,10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,28,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+grilledecors.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,0,8,0,10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,28,0,0,'Cane',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
 grilledecors.append([0,0,0,0,0,0,0,0,0,0,0,0,0,20,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,12,0,30,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
 grilledecors.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,13,0,0,0,0,34,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
 grilledecors.append([0,0,0,0,0,27,27,27,27,0,0,0,0,0,0,'C',0,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
@@ -323,6 +324,7 @@ chatcd = 20
 continuer=1
 timer=1;
 RangerQuest = 0
+fishermanQuest = 0
 cdinv = 20
 CurrentWindow = 'Chat'
 hpBarMax = 200
@@ -718,6 +720,15 @@ while continuer:
                     RangerQuest = 1
                     grilledecors[p][o] = 0
                     getReward(1,2)
+            if grilledecors[p][o] == 'Cane' :
+                rectCane = imageCane.get_rect()
+                rectCane.x = o*largeurcaseDecors
+                rectCane.y = p*largeurcaseDecors
+                fenetre.blit(imageCane, rectCane)
+                if touches[pygame.K_RETURN] and perso["rect"].colliderect(rectCane) :
+                    fishermanQuest = 2
+                    grilledecors[p][o] = 0
+                    getReward(1,3)
 
     for t in range(len(grilletable)) :
         for t1 in range(len(grilletable[t])) :
@@ -851,8 +862,76 @@ de plus."""
                 Chat = """Merci !!! Tu viens de sauver plus
 de vies que tu ne l'imagines..."""
                 chatcd = 0
-    elif touches[pygame.K_RETURN] and perso["rect"].colliderect(rectDecors21) :
-        Chat = 'Je connais une bonne taverne !'
+    if touches[pygame.K_RETURN] and perso["rect"].colliderect(rectDecors21) :
+            RanChat = random.randint(1,10)
+            if fishermanQuest == 2:
+                chatcd = 0
+                Chat = """Merci ! le plus dur n'est pas
+de l'attrapper, mais de le vendre!
+j'en ai mal au dos! Maintenant
+prends cette canne, et attrapes
+moi n'importe quoi !"""
+
+                fishermanQuest = 3
+
+
+            if RanChat == 1 and chatcd > 20 :
+                Chat = """L'air est frais aujourd'hui !"""
+                chatcd = 0
+            elif RanChat == 2 and chatcd > 20 :
+                Chat = """La mer n'a jamais été
+aussi calme ! Les poissons
+sautent presque dans nos bras !"""
+                chatcd = 0
+            elif RanChat == 3 and chatcd > 20 :
+                Chat = """Y'a peut-être pas d'arrêtes
+dans le beefsteak mais mon
+poisson est riche en Oméga 3 !"""
+                chatcd = 0
+            elif RanChat == 4 and chatcd > 20 and fishermanQuest <= 1:
+                Chat = """Comment ça tu ne sais pas
+pêcher ? Va me chercher ma canne
+et je t'apprendrai les secrets
+du métier !"""
+                fishermanQuest = 1
+
+                chatcd = 0
+            elif RanChat == 5 and chatcd > 20 :
+                Chat = """IL EST FRAIS MON POISSON !"""
+                chatcd = 0
+
+            elif RanChat == 6 and chatcd > 20 and fishermanQuest <= 1:
+                Chat = """Comment ça tu ne sais pas
+pêcher ? Va me chercher ma canne
+et je t'apprendrai les secrets
+du métier !"""
+                fishermanQuest = 1
+                chatcd = 0
+
+            elif RanChat == 7 and chatcd > 20 :
+                Chat = """Hey toi ! tu veux voir mon
+plus grand secret ? La voici:
+Une botte secrète de 65cm de
+long ! imagine les péniches
+de la bête !!!"""
+                chatcd = 0
+            elif RanChat == 8 and chatcd > 20 :
+                Chat = """Tu penses que les poissons
+pierre existaient déjà durant
+l'âge de pierre ?"""
+                chatcd = 0
+            elif RanChat == 9 and chatcd > 20 :
+                Chat = """Devines : les oursins sont
+les petits des ours
+ou des oursons ?"""
+                chatcd = 0
+            elif RanChat == 10 and chatcd > 20 :
+                Chat = """J'ai pêché un requin marteau
+l'année dèrniere. On m'a dit
+qu'ils ne valaient
+pas un clou !"""
+                chatcd = 0
+
     elif touches[pygame.K_RETURN] and perso["rect"].colliderect(rectDecors22) :
         Chat = 'bonjour petite! une friandise ?'
 
@@ -905,6 +984,14 @@ de vies que tu ne l'imagines..."""
                     rectCarquois.x = 10+(j*largeurCaseInv)
                     rectCarquois.y = (rectInventory.y+20)+(i*hauteurCaseInv)
                     fenetre.blit(imageCarquois, rectCarquois)
+
+                elif grilleInventaire[i][j] == 3 :
+                    rectCane = imageCane.get_rect()
+                    objet["i"] = i
+                    objet["j"] = j
+                    rectCane.x = 10+(j*largeurCaseInv)
+                    rectCane.y = (rectInventory.y+20)+(i*hauteurCaseInv)
+                    fenetre.blit(imageCane, rectCane)
 #Health Bar contour
     pygame.draw.rect(fenetre, (200, 0,255), pygame.Rect(largeur-233, hauteur-(hauteur-35), hpBarMax+4, 14),4)
     #HealthBar
