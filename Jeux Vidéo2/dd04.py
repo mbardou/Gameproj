@@ -481,8 +481,7 @@ while continuer:
 
 #Utilisation potion_____________________________________________________________
     tempTab = []
-    if pygame.mouse.get_pressed() == (True,False,False)and cdpot == 50:
-        if (objet["rect"]).collidepoint(pygame.mouse.get_pos()):
+    if (pygame.mouse.get_pressed() == (True,False,False)and cdpot == 50) and (objet["rect"]).collidepoint(pygame.mouse.get_pos()) or (touches[pygame.K_RSHIFT] and cdpot == 50):
             cdpot = 0
             done = False
             for objet in objets :
