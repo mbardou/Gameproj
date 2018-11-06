@@ -152,218 +152,225 @@ imagesPerso["up"].append(temp)
 
 #Dico image Wolf________________________________________________________________
 
-# imagesWolf = {}
-# imagesWolf["stationnaryup"] = []
-# imagesWolf["stationnarydown"] = []
-# imagesWolf["stationnaryleft"] = []
-# imagesWolf["stationnaryright"] = []
-# imagesWolf["walkingup"] = []
-# imagesWolf["walingdown"] = []
-# imagesWolf["walkingleft"] = []
-# imagesWolf["walkingright"] = []
-# imagesWolf["runup"] = []
-# imagesWolf["rundown"] = []
-# imagesWolf["runleft"] = []
-# imagesWolf["runright"] = []
-# imagesWolf["attackup"] = []
-# imagesWolf["attackdown"] = []
-# imagesWolf["attackleft"] = []
-# imagesWolf["attackright"] = []
-# imagesWolf["sleepup"] = []
-# imagesWolf["sleepdown"] = []
-# imagesWolf["sleepleft"] = []
-# imagesWolf["sleepright"] = []
-#
-# #WOLFSTATIONNARY__________________________________________________________
-# temp = pygame.image.load("pictures/wolf/wolfstationnaryup1.png").convert_alpha()
-# imagesWolf["stationnaryup"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfstationnarydown1.png").convert_alpha()
-# imagesWolf["stationnarydown"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfstationnarydown2.png").convert_alpha()
-# imagesWolf["stationnarydown"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfstationnarydown3.png").convert_alpha()
-# imagesWolf["stationnarydown"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfstationnarydown4.png").convert_alpha()
-# imagesWolf["stationnarydown"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfstationnarydown5.png").convert_alpha()
-# imagesWolf["stationnarydown"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfstationnaryleft1.png").convert_alpha()
-# imagesWolf["stationnaryleft"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfstationnaryleft2.png").convert_alpha()
-# imagesWolf["stationnaryleft"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfstationnaryleft3.png").convert_alpha()
-# imagesWolf["stationnaryleft"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfstationnaryleft4.png").convert_alpha()
-# imagesWolf["stationnaryleft"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfstationnaryright1.png").convert_alpha()
-# imagesWolf["stationnaryright"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfstationnaryright2.png").convert_alpha()
-# imagesWolf["stationnaryright"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfstationnaryright3.png").convert_alpha()
-# imagesWolf["stationnaryright"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfstationnaryright4.png").convert_alpha()
-# imagesWolf["stationnaryright"].append(temp)
-#
-# #WOLFWALK_________________________________________________________________
-# temp = pygame.image.load("pictures/wolf/walkingup1.png").convert_alpha()
-# imagesWolf["walkingup"].append(temp)
-# temp = pygame.image.load("pictures/wolf/walkingup2.png").convert_alpha()
-# imagesWolf["walkingup"].append(temp)
-# temp = pygame.image.load("pictures/wolf/walkingup3.png").convert_alpha()
-# imagesWolf["walkingup"].append(temp)
-# temp = pygame.image.load("pictures/wolf/walkingup4.png").convert_alpha()
-# imagesWolf["walkingup"].append(temp)
-# temp = pygame.image.load("pictures/wolf/walkingdown1.png").convert_alpha()
-# imagesWolf["walkingdown"].append(temp)
-# temp = pygame.image.load("pictures/wolf/walkingdown2.png").convert_alpha()
-# imagesWolf["walkingdown"].append(temp)
-# temp = pygame.image.load("pictures/wolf/walkingdown3.png").convert_alpha()
-# imagesWolf["walkingdown"].append(temp)
-# temp = pygame.image.load("pictures/wolf/walkingdown4.png").convert_alpha()
-# imagesWolf["walkingdown"].append(temp)
-# temp = pygame.image.load("pictures/wolf/walkingleft1.png").convert_alpha()
-# imagesWolf["walkingleft"].append(temp)
-# temp = pygame.image.load("pictures/wolf/walkingleft2.png").convert_alpha()
-# imagesWolf["walkingleft"].append(temp)
-# temp = pygame.image.load("pictures/wolf/walkingleft3.png").convert_alpha()
-# imagesWolf["walkingleft"].append(temp)
-# temp = pygame.image.load("pictures/wolf/walkingleft4.png").convert_alpha()
-# imagesWolf["walkingleft"].append(temp)
-# temp = pygame.image.load("pictures/wolf/walkingleft5.png").convert_alpha()
-# imagesWolf["walkingleft"].append(temp)
-# temp = pygame.image.load("pictures/wolf/walkingright1.png").convert_alpha()
-# imagesWolf["walkingright"].append(temp)
-# temp = pygame.image.load("pictures/wolf/walkingright2.png").convert_alpha()
-# imagesWolf["walkingright"].append(temp)
-# temp = pygame.image.load("pictures/wolf/walkingright3.png").convert_alpha()
-# imagesWolf["walkingright"].append(temp)
-# temp = pygame.image.load("pictures/wolf/walkingright4.png").convert_alpha()
-# imagesWolf["walkingright"].append(temp)
-# temp = pygame.image.load("pictures/wolf/walkingright5.png").convert_alpha()
-# imagesWolf["walkingright"].append(temp)
-#
-# #WOLFRUN__________________________________________________________________
-# temp = pygame.image.load("pictures/wolf/wolfrunup1.png").convert_alpha()
-# imagesWolf["runup"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfrunup2.png").convert_alpha()
-# imagesWolf["runup"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfrunup3.png").convert_alpha()
-# imagesWolf["runup"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfrunup4.png").convert_alpha()
-# imagesWolf["runup"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfrunup5.png").convert_alpha()
-# imagesWolf["runup"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfrundown1.png").convert_alpha()
-# imagesWolf["rundown"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfrundown2.png").convert_alpha()
-# imagesWolf["rundown"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfrundown3.png").convert_alpha()
-# imagesWolf["rundown"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfrundown4.png").convert_alpha()
-# imagesWolf["rundown"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfrundown5.png").convert_alpha()
-# imagesWolf["rundown"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfrunleft1.png").convert_alpha()
-# imagesWolf["runleft"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfrunleft2.png").convert_alpha()
-# imagesWolf["runleft"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfrunleft3.png").convert_alpha()
-# imagesWolf["runleft"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfrunleft4.png").convert_alpha()
-# imagesWolf["runleft"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfrunleft5.png").convert_alpha()
-# imagesWolf["runleft"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfrunright1.png").convert_alpha()
-# imagesWolf["runright"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfrunright2.png").convert_alpha()
-# imagesWolf["runright"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfrunright3.png").convert_alpha()
-# imagesWolf["runright"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfrunright4.png").convert_alpha()
-# imagesWolf["runright"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfrunright5.png").convert_alpha()
-# imagesWolf["runright"].append(temp)
-#
-# #WOLFATTACK_______________________________________________________________
-# temp = pygame.image.load("pictures/wolf/wolfattackup1.png").convert_alpha()
-# imagesWolf["attackup"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfattackup2.png").convert_alpha()
-# imagesWolf["attackup"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfattackup3.png").convert_alpha()
-# imagesWolf["attackup"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfattackup4.png").convert_alpha()
-# imagesWolf["attackup"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfattackup5.png").convert_alpha()
-# imagesWolf["attackup"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfattackdown1.png").convert_alpha()
-# imagesWolf["attackdown"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfattackdown2.png").convert_alpha()
-# imagesWolf["attackdown"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfattackdown3.png").convert_alpha()
-# imagesWolf["attackdown"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfattackdown4.png").convert_alpha()
-# imagesWolf["attackdown"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfattackdown5.png").convert_alpha()
-# imagesWolf["attackdown"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfattackleft1.png").convert_alpha()
-# imagesWolf["attackleft"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfattackleft2.png").convert_alpha()
-# imagesWolf["attackleft"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfattackleft3.png").convert_alpha()
-# imagesWolf["attackleft"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfattackleft4.png").convert_alpha()
-# imagesWolf["attackleft"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfattackleft5.png").convert_alpha()
-# imagesWolf["attackleft"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfattackright1.png").convert_alpha()
-# imagesWolf["attackright"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfattackright2.png").convert_alpha()
-# imagesWolf["attackright"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfattackright3.png").convert_alpha()
-# imagesWolf["attackright"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfattackright4.png").convert_alpha()
-# imagesWolf["attackright"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfattackright5.png").convert_alpha()
-# imagesWolf["attackright"].append(temp)
-#
-# #WOLFSLEEP________________________________________________________________
-# temp = pygame.image.load("pictures/wolf/wolfsleepup1.png").convert_alpha()
-# imagesWolf["sleepup"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfsleepup2.png").convert_alpha()
-# imagesWolf["sleepup"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfsleepup3.png").convert_alpha()
-# imagesWolf["sleepup"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfsleepup4.png").convert_alpha()
-# imagesWolf["sleepup"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfsleepdown1.png").convert_alpha()
-# imagesWolf["sleepdown"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfsleepdown2.png").convert_alpha()
-# imagesWolf["sleepdown"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfsleepdown3.png").convert_alpha()
-# imagesWolf["sleepdown"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfsleepdown4.png").convert_alpha()
-# imagesWolf["sleepdown"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfsleepleft1.png").convert_alpha()
-# imagesWolf["sleepleft"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfsleepleft2.png").convert_alpha()
-# imagesWolf["sleepleft"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfsleepleft3.png").convert_alpha()
-# imagesWolf["sleepleft"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfsleepleft4.png").convert_alpha()
-# imagesWolf["sleepleft"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfsleepright1.png").convert_alpha()
-# imagesWolf["sleepright"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfsleepright2.png").convert_alpha()
-# imagesWolf["sleepright"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfsleepright3.png").convert_alpha()
-# imagesWolf["sleepright"].append(temp)
-# temp = pygame.image.load("pictures/wolf/wolfsleepright4.png").convert_alpha()
-# imagesWolf["sleepright"].append(temp)
+imagesWolf = {}
+imagesWolf["stationnaryup"] = []
+imagesWolf["stationnarydown"] = []
+imagesWolf["stationnaryleft"] = []
+imagesWolf["stationnaryright"] = []
+imagesWolf["walkingup"] = []
+imagesWolf["walkingdown"] = []
+imagesWolf["walkingleft"] = []
+imagesWolf["walkingright"] = []
+imagesWolf["runup"] = []
+imagesWolf["rundown"] = []
+imagesWolf["runleft"] = []
+imagesWolf["runright"] = []
+imagesWolf["attackup"] = []
+imagesWolf["attackdown"] = []
+imagesWolf["attackleft"] = []
+imagesWolf["attackright"] = []
+imagesWolf["sleepup"] = []
+imagesWolf["sleepdown"] = []
+imagesWolf["sleepleft"] = []
+imagesWolf["sleepright"] = []
+
+#WOLFSTATIONNARY__________________________________________________________
+temp = pygame.image.load("pictures/wolf/wolfstationnaryup1.png").convert_alpha()
+imagesWolf["stationnaryup"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfstationnarydown1.png").convert_alpha()
+imagesWolf["stationnarydown"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfstationnarydown2.png").convert_alpha()
+imagesWolf["stationnarydown"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfstationnarydown3.png").convert_alpha()
+imagesWolf["stationnarydown"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfstationnarydown4.png").convert_alpha()
+imagesWolf["stationnarydown"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfstationnarydown5.png").convert_alpha()
+imagesWolf["stationnarydown"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfstationnaryleft1.png").convert_alpha()
+imagesWolf["stationnaryleft"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfstationnaryleft2.png").convert_alpha()
+imagesWolf["stationnaryleft"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfstationnaryleft3.png").convert_alpha()
+imagesWolf["stationnaryleft"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfstationnaryleft4.png").convert_alpha()
+imagesWolf["stationnaryleft"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfstationnaryright1.png").convert_alpha()
+imagesWolf["stationnaryright"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfstationnaryright2.png").convert_alpha()
+imagesWolf["stationnaryright"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfstationnaryright3.png").convert_alpha()
+imagesWolf["stationnaryright"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfstationnaryright4.png").convert_alpha()
+imagesWolf["stationnaryright"].append(temp)
+
+#WOLFWALK_________________________________________________________________
+temp = pygame.image.load("pictures/wolf/wolfwalkingup1.png").convert_alpha()
+imagesWolf["walkingup"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfwalkingup2.png").convert_alpha()
+imagesWolf["walkingup"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfwalkingup3.png").convert_alpha()
+imagesWolf["walkingup"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfwalkingup4.png").convert_alpha()
+imagesWolf["walkingup"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfwalkingdown1.png").convert_alpha()
+imagesWolf["walkingdown"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfwalkingdown2.png").convert_alpha()
+imagesWolf["walkingdown"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfwalkingdown3.png").convert_alpha()
+imagesWolf["walkingdown"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfwalkingdown4.png").convert_alpha()
+imagesWolf["walkingdown"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfwalkingleft1.png").convert_alpha()
+imagesWolf["walkingleft"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfwalkingleft2.png").convert_alpha()
+imagesWolf["walkingleft"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfwalkingleft3.png").convert_alpha()
+imagesWolf["walkingleft"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfwalkingleft4.png").convert_alpha()
+imagesWolf["walkingleft"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfwalkingleft5.png").convert_alpha()
+imagesWolf["walkingleft"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfwalkingright1.png").convert_alpha()
+imagesWolf["walkingright"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfwalkingright2.png").convert_alpha()
+imagesWolf["walkingright"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfwalkingright3.png").convert_alpha()
+imagesWolf["walkingright"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfwalkingright4.png").convert_alpha()
+imagesWolf["walkingright"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfwalkingright5.png").convert_alpha()
+imagesWolf["walkingright"].append(temp)
+
+#WOLFRUN__________________________________________________________________
+temp = pygame.image.load("pictures/wolf/wolfrunup1.png").convert_alpha()
+imagesWolf["runup"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfrunup2.png").convert_alpha()
+imagesWolf["runup"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfrunup3.png").convert_alpha()
+imagesWolf["runup"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfrunup4.png").convert_alpha()
+imagesWolf["runup"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfrunup5.png").convert_alpha()
+imagesWolf["runup"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfrundown1.png").convert_alpha()
+imagesWolf["rundown"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfrundown2.png").convert_alpha()
+imagesWolf["rundown"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfrundown3.png").convert_alpha()
+imagesWolf["rundown"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfrundown4.png").convert_alpha()
+imagesWolf["rundown"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfrundown5.png").convert_alpha()
+imagesWolf["rundown"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfrunleft1.png").convert_alpha()
+imagesWolf["runleft"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfrunleft2.png").convert_alpha()
+imagesWolf["runleft"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfrunleft3.png").convert_alpha()
+imagesWolf["runleft"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfrunleft4.png").convert_alpha()
+imagesWolf["runleft"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfrunleft5.png").convert_alpha()
+imagesWolf["runleft"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfrunright1.png").convert_alpha()
+imagesWolf["runright"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfrunright2.png").convert_alpha()
+imagesWolf["runright"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfrunright3.png").convert_alpha()
+imagesWolf["runright"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfrunright4.png").convert_alpha()
+imagesWolf["runright"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfrunright5.png").convert_alpha()
+imagesWolf["runright"].append(temp)
+
+#WOLFATTACK_______________________________________________________________
+temp = pygame.image.load("pictures/wolf/wolfattackup1.png").convert_alpha()
+imagesWolf["attackup"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfattackup2.png").convert_alpha()
+imagesWolf["attackup"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfattackup3.png").convert_alpha()
+imagesWolf["attackup"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfattackup4.png").convert_alpha()
+imagesWolf["attackup"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfattackup5.png").convert_alpha()
+imagesWolf["attackup"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfattackdown1.png").convert_alpha()
+imagesWolf["attackdown"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfattackdown2.png").convert_alpha()
+imagesWolf["attackdown"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfattackdown3.png").convert_alpha()
+imagesWolf["attackdown"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfattackdown4.png").convert_alpha()
+imagesWolf["attackdown"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfattackdown5.png").convert_alpha()
+imagesWolf["attackdown"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfattackleft1.png").convert_alpha()
+imagesWolf["attackleft"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfattackleft2.png").convert_alpha()
+imagesWolf["attackleft"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfattackleft3.png").convert_alpha()
+imagesWolf["attackleft"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfattackleft4.png").convert_alpha()
+imagesWolf["attackleft"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfattackleft5.png").convert_alpha()
+imagesWolf["attackleft"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfattackright1.png").convert_alpha()
+imagesWolf["attackright"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfattackright2.png").convert_alpha()
+imagesWolf["attackright"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfattackright3.png").convert_alpha()
+imagesWolf["attackright"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfattackright4.png").convert_alpha()
+imagesWolf["attackright"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfattackright5.png").convert_alpha()
+imagesWolf["attackright"].append(temp)
+
+#WOLFSLEEP________________________________________________________________
+temp = pygame.image.load("pictures/wolf/wolfsleepup1.png").convert_alpha()
+imagesWolf["sleepup"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfsleepup2.png").convert_alpha()
+imagesWolf["sleepup"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfsleepup3.png").convert_alpha()
+imagesWolf["sleepup"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfsleepup4.png").convert_alpha()
+imagesWolf["sleepup"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfsleepdown1.png").convert_alpha()
+imagesWolf["sleepdown"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfsleepdown2.png").convert_alpha()
+imagesWolf["sleepdown"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfsleepdown3.png").convert_alpha()
+imagesWolf["sleepdown"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfsleepdown4.png").convert_alpha()
+imagesWolf["sleepdown"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfsleepleft1.png").convert_alpha()
+imagesWolf["sleepleft"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfsleepleft2.png").convert_alpha()
+imagesWolf["sleepleft"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfsleepleft3.png").convert_alpha()
+imagesWolf["sleepleft"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfsleepleft4.png").convert_alpha()
+imagesWolf["sleepleft"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfsleepright1.png").convert_alpha()
+imagesWolf["sleepright"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfsleepright2.png").convert_alpha()
+imagesWolf["sleepright"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfsleepright3.png").convert_alpha()
+imagesWolf["sleepright"].append(temp)
+temp = pygame.image.load("pictures/wolf/wolfsleepright4.png").convert_alpha()
+imagesWolf["sleepright"].append(temp)
 
 
 #_______________________________________________________________________________
 
 iwolf = 0
+
+imageWolf = imagesWolf["sleepleft"][iwolf]
+
+wolf = {}
+
+wolf["img"] = imageWolf
+
 ianime = 0
 imagePerso = imagesPerso["down"][ianime]
 rectPerso = imagePerso.get_rect()
@@ -480,30 +487,30 @@ hauteurCase = 33
 # 1 puit 2bigboat 3 boat1 4 boat2 5 horloge 6 market1 7 market2 8 wheatbag1 9 rondin 10 banc 11 lampe 12 tonneau
 # 13 Forge 14 Greatmarket 15 barrier 16 tablegrande 17chariot1 18 chariot2 19 pnj1 20 pnj2 21 pnj3 22 pnj4 'C' carquois "Cane" Cane
 # 23 Nenu1 24 Nenu2 25 Nenu3 26 market3 27 buisson2 28 supplies1 29 pnj4bas 30 pnj5 31 pnj4left 32 pnj6 33 cadavre1
-# 34 potdefleur 35 litpaille1 36 coffre 37 treespooky1
+# 34 potdefleur 35 litpaille1 36 coffre 37 treespooky1 38 wolf
 
 grilledecors = []
-grilledecors.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
-grilledecors.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
-grilledecors.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
-grilledecors.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
-grilledecors.append([0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
-grilledecors.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
-grilledecors.append([0,0,0,0,0,0,0,0,0,0,11,0,14,0,0,0,0,29,0,0,0,0,0,0,0,0,0,11,0,0,0,0,0,0,0,0,11,0,26,0,0,0,0,0,11,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
-grilledecors.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,0,8,0,10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,28,0,0,'Cane',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
-grilledecors.append([0,0,0,0,0,0,0,0,0,0,0,0,0,20,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,12,0,30,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
-grilledecors.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,13,0,0,0,0,34,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
-grilledecors.append([0,0,0,0,0,27,27,27,27,0,0,0,0,0,0,'C',0,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
-grilledecors.append([0,0,0,0,0,27,27,27,27,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,31,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
-grilledecors.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,36,0,0,0,7,0,0,11,0,23,0,0,24,0,0,0,35,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
-grilledecors.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,19,0,0,0,0,0,0,25,0,0,25,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
-grilledecors.append([0,0,0,0,0,0,0,0,0,0,0,0,0,21,0,0,0,0,0,0,0,0,0,0,6,0,0,0,0,24,0,0,0,23,0,0,17,0,0,0,0,0,0,0,0,0,0,0,0,0,0,37,0,0,0,0,0,0,0,0,0,0,0])
-grilledecors.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,16,16,0,0,0,0,0,0,0,0,0,0,0,0,0,0,23,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,37,37,0,0,0,0,0,0,0,0,0])
-grilledecors.append([0,0,0,0,0,27,27,27,27,0,22,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,32,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
-grilledecors.append([0,0,0,0,0,27,27,27,27,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,37,37,0,0,0,0,0,0,0,0,0,0])
-grilledecors.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,33,0,0,0,0,0,0,0,0,0,0,0,37,0,0,0,0,0,0,0,0])
-grilledecors.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
-grilledecors.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,33,0,0,0,0,0,0,0,0,0,0,37,0,0,0,0,0,0,0,0,0,0,0])
+# grilledecors.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+# grilledecors.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+# grilledecors.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+# grilledecors.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+# grilledecors.append([0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+# grilledecors.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+# grilledecors.append([0,0,0,0,0,0,0,0,0,0,11,0,14,0,0,0,0,29,0,0,0,0,0,0,0,0,0,11,0,0,0,0,0,0,0,0,11,0,26,0,0,0,0,0,11,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+# grilledecors.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,0,8,0,10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,28,0,0,'Cane',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+# grilledecors.append([0,0,0,0,0,0,0,0,0,0,0,0,0,20,0,0,0,0,38,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,12,0,30,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+# grilledecors.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,13,0,0,0,0,34,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+# grilledecors.append([0,0,0,0,0,27,27,27,27,0,0,0,0,0,0,'C',0,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+# grilledecors.append([0,0,0,0,0,27,27,27,27,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,31,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+# grilledecors.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,36,0,0,0,7,0,0,11,0,23,0,0,24,0,0,0,35,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+# grilledecors.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,19,0,0,0,0,0,0,25,0,0,25,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+# grilledecors.append([0,0,0,0,0,0,0,0,0,0,0,0,0,21,0,0,0,0,0,0,0,0,0,0,6,0,0,0,0,24,0,0,0,23,0,0,17,0,0,0,0,0,0,0,0,0,0,0,0,0,0,37,0,0,0,0,0,0,0,0,0,0,0])
+# grilledecors.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,16,16,0,0,0,0,0,0,0,0,0,0,0,0,0,0,23,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,37,37,0,0,0,0,0,0,0,0,0])
+# grilledecors.append([0,0,0,0,0,27,27,27,27,0,22,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,32,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+# grilledecors.append([0,0,0,0,0,27,27,27,27,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,37,37,0,0,0,0,0,0,0,0,0,0])
+# grilledecors.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,33,0,0,0,0,0,0,0,0,0,0,0,37,0,0,0,0,0,0,0,0])
+# grilledecors.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+# grilledecors.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,33,0,0,0,0,0,0,0,0,0,0,37,0,0,0,0,0,0,0,0,0,0,0])
 
 
 largeurcaseDecors = 33
@@ -547,14 +554,31 @@ def getReward(nbItem,CodeItem):
                 return
     # Chat = 'Vous avez besoin de plus de place !'
     # return
-
+# def changemonde():
+    # with open("stair02.txt") as f:
+    #     for line in f:
+    #         grilledecors[].append(line)
+    # contenu = mon_fichier.read()
+    # grille[]
+    # if perso["rect"].colliderect(rectDecors38):
+    #     fenetre.blit(mon_fichier)
+with open("decorsville.txt") as f:
+    for line in f:
+        tabLigne = line.split()
+        #print (line)
+        #print (tabLigne)
+        newLine=[]
+        for c in tabLigne :
+            newLine.append(int(c))
+        print (newLine)
+        grilledecors.append(newLine)
 
 
 Heal = 0
 Chat = ''
 chatcd = 20
 continuer=1
-timer=1;
+timer=1
 RangerQuest = 0
 fishermanQuest = 0
 cdinv = 20
@@ -574,7 +598,7 @@ while continuer:
             hauteur = 768
             rectInventory.y = (hauteur)-(rectInventory.h)
             rectChatbox.y = (hauteur)-(rectChatbox.h)
-            fenetre=pygame.display.set_mode((largeur,hauteur), RESIZABLE)
+            fenetre=pygame.display.set_mode((largeur,hauteur), FULLSCREEN)
         else :
             largeur = 1920
             hauteur = 1080
@@ -943,7 +967,7 @@ while continuer:
                 rectDecors37.x = o*largeurcaseDecors
                 rectDecors37.y = p*largeurcaseDecors
                 fenetre.blit(imageTreespooky01, rectDecors37)
-            if grilledecors[p][o] == 'C' :
+            if grilledecors[p][o] == 39 :
                 rectCarquois = imageCarquois.get_rect()
                 rectCarquois.x = o*largeurcaseDecors
                 rectCarquois.y = p*largeurcaseDecors
@@ -952,7 +976,7 @@ while continuer:
                     RangerQuest = 1
                     grilledecors[p][o] = 0
                     getReward(1,2)
-            if grilledecors[p][o] == 'Cane' :
+            if grilledecors[p][o] == 40 :
                 rectCane = imageCane.get_rect()
                 rectCane.x = o*largeurcaseDecors
                 rectCane.y = p*largeurcaseDecors
@@ -961,6 +985,17 @@ while continuer:
                     fishermanQuest = 2
                     grilledecors[p][o] = 0
                     getReward(1,3)
+            if grilledecors[p][o] == 38 :
+                rectDecors38 = imageWolf.get_rect()
+                rectDecors38.x = o*largeurcaseDecors
+                rectDecors38.y = p*largeurcaseDecors
+                fenetre.blit(imageWolf, rectDecors38)
+                if touches[pygame.K_SPACE] and perso["rect"].colliderect(rectDecors38) :
+                    if timer%2==0:
+                        iwolf = (iwolf+1)%len(imagesWolf["sleepleft"])
+                        imageWolf = imagesWolf["sleepleft"][iwolf]
+
+
 
     for t in range(len(grilletable)) :
         for t1 in range(len(grilletable[t])) :
