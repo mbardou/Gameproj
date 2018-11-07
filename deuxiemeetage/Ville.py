@@ -12,7 +12,7 @@ LargeurPerso = 30
 HauteurPerso = 50
 fontChat = pygame.font.SysFont("monospace", 15)
 # fenetre=pygame.display.set_mode((largeur,hauteur))
-# fenetre=pygame.display.set_mode((largeur,hauteur), RESIZABLE)
+# fenetre=pygame.display.set_mode((largeur,hauteur),HWSURFACE|DOUBLEBUF|RESIZABLE)
 fenetre=pygame.display.set_mode((largeur,hauteur), FULLSCREEN)
 rectFenetre = fenetre.get_rect()
 imageChatbox = pygame.image.load("pictures/FenetreChat1.png").convert_alpha()
@@ -29,13 +29,17 @@ imageFond05 = pygame.image.load("pictures/sol/solterre12.png").convert_alpha()
 imageFond06 = pygame.image.load("pictures/sol/solterre13.png").convert_alpha()
 imagePont01 = pygame.image.load("pictures/pont01.png").convert_alpha()
 imagePont02 = pygame.image.load("pictures/pont2.png").convert_alpha()
+imagePont03 = pygame.image.load("pictures/pont3.png").convert_alpha()
+imagePont04 = pygame.image.load("pictures/pont4.png").convert_alpha()
+imageIlot01 = pygame.image.load("pictures/ilot1.png").convert_alpha()
 imageMarketplace01 = pygame.image.load("pictures/marketplace4.png").convert_alpha()
 imageMarketplace02 = pygame.image.load("pictures/marketplace3.png").convert_alpha()
 imagePontvertical01 = pygame.image.load("pictures/pontvertical01.png").convert_alpha()
-imageHorloge01 = pygame.image.load("pictures/horloge1.png").convert_alpha()
+imageHorloge01 = pygame.image.load("pictures/horloge2.png").convert_alpha()
 imagePuit01 = pygame.image.load("pictures/puit1.png").convert_alpha()
 imageTonneau01 = pygame.image.load("pictures/tonneau1.png").convert_alpha()
-imageLampe01 = pygame.image.load("pictures/lampe1.png").convert_alpha()
+imageTonneau02 = pygame.image.load("pictures/tonneau2.png").convert_alpha()
+imageLampe01 = pygame.image.load("pictures/lampe2.png").convert_alpha()
 imageBanc01 = pygame.image.load("pictures/banc1.png").convert_alpha()
 imageBoat01 = pygame.image.load("pictures/boat1.png").convert_alpha()
 imageBoat02 = pygame.image.load("pictures/boat2.png").convert_alpha()
@@ -43,6 +47,7 @@ imageMarket01 = pygame.image.load("pictures/market1.png").convert_alpha()
 imageMarket02 = pygame.image.load("pictures/market2.png").convert_alpha()
 imageMarket03 = pygame.image.load("pictures/market3.png").convert_alpha()
 imageRondin01 = pygame.image.load("pictures/rondin1.png").convert_alpha()
+imageTree02 = pygame.image.load("pictures/tree3.png").convert_alpha()
 imageWheatbag01 = pygame.image.load("pictures/wheatbag1.png").convert_alpha()
 imageBigboat01 = pygame.image.load("pictures/bigboat1.png").convert_alpha()
 imageForge01 = pygame.image.load("pictures/forge2.png").convert_alpha()
@@ -62,6 +67,8 @@ imageBuisson02 = pygame.image.load("pictures/buisson2.png").convert_alpha()
 imageSupplies01= pygame.image.load("pictures/supplies1.png").convert_alpha()
 imagePotdefleur01= pygame.image.load("pictures/potdefleur1.png").convert_alpha()
 imageTreespooky01 = pygame.image.load("pictures/treespooky1.png").convert_alpha()
+imageBarrier02 = pygame.image.load("pictures/barrier2.png").convert_alpha()
+imageCaisse01 = pygame.image.load("pictures/caisse2.png").convert_alpha()
 imagePnj01 = pygame.image.load("pictures/pnj1.png").convert_alpha()
 imagePnj02 = pygame.image.load("pictures/pnj2.png").convert_alpha()
 imagePnj03 = pygame.image.load("pictures/pnj3.png").convert_alpha()
@@ -105,6 +112,26 @@ imageCoffre = imagesCoffre["fermer"][icoffre]
 coffre = {}
 
 coffre["img"] = imageCoffre
+
+# animation de l'ouverture de poubelle___________________________________________________
+
+imagesTrash = {}
+
+imagesTrash["fermer"]=[]
+imagesTrash["ouvert"]=[]
+
+temp = pygame.image.load("pictures/trash1.png").convert_alpha()
+imagesTrash["fermer"].append(temp)
+temp = pygame.image.load("pictures/trash2.png").convert_alpha()
+imagesTrash["ouvert"].append(temp)
+
+itrash = 0
+
+imageTrash = imagesTrash["fermer"][itrash]
+
+trash = {}
+
+trash["img"] = imageTrash
 
 #Dico d'images perso_____________________________________________________________________
 
@@ -484,6 +511,7 @@ with open("table.txt") as f :
             newLine.append(int(c))
         grilletable.append(newLine)
 
+fenetre = rectFenetre - perso["rect"]
 #_______________________________________________________________________________
 Heal = 0
 Chat = ''
@@ -683,6 +711,22 @@ while continuer:
                 rectPlateforme5.x = j*largeurCase
                 rectPlateforme5.y = i*hauteurCase
                 fenetre.blit(imagePontvertical01,rectPlateforme5)
+            if grillePlateforme[i][j] == 6 :
+                rectPlateforme6 = imageIlot01.get_rect()
+                rectPlateforme6.x = j*largeurCase
+                rectPlateforme6.y = i*hauteurCase
+                fenetre.blit(imageIlot01,rectPlateforme6)
+            if grillePlateforme[i][j] == 7 :
+                rectPlateforme7 = imagePont03.get_rect()
+                rectPlateforme7.x = j*largeurCase
+                rectPlateforme7.y = i*hauteurCase
+                fenetre.blit(imagePont03,rectPlateforme7)
+            if grillePlateforme[i][j] == 8 :
+                rectPlateforme8 = imagePont04.get_rect()
+                rectPlateforme8.x = j*largeurCase
+                rectPlateforme8.y = i*hauteurCase
+                fenetre.blit(imagePont04,rectPlateforme8)
+
             fenetre.blit(imagePerso, perso["rect"])
     #DECORS
     for p in range(len(grilledecors)) :
@@ -878,6 +922,15 @@ while continuer:
                 rectDecors37.x = o*largeurcaseDecors
                 rectDecors37.y = p*largeurcaseDecors
                 fenetre.blit(imageTreespooky01, rectDecors37)
+            if grilledecors[p][o] == 38 :
+                rectDecors38 = imageWolf.get_rect()
+                rectDecors38.x = o*largeurcaseDecors
+                rectDecors38.y = p*largeurcaseDecors
+                fenetre.blit(imageWolf, rectDecors38)
+                if touches[pygame.K_SPACE] and perso["rect"].colliderect(rectDecors38) :
+                    if timer%2==0:
+                        iwolf = (iwolf+1)%len(imagesWolf["sleepleft"])
+                        imageWolf = imagesWolf["sleepleft"][iwolf]
             if grilledecors[p][o] == 39 :
                 rectCarquois = imageCarquois.get_rect()
                 rectCarquois.x = o*largeurcaseDecors
@@ -896,16 +949,37 @@ while continuer:
                     fishermanQuest = 2
                     grilledecors[p][o] = 0
                     getReward(1,3)
-            if grilledecors[p][o] == 38 :
-                rectDecors38 = imageWolf.get_rect()
-                rectDecors38.x = o*largeurcaseDecors
-                rectDecors38.y = p*largeurcaseDecors
-                fenetre.blit(imageWolf, rectDecors38)
-                if touches[pygame.K_SPACE] and perso["rect"].colliderect(rectDecors38) :
+            if grilledecors[p][o] == 41 :
+                rectDecors41 = imageBarrier02.get_rect()
+                rectDecors41.x = o*largeurcaseDecors
+                rectDecors41.y = p*largeurcaseDecors
+                fenetre.blit(imageBarrier02, rectDecors41)
+            if grilledecors[p][o] == 42 :
+                rectDecors42 = imageTrash.get_rect()
+                rectDecors42.x = o*largeurcaseDecors
+                rectDecors42.y = p*largeurcaseDecors
+                fenetre.blit(imageTrash, rectDecors42)
+                if touches[pygame.K_SPACE] and perso["rect"].colliderect(rectDecors42) :
                     if timer%2==0:
-                        iwolf = (iwolf+1)%len(imagesWolf["sleepleft"])
-                        imageWolf = imagesWolf["sleepleft"][iwolf]
-
+                        itrash = (itrash+1)%len(imagesTrash["ouvert"])
+                        imageTrash = imagesTrash["ouvert"][itrash]
+                elif not(perso["rect"].colliderect(rectDecors42)) :
+                    imageTrash = imagesTrash["fermer"][itrash]
+            if grilledecors[p][o] == 43 :
+                rectDecors43 = imageCaisse01.get_rect()
+                rectDecors43.x = o*largeurcaseDecors
+                rectDecors43.y = p*largeurcaseDecors
+                fenetre.blit(imageCaisse01, rectDecors43)
+            if grilledecors[p][o] == 44 :
+                rectDecors44 = imageTree02.get_rect()
+                rectDecors44.x = o*largeurcaseDecors
+                rectDecors44.y = p*largeurcaseDecors
+                fenetre.blit(imageTree02, rectDecors44)
+            if grilledecors[p][o] == 45 :
+                rectDecors45 = imageTonneau02.get_rect()
+                rectDecors45.x = o*largeurcaseDecors
+                rectDecors45.y = p*largeurcaseDecors
+                fenetre.blit(imageTonneau02, rectDecors45)
 
     for t in range(len(grilletable)) :
         for t1 in range(len(grilletable[t])) :
