@@ -402,6 +402,7 @@ grilleInventaire = []
 grilleInventaire.append([0,0,0,0,0,0])
 grilleInventaire.append([0,0,0,0,0,0])
 
+
 largeurCaseInv = 45
 hauteurCaseInv = 60
 
@@ -418,6 +419,41 @@ grillePlateforme = []
 
 largeurCase = 33
 hauteurCase = 33
+
+tabScroll = []
+tabScroll.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+tabScroll.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+tabScroll.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+tabScroll.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+tabScroll.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+tabScroll.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+tabScroll.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+tabScroll.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+tabScroll.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+tabScroll.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+tabScroll.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+tabScroll.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+tabScroll.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+tabScroll.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+tabScroll.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+tabScroll.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+tabScroll.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+tabScroll.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+tabScroll.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+tabScroll.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+tabScroll.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+tabScroll.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+tabScroll.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+tabScroll.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+tabScroll.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+tabScroll.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+tabScroll.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+tabScroll.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+tabScroll.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+tabScroll.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+tabScroll.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+tabScroll.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+
 
 #Initialisation du tableau des décors
 # 1 puit 2bigboat 3 boat1 4 boat2 5 horloge 6 market1 7 market2 8 wheatbag1 9 rondin 10 banc 11 lampe 12 tonneau
@@ -522,7 +558,7 @@ while continuer:
 
 
 
-
+    print(int(hauteur/hauteurCase))
 
     if cdecran<50 :
         cdecran+=1
@@ -538,17 +574,35 @@ while continuer:
             ianime = (ianime+1)%len(imagesPerso["up"])
             imagePerso = imagesPerso["up"][ianime]
         if not(grillePlateforme[int((perso["rect"].y+HauteurPerso/2)/hauteurCase)][int((perso["rect"].x)/largeurCase)]==0) :
-            perso["rect"].y-=5
+            perso["rect"].y-=33
         #else: perso["rect"].y=perso["rect"].y
 
+    for i in range(len(tabScroll)):
+        for j in range(len(tabScroll[i])):
+            if perso["rect"].y < hauteur and grillePlateforme[i-32][j]:
+                tabScroll[i][j] = grillePlateforme[i-32][j]
+                perso["rect"].y +=hauteur
     if touches[pygame.K_DOWN] :
         if timer%5==0 :
             ianime = (ianime+1)%len(imagesPerso["down"])
             imagePerso = imagesPerso["down"][ianime]
         if not(grillePlateforme[int((perso["rect"].y+HauteurPerso)/hauteurCase)][int((perso["rect"].x)/largeurCase)]==0) :
-            perso["rect"].y+=5
+            perso["rect"].y+=33
         #else: perso["rect"].y=perso["rect"].y
 
+    for i in range(len(tabScroll)):
+        for j in range(len(tabScroll[i])):
+            if perso["rect"].y > hauteur and grillePlateforme[i+32][j]:
+                tabScroll[i][j] = grillePlateforme[i+32][j]
+                perso["rect"].y -=hauteur
+
+    for i in range(len(tabScroll)):
+        for j in range(len(tabScroll[i])):
+            tabScroll[i][j] = grillePlateforme[i][j]
+
+# for i in range(len(tabScroll)):
+#     for j in range(len(tabScroll[i])):
+#             tabScroll[i][j] = grillePlateforme[i+int(perso["rect"].y/hauteurCase)][j+int(perso["rect"].x/largeurCase)]
 
     if touches[pygame.K_RIGHT] :
         if timer%5==0 :
@@ -556,10 +610,15 @@ while continuer:
             imagePerso = imagesPerso["right"][ianime]
         if int(perso["rect"].y) > int(hauteur/2) :
             if not(grillePlateforme[int((perso["rect"].y)/hauteurCase)][int((perso["rect"].x+LargeurPerso)/largeurCase)]==0) :
-                perso["rect"].x+=5
+                perso["rect"].x+=33
         else:
             if not(grillePlateforme[int((perso["rect"].y)/hauteurCase)+1][int((perso["rect"].x+LargeurPerso)/largeurCase)]==0) :
-                perso["rect"].x+=5
+                perso["rect"].x+=33
+    for i in range(len(tabScroll)):
+        for j in range(len(tabScroll[i])):
+            if perso["rect"].y > largeur and grillePlateforme[i][j+58]:
+                tabScroll[i][j] = grillePlateforme[i][j+58]
+                perso["rect"].x -=largeur
         #else: perso["rect"].x=perso["rect"].x
 
     if touches[pygame.K_LEFT] :
@@ -568,10 +627,16 @@ while continuer:
             imagePerso = imagesPerso["left"][ianime]
         if int(perso["rect"].y) > int(hauteur/2) :
             if not(grillePlateforme[int((perso["rect"].y)/hauteurCase)][int((perso["rect"].x-6)/largeurCase)]==0) :
-                perso["rect"].x-=5
+                perso["rect"].x-=33
         else:
             if not(grillePlateforme[int((perso["rect"].y)/hauteurCase)+1][int((perso["rect"].x-6)/largeurCase)]==0) :
-                perso["rect"].x-=5
+                perso["rect"].x-=33
+
+    for i in range(len(tabScroll)):
+        for j in range(len(tabScroll[i])):
+            if perso["rect"].y < largeur and grillePlateforme[i][j-58]:
+                tabScroll[i][j] = grillePlateforme[i][j-58]
+                perso["rect"].x +=largeur
         #else: perso["rect"].x=perso["rect"].x
 
 
@@ -659,29 +724,31 @@ while continuer:
                 fenetre.blit(imageFond06, rectFond6)
 
     #PLATEFORMES
-    for i in range(len(grillePlateforme)) :
-        for j in range(len(grillePlateforme[i])) :
-            if grillePlateforme[i][j] == 1 :
+
+
+    for i in range(len(tabScroll)) :
+        for j in range(len(tabScroll[i])) :
+            if tabScroll[i][j] == 1 :
                 rectPlateforme1 = imagePont01.get_rect()
                 rectPlateforme1.x = j*largeurCase + scrollx
                 rectPlateforme1.y = i*hauteurCase + scrolly
                 fenetre.blit(imagePont01,rectPlateforme1)
-            if grillePlateforme[i][j] == 2 :
+            if tabScroll[i][j] == 2 :
                 rectPlateforme2 = imageMarketplace01.get_rect()
                 rectPlateforme2.x = j*largeurCase + scrollx
                 rectPlateforme2.y = i*hauteurCase + scrolly
                 fenetre.blit(imageMarketplace01,rectPlateforme2)
-            if grillePlateforme[i][j] == 3 :
+            if tabScroll[i][j] == 3 :
                 rectPlateforme3 = imageMarketplace01.get_rect()
                 rectPlateforme3.x = j*largeurCase + scrollx
                 rectPlateforme3.y = i*hauteurCase + scrolly
                 fenetre.blit(imageMarketplace02,rectPlateforme3)
-            if grillePlateforme[i][j] == 4 :
+            if tabScroll[i][j] == 4 :
                 rectPlateforme4 = imageFond.get_rect()
                 rectPlateforme4.x = j*largeurCase + scrollx
                 rectPlateforme4.y = i*hauteurCase + scrolly
                 fenetre.blit(imageFond,rectPlateforme4)
-            if grillePlateforme[i][j] == 5 :
+            if tabScroll[i][j] == 5 :
                 rectPlateforme5 = imagePontvertical01.get_rect()
                 rectPlateforme5.x = j*largeurCase + scrollx
                 rectPlateforme5.y = i*hauteurCase + scrolly

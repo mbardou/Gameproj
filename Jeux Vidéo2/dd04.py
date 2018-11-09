@@ -363,6 +363,7 @@ hpHealed = 0
 #cd inventaire
 cdinv = 20
 cdpot = 50
+hpcolor = (255, 0, 0)
 while continuer:
     # print("je peux tirer ? "+str(perso["canshoot"]))
 
@@ -544,6 +545,7 @@ while continuer:
         tir["canhit"] = True
         tir["rect"] = rectbone
         tir["direction"] = dirbone
+        tir["touche"] = 1
 
 
         tirs.append(tir)
@@ -610,7 +612,7 @@ while continuer:
 
     tempTab = []
     for t in tirs:
-        if not(t["rect"].x > 1024 or t["rect"].x < 0 or t["rect"].y > 768 or t["rect"].y<0) :
+        if not(t["rect"].x > 1024 or t["rect"].x < 0 or t["rect"].y > 768 or t["rect"].y<0) and t["touche"]==1 :
             tempTab.append(t)
     tirs = tempTab
 
@@ -718,6 +720,7 @@ while continuer:
                 if t["canhit"] == True:
                     blob["pv"] -= 10
                     t["canhit"] = False
+                    t["touche"] = 0
     temptablob = []
     for b in blobs :
         if b["pv"] <= 0 :
@@ -953,11 +956,14 @@ while continuer:
     #Health Bar contour
     pygame.draw.rect(fenetre, (200, 0,255), pygame.Rect(largeur-233, hauteur-(hauteur-35), hpBarMax+4, 14),4)
     #HealthBar
+    if hp == hpBarMax:
+        hpcolor = (0,255,0)
+    else: hpcolor = (255,0,0)
     if hp < 0 :
         hpAffiche = 0
     else :
         hpAffiche = hp
-    pygame.draw.rect(fenetre, (255, 0, 0), pygame.Rect(largeur-230, hauteur-(hauteur-38), hpAffiche, 10))
+    pygame.draw.rect(fenetre, hpcolor, pygame.Rect(largeur-230, hauteur-(hauteur-38), hpAffiche, 10))
     if hp <= 0 :
         pygame.quit()
 

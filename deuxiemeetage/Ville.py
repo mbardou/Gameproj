@@ -14,7 +14,7 @@ fontChat = pygame.font.SysFont("monospace", 15)
 # fenetre=pygame.display.set_mode((largeur,hauteur))
 # fenetre=pygame.display.set_mode((largeur,hauteur),HWSURFACE|DOUBLEBUF|RESIZABLE)
 fenetre=pygame.display.set_mode((largeur,hauteur), FULLSCREEN)
-rectFenetre = fenetre.get_rect()
+# rectFenetre = fenetre.get_rect()
 imageChatbox = pygame.image.load("pictures/FenetreChat1.png").convert_alpha()
 rectChatbox = imageChatbox.get_rect()
 rectChatbox.x = 200
@@ -102,11 +102,8 @@ temp = pygame.image.load("pictures/coffre1.png").convert_alpha()
 imagesCoffre["fermer"].append(temp)
 temp = pygame.image.load("pictures/coffre2.png").convert_alpha()
 imagesCoffre["ouvert"].append(temp)
-# temp = pygame.image.load("pictures/coffre3.png").convert_alpha()
-# imagesCoffre["ouvert"].append(temp)
 
 icoffre = 0
-
 imageCoffre = imagesCoffre["fermer"][icoffre]
 
 coffre = {}
@@ -126,7 +123,6 @@ temp = pygame.image.load("pictures/trash2.png").convert_alpha()
 imagesTrash["ouvert"].append(temp)
 
 itrash = 0
-
 imageTrash = imagesTrash["fermer"][itrash]
 
 trash = {}
@@ -399,7 +395,7 @@ wolf["img"] = imageWolf
 ianime = 0
 imagePerso = imagesPerso["down"][ianime]
 rectPerso = imagePerso.get_rect()
-
+rectPersounvirgulecinq = imagePerso.get_rect()
 perso = {}
 perso["rect"]=rectPerso
 perso["img"]=imagePerso
@@ -407,8 +403,8 @@ perso["direction"]="right"
 perso["canshoot"]=True
 perso["cooldown"]=0
 
-perso["rect"].x= 450
-perso["rect"].y= 300
+perso["rect"].x= 2400
+perso["rect"].y= 500
 horloge = pygame.time.Clock()
 
 objet = {}
@@ -499,7 +495,7 @@ with open("fondville.txt") as f :
             newLine.append(int(c))
         grilleFond.append(newLine)
 
-with open("plateforme.txt") as f :
+with open("plateforme2.txt") as f :
     for line in f :
         tabLigne = line.split()
         newLine = []
@@ -517,8 +513,8 @@ with open("table.txt") as f :
 
 #_______________________________________________________________________________
 
-xf = 350
-yf = 160
+xf = 0
+yf = 0
 
 Heal = 0
 Chat = ''
@@ -532,6 +528,7 @@ CurrentWindow = 'Chat'
 hpBarMax = 200
 hp = 200
 hpHealed = 0
+
 while continuer:
     horloge.tick(30)
     timer+=1
@@ -820,21 +817,22 @@ while continuer:
             if grilledecors[i][j] == 35 :
                 img = imageLitpaille01
 
-            # if grilledecors[i][j] == 36 :
-            #     img = imageCoffre
-            #
-            #     # rectDecors36 = imageCoffre.get_rect()
-            #     # rectDecors36.x = o*largeurcaseDecors
-            #     # rectDecors36.y = i*largeurcaseDecors
-            #     # fenetre.blit(imageCoffre, rectDecors36)
-            #     if touches[pygame.K_SPACE] and perso["rect"].colliderect(img) :
-            #         if timer%2==0:
-            #             icoffre = (icoffre+1)%len(imagesCoffre["ouvert"])
-            #             imageCoffre = imagesCoffre["ouvert"][icoffre]
-            #     elif not(perso["rect"].colliderect(img)) :
-            #         imageCoffre = imagesCoffre["fermer"][icoffre]
-            # if grilledecors[i][j] == 37 :
-            #     rectDecors37 = imageTreesiooky01
+            if grilledecors[i][j] == 36 :
+                # img = imageCoffre
+                rectDecors36 = imageCoffre.get_rect()
+                rectDecors36.x = i*largeurcaseDecors -xf
+                rectDecors36.y = j*largeurcaseDecors -yf
+
+
+                fenetre.blit(imageCoffre, rectDecors36)
+                if touches[pygame.K_SPACE] and perso["rect"].colliderect(rectDecors36) :
+                    if timer%2==0:
+                        icoffre = (icoffre+1)%len(imagesCoffre["ouvert"])
+                        imageCoffre = imagesCoffre["ouvert"][icoffre]
+                elif not(perso["rect"].colliderect(rectDecors36)) :
+                    imageCoffre = imagesCoffre["fermer"][icoffre]
+            if grilledecors[i][j] == 37 :
+                rectDecors37 = imageTreesiooky01
             # if grilledecors[i][j] == 38 :
             #     img = imageWolf
             #     # rectDecors38 = imageWolf.get_rect()
@@ -904,7 +902,13 @@ while continuer:
             if not img == 0 :
                 Position()
     # if rectCarquois.get_rect().collidepoint(pygame.mouse.get_pos()) and :
-    fenetre.blit(imagePerso, perso["rect"])
+    fenetre.blit(imagePerso, (perso["rect"].x - xf, perso["rect"].y -yf))
+    rectPersounvirgulecinq.x =  perso["rect"].x - xf
+    rectPersounvirgulecinq.y = perso["rect"].y -yf
+    pygame.draw.rect(fenetre, (0, 0, 255), perso["rect"])
+    pygame.draw.rect(fenetre, (0, 255, 0), rectPersounvirgulecinq)
+    rectPersounvirgulecinq.x = largeur/2
+    rectPersounvirgulecinq.y = hauteur/2
 
     if touches[pygame.K_RETURN] and perso["rect"].colliderect(rectDecors19) :
             RanChat = random.randint(1,10)
