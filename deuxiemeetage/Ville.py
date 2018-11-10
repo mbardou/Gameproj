@@ -21,12 +21,20 @@ rectChatbox.x = 200
 rectChatbox.y = 700
 # rectChatbox.x = 0
 # rectChatbox.y = (hauteur)-(rectChatbox.h)
+# imageFond = pygame.image.load("pictures/sol/marecage1.png").convert_alpha()
+# imageFond01 = pygame.image.load("pictures/sol/marecage2.png").convert_alpha()
 imageFond = pygame.image.load("pictures/eau.png").convert_alpha()
 imageFond02 = pygame.image.load("pictures/sol/solpierre9.png").convert_alpha()
 imageFond03 = pygame.image.load("pictures/sol/solterre11.png").convert_alpha()
 imageFond04 = pygame.image.load("pictures/sol/solterre14.png").convert_alpha()
 imageFond05 = pygame.image.load("pictures/sol/solterre12.png").convert_alpha()
 imageFond06 = pygame.image.load("pictures/sol/solterre13.png").convert_alpha()
+imageFond07 = pygame.image.load("pictures/sol/solpierre10.png").convert_alpha()
+imageFond08 = pygame.image.load("pictures/sol/solpierre11.png").convert_alpha()
+imageFond09 = pygame.image.load("pictures/sol/solterre17.png").convert_alpha()
+imageFond10 = pygame.image.load("pictures/sol/solcurse1.png").convert_alpha()
+imageFond11 = pygame.image.load("pictures/sol/soldust1.png").convert_alpha()
+imageHerbe01 = pygame.image.load("pictures/herbe1.png").convert_alpha()
 imagePont01 = pygame.image.load("pictures/pont01.png").convert_alpha()
 imagePont02 = pygame.image.load("pictures/pont2.png").convert_alpha()
 imagePont03 = pygame.image.load("pictures/pont3.png").convert_alpha()
@@ -77,6 +85,7 @@ imagePnj04bas = pygame.image.load("pictures/pnj4bas.png").convert_alpha()
 imagePnj04left = pygame.image.load("pictures/pnj4left.png").convert_alpha()
 imagePnj05 = pygame.image.load("pictures/pnj5.png").convert_alpha()
 imagePnj06 = pygame.image.load("pictures/pnj6.png").convert_alpha()
+imagePnj07 = pygame.image.load("pictures/pnj7.png").convert_alpha()
 imageCadavre01 = pygame.image.load("pictures/cadavre1.png").convert_alpha()
 imageLitpaille01 = pygame.image.load("pictures/litpaille1.png").convert_alpha()
 imageCarquois = pygame.image.load("pictures/Carquois.png").convert_alpha()
@@ -90,6 +99,24 @@ imageIconeChat = pygame.image.load("pictures/ChatIcon.png").convert_alpha()
 rectIconeChat = imageIconeChat.get_rect()
 imageHealthPot01 = pygame.image.load("pictures/pt01.png").convert_alpha()
 rectInv01 = imageHealthPot01.get_rect()
+imagePortebarrier = pygame.image.load("pictures/portebarrier2.png").convert_alpha()
+imageBarrier03 = pygame.image.load("pictures/barrier3.png").convert_alpha()
+imageBarrier04 = pygame.image.load("pictures/barrier5.png").convert_alpha()
+imageTombe01 = pygame.image.load("pictures/tombe1.png").convert_alpha()
+imageTombe02 = pygame.image.load("pictures/tombe2.png").convert_alpha()
+imageTombe03 = pygame.image.load("pictures/tombe3.png").convert_alpha()
+imageTombe04 = pygame.image.load("pictures/tombe4.png").convert_alpha()
+imageLampe02 = pygame.image.load("pictures/lampe3.png").convert_alpha()
+imageCampement01 = pygame.image.load("pictures/campement1.png").convert_alpha()
+imageTree03 = pygame.image.load("pictures/tree4.png").convert_alpha()
+imageBonfire01 = pygame.image.load("pictures/bonfire1.png").convert_alpha()
+imageTree04 = pygame.image.load("pictures/tree5.png").convert_alpha()
+imageTree05 = pygame.image.load("pictures/tree6.png").convert_alpha()
+imageFlaquedeau01 = pygame.image.load("pictures/flaquedeau1.png").convert_alpha()
+imageRondincut01 = pygame.image.load("pictures/rondincut1.png").convert_alpha()
+# imageRondincut02 = pygame.image.load("pictures/rondincut2.png").convert_alpha()
+imageSquelette01 = pygame.image.load("pictures/zs/sk01.png").convert_alpha()
+
 
 # animation de l'ouverture du coffre_____________________________________________________
 
@@ -403,8 +430,8 @@ perso["direction"]="right"
 perso["canshoot"]=True
 perso["cooldown"]=0
 
-perso["rect"].x= 2400
-perso["rect"].y= 500
+perso["rect"].x= 1300
+perso["rect"].y= 750
 horloge = pygame.time.Clock()
 
 objet = {}
@@ -495,7 +522,7 @@ with open("fondville.txt") as f :
             newLine.append(int(c))
         grilleFond.append(newLine)
 
-with open("plateforme2.txt") as f :
+with open("plateforme.txt") as f :
     for line in f :
         tabLigne = line.split()
         newLine = []
@@ -564,7 +591,7 @@ while continuer:
             ianime = (ianime+1)%len(imagesPerso["up"])
             imagePerso = imagesPerso["up"][ianime]
         if not(grillePlateforme[int((perso["rect"].y+HauteurPerso/2)/hauteurCase)][int((perso["rect"].x)/largeurCase)]==0) :
-            perso["rect"].y-=5
+            perso["rect"].y-=10
         #else: perso["rect"].y=perso["rect"].y
 
     if touches[pygame.K_DOWN] :
@@ -572,7 +599,7 @@ while continuer:
             ianime = (ianime+1)%len(imagesPerso["down"])
             imagePerso = imagesPerso["down"][ianime]
         if not(grillePlateforme[int((perso["rect"].y+HauteurPerso)/hauteurCase)][int((perso["rect"].x)/largeurCase)]==0) :
-            perso["rect"].y+=5
+            perso["rect"].y+=10
         #else: perso["rect"].y=perso["rect"].y
 
 
@@ -582,10 +609,10 @@ while continuer:
             imagePerso = imagesPerso["right"][ianime]
         if int(perso["rect"].y) > int(hauteur/2) :
             if not(grillePlateforme[int((perso["rect"].y)/hauteurCase)][int((perso["rect"].x+LargeurPerso)/largeurCase)]==0) :
-                perso["rect"].x+=5
+                perso["rect"].x+=10
         else:
             if not(grillePlateforme[int((perso["rect"].y)/hauteurCase)+1][int((perso["rect"].x+LargeurPerso)/largeurCase)]==0) :
-                perso["rect"].x+=5
+                perso["rect"].x+=10
         #else: perso["rect"].x=perso["rect"].x
 
     if touches[pygame.K_LEFT] :
@@ -594,10 +621,10 @@ while continuer:
             imagePerso = imagesPerso["left"][ianime]
         if int(perso["rect"].y) > int(hauteur/2) :
             if not(grillePlateforme[int((perso["rect"].y)/hauteurCase)][int((perso["rect"].x-6)/largeurCase)]==0) :
-                perso["rect"].x-=5
+                perso["rect"].x-=10
         else:
             if not(grillePlateforme[int((perso["rect"].y)/hauteurCase)+1][int((perso["rect"].x-6)/largeurCase)]==0) :
-                perso["rect"].x-=5
+                perso["rect"].x-=10
         #else: perso["rect"].x=perso["rect"].x
 
 
@@ -674,6 +701,23 @@ while continuer:
             if grilleFond[i][j] == 5 :
                 img = imageFond06
 
+            if grilleFond[i][j] == 6 :
+                img = imageFond07
+
+            if grilleFond[i][j] == 7 :
+                img = imageFond08
+
+            if grilleFond[i][j] == 8 :
+                img = imageFond09
+
+            if grilleFond[i][j] == 9 :
+                img = imageFond10
+
+            if grilleFond[i][j] == 10 :
+                img = imageFond11
+
+
+
             if not img == 0 :
                 Position()
 
@@ -701,9 +745,6 @@ while continuer:
 
             if grillePlateforme[i][j] == 7 :
                 img = imagePont03
-
-            if grillePlateforme[i][j] == 8 :
-                img = imagePont04
 
             if not img == 0 :
                 Position()
@@ -884,6 +925,52 @@ while continuer:
                 img = imageTree02
             if grilledecors[i][j] == 45 :
                 img = imageTonneau02
+            if grilledecors[i][j] == 46 :
+                img = imagePortebarrier
+            if grilledecors[i][j] == 47 :
+                img = imageBarrier03
+            if grilledecors[i][j] == 48 :
+                img = imageBarrier04
+            if grilledecors[i][j] == 49 :
+                img = imageTombe01
+            if grilledecors[i][j] == 50 :
+                img = imageLampe02
+            if grilledecors[i][j] == 51 :
+                img = imageCampement01
+            if grilledecors[i][j] == 52 :
+                img = imageHerbe01
+            if grilledecors[i][j] == 53 :
+                img = imageTree03
+            if grilledecors[i][j] == 54 :
+                img = imageBonfire01
+            if grilledecors[i][j] == 55 :
+                img = imageTree04
+            if grilledecors[i][j] == 56 :
+                img = imageTree05
+            if grilledecors[i][j] == 57 :
+                img = imagePnj07
+            if grilledecors[i][j] == 58 :
+                img = imageFlaquedeau01
+            if grilledecors[i][j] == 59 :
+                img = imageTombe02
+            if grilledecors[i][j] == 60 :
+                img = imageTombe03
+            if grilledecors[i][j] == 61 :
+                img = imageTombe04
+            if grilledecors[i][j] == 62 :
+                img = imageRondincut01
+            # if grilledecors[i][j] == 63 :
+            #     img = imageRondincut02
+            if grilledecors[i][j] == 64 :
+                img = imageSquelette01
+
+
+
+
+
+
+
+
             if not img == 0 :
                 Position()
 
