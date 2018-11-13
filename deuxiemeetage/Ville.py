@@ -487,7 +487,8 @@ def Position():
     myRect = img.get_rect()
     myRect.x = j*largeurCase -xf
     myRect.y = i*hauteurCase -yf
-    fenetre.blit(img,myRect)
+    if not ((myRect.x < 0 or myRect.x > largeur/2 ) or ( myRect.y > hauteur/2 or myRect.y < 0)) :
+        fenetre.blit(img,myRect)
 
 
 def getReward(nbItem,CodeItem):
@@ -1004,8 +1005,10 @@ while continuer:
             if not img == 0 :
                 Position()
     # if rectCarquois.get_rect().collidepoint(pygame.mouse.get_pos()) and :
-    # fenetretemp = []
+    fenetretemp = []
+
     fenetre.blit(imagePerso, (perso["rect"].x - xf, perso["rect"].y -yf))
+
 
     # rectPersounvirgulecinq.x =  perso["rect"].x - xf
     # rectPersounvirgulecinq.y = perso["rect"].y -yf
