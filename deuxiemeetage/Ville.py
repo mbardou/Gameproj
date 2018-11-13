@@ -432,6 +432,7 @@ perso["cooldown"]=0
 
 perso["rect"].x= 1300
 perso["rect"].y= 750
+
 horloge = pygame.time.Clock()
 
 objet = {}
@@ -592,6 +593,8 @@ while continuer:
             imagePerso = imagesPerso["up"][ianime]
         if not(grillePlateforme[int((perso["rect"].y+HauteurPerso/2)/hauteurCase)][int((perso["rect"].x)/largeurCase)]==0) :
             perso["rect"].y-=10
+        elif not(grilleFond[int((perso["rect"].y)/hauteurCase)][int((perso["rect"].x-6)/largeurCase)]==0) :
+            perso["rect"].y-=10
         #else: perso["rect"].y=perso["rect"].y
 
     if touches[pygame.K_DOWN] :
@@ -599,6 +602,8 @@ while continuer:
             ianime = (ianime+1)%len(imagesPerso["down"])
             imagePerso = imagesPerso["down"][ianime]
         if not(grillePlateforme[int((perso["rect"].y+HauteurPerso)/hauteurCase)][int((perso["rect"].x)/largeurCase)]==0) :
+            perso["rect"].y+=10
+        elif not(grilleFond[int((perso["rect"].y)/hauteurCase)][int((perso["rect"].x-6)/largeurCase)]==0) :
             perso["rect"].y+=10
         #else: perso["rect"].y=perso["rect"].y
 
@@ -610,8 +615,12 @@ while continuer:
         if int(perso["rect"].y) > int(hauteur/2) :
             if not(grillePlateforme[int((perso["rect"].y)/hauteurCase)][int((perso["rect"].x+LargeurPerso)/largeurCase)]==0) :
                 perso["rect"].x+=10
+            elif not(grilleFond[int((perso["rect"].y)/hauteurCase)][int((perso["rect"].x-6)/largeurCase)]==0) :
+                perso["rect"].x+=10
         else:
             if not(grillePlateforme[int((perso["rect"].y)/hauteurCase)+1][int((perso["rect"].x+LargeurPerso)/largeurCase)]==0) :
+                perso["rect"].x+=10
+            elif not(grilleFond[int((perso["rect"].y)/hauteurCase)][int((perso["rect"].x-6)/largeurCase)]==0) :
                 perso["rect"].x+=10
         #else: perso["rect"].x=perso["rect"].x
 
@@ -622,8 +631,12 @@ while continuer:
         if int(perso["rect"].y) > int(hauteur/2) :
             if not(grillePlateforme[int((perso["rect"].y)/hauteurCase)][int((perso["rect"].x-6)/largeurCase)]==0) :
                 perso["rect"].x-=10
+            elif not(grilleFond[int((perso["rect"].y)/hauteurCase)][int((perso["rect"].x-6)/largeurCase)]==0) :
+                perso["rect"].x-=10
         else:
             if not(grillePlateforme[int((perso["rect"].y)/hauteurCase)+1][int((perso["rect"].x-6)/largeurCase)]==0) :
+                perso["rect"].x-=10
+            elif not(grilleFond[int((perso["rect"].y)/hauteurCase)][int((perso["rect"].x-6)/largeurCase)]==0) :
                 perso["rect"].x-=10
         #else: perso["rect"].x=perso["rect"].x
 
@@ -675,8 +688,8 @@ while continuer:
     if cdinv < 20 :
         cdinv+=1
 
-    xf = perso["rect"].x -400
-    yf = perso["rect"].y -300
+    xf = perso["rect"].x -largeur/2
+    yf = perso["rect"].y -hauteur/2
 
 # On Attribut un chiffre à une image qu'on placera dans une case dans la grille initialisé ci-dessus
     #FOND
@@ -745,6 +758,8 @@ while continuer:
 
             if grillePlateforme[i][j] == 7 :
                 img = imagePont03
+            if grillePlateforme[i][j] == 8 :
+                img = imageBonfire01
 
             if not img == 0 :
                 Position()
@@ -989,13 +1004,15 @@ while continuer:
             if not img == 0 :
                 Position()
     # if rectCarquois.get_rect().collidepoint(pygame.mouse.get_pos()) and :
+    # fenetretemp = []
     fenetre.blit(imagePerso, (perso["rect"].x - xf, perso["rect"].y -yf))
-    rectPersounvirgulecinq.x =  perso["rect"].x - xf
-    rectPersounvirgulecinq.y = perso["rect"].y -yf
-    pygame.draw.rect(fenetre, (0, 0, 255), perso["rect"])
-    pygame.draw.rect(fenetre, (0, 255, 0), rectPersounvirgulecinq)
-    rectPersounvirgulecinq.x = largeur/2
-    rectPersounvirgulecinq.y = hauteur/2
+
+    # rectPersounvirgulecinq.x =  perso["rect"].x - xf
+    # rectPersounvirgulecinq.y = perso["rect"].y -yf
+    # pygame.draw.rect(fenetre, (0, 0, 255), perso["rect"])
+    # pygame.draw.rect(fenetre, (0, 255, 0), rectPersounvirgulecinq)
+    # rectPersounvirgulecinq.x = largeur/2
+    # rectPersounvirgulecinq.y = hauteur/2
 
     if touches[pygame.K_RETURN] and perso["rect"].colliderect(rectDecors19) :
             RanChat = random.randint(1,10)
