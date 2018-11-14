@@ -34,6 +34,7 @@ imageFond08 = pygame.image.load("pictures/sol/solpierre11.png").convert_alpha()
 imageFond09 = pygame.image.load("pictures/sol/solterre17.png").convert_alpha()
 imageFond10 = pygame.image.load("pictures/sol/solcurse1.png").convert_alpha()
 imageFond11 = pygame.image.load("pictures/sol/soldust1.png").convert_alpha()
+imageFond12 = pygame.image.load("pictures/sol/solpierre15.png").convert_alpha()
 imageHerbe01 = pygame.image.load("pictures/herbe1.png").convert_alpha()
 imagePont01 = pygame.image.load("pictures/pont01.png").convert_alpha()
 imagePont02 = pygame.image.load("pictures/pont2.png").convert_alpha()
@@ -116,6 +117,12 @@ imageFlaquedeau01 = pygame.image.load("pictures/flaquedeau1.png").convert_alpha(
 imageRondincut01 = pygame.image.load("pictures/rondincut1.png").convert_alpha()
 # imageRondincut02 = pygame.image.load("pictures/rondincut2.png").convert_alpha()
 imageSquelette01 = pygame.image.load("pictures/zs/sk01.png").convert_alpha()
+imageBuisson03 = pygame.image.load("pictures/buisson3.png").convert_alpha()
+imagePnjdown08 = pygame.image.load("pictures/pnj8left.png").convert_alpha()
+imagePnjright08 = pygame.image.load("pictures/pnj8right.png").convert_alpha()
+imagePnjleft08 = pygame.image.load("pictures/pnj8down.png").convert_alpha()
+imageTree06 = pygame.image.load("pictures/tree7.png").convert_alpha()
+
 
 
 # animation de l'ouverture du coffre_____________________________________________________
@@ -737,6 +744,9 @@ while continuer:
             if grilleFond[i][j] == 10 :
                 img = imageFond11
 
+            if grilleFond[i][j] == 11 :
+                img = imageFond12
+
 
 
             if not img == 0 :
@@ -982,7 +992,10 @@ while continuer:
             if grilledecors[i][j] == 56 :
                 img = imageTree05
             if grilledecors[i][j] == 57 :
-                img = imagePnj07
+                rectDecors57 = imagePnj07.get_rect()
+                rectDecors57.x = j*largeurcaseDecors -xf
+                rectDecors57.y = i*largeurcaseDecors -yf
+                fenetre.blit(imagePnj07, rectDecors57)
             if grilledecors[i][j] == 58 :
                 img = imageFlaquedeau01
             if grilledecors[i][j] == 59 :
@@ -997,6 +1010,16 @@ while continuer:
             #     img = imageRondincut02
             if grilledecors[i][j] == 64 :
                 img = imageSquelette01
+            if grilledecors[i][j] == 65 :
+                img = imageBuisson03
+            if grilledecors[i][j] == 66 :
+                img = imagePnjright08
+            if grilledecors[i][j] == 67 :
+                img = imagePnjdown08
+            if grilledecors[i][j] == 68 :
+                img = imagePnjleft08
+            if grilledecors[i][j] == 69 :
+                img = imageTree06
 
 
 
@@ -1077,6 +1100,42 @@ fraîche, soit c'est le marchand
                 Chat = """Tu est nouveau dans ce bourg
 n'est-ce pas ?"""
                 chatcd = 0
+
+    elif touches[pygame.K_RETURN] and rectPersounvirgulecinq.colliderect(rectDecors57) :
+                RanChat = random.randint(1,10)
+                if RanChat == 1 and chatcd > 20 :
+                    Chat = """Vous là bas,
+il serait préférable pour vous
+de rebrousser chemin
+..."""
+                    chatcd = 0
+                elif RanChat == 2 and chatcd > 20 :
+                    Chat = """Suite aux plaintes des habitants,
+mon supérieur ...
+m'a ordonné d'enquêter
+sur ce cimetière ..."""
+                    chatcd = 0
+                elif RanChat == 3 and chatcd > 20 :
+                    Chat = """Quelque chose à reveiller les morts
+...
+Ils en rodent partout
+dans ces lieux """
+                    chatcd = 0
+                elif RanChat == 4 and chatcd > 20 :
+                    Chat = """Certains tombent en mer
+...
+et leur corps flottent
+tout le long du village """
+                    chatcd = 0
+                elif RanChat == 5 and chatcd > 20 :
+                    Chat = """ M m m MOI, p pe PEUR
+...
+JE SUIS UN COURAGEUX chevalier,
+je réglerai ce problème
+u u une fois que
+...
+j'aurais finis thé"""
+                    chatcd = 0
 
     elif touches[pygame.K_RETURN] and rectPersounvirgulecinq.colliderect(rectDecors20) :
         RanChat = random.randint(1,10)
