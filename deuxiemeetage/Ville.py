@@ -128,7 +128,7 @@ imagePont05c = pygame.image.load("pictures/pont5c.png").convert_alpha()
 imagePont05d = pygame.image.load("pictures/pont5d.png").convert_alpha()
 imagePont05e = pygame.image.load("pictures/pont5e.png").convert_alpha()
 imagePont05f = pygame.image.load("pictures/pont5f.png").convert_alpha()
-
+rectCarquois2 = imageCarquois.get_rect()
 
 
 # animation de l'ouverture du coffre_____________________________________________________
@@ -424,6 +424,7 @@ temp = pygame.image.load("pictures/wolf/wolfsleepright4.png").convert_alpha()
 imagesWolf["sleepright"].append(temp)
 
 
+
 #_______________________________________________________________________________
 
 iwolf = 0
@@ -569,6 +570,7 @@ CurrentWindow = 'Chat'
 hpBarMax = 200
 hp = 200
 hpHealed = 0
+tirs = []
 
 while continuer:
     horloge.tick(30)
@@ -654,7 +656,56 @@ while continuer:
         #else: perso["rect"].x=perso["rect"].x
 
 
+    if touches[pygame.K_SPACE] and perso["canshoot"] :
+        rectCarquois2 = imageCarquois.get_rect()
+        rectCarquois2.x = perso["rect"].x
+        rectCarquois2.y = perso["rect"].y
 
+        if touches[pygame.K_UP] :
+            dirbone = 0
+        elif touches[pygame.K_RIGHT] :
+            dirbone = 1
+        elif touches[pygame.K_DOWN] :
+            dirbone = 2
+        elif touches[pygame.K_LEFT] :
+            dirbone = 3
+        else :
+            dirbone = 4
+
+
+        tir = {}
+        tir["canhit"] = True
+        tir["rect"] = rectCarquois2
+        tir["direction"] = dirbone
+        tir["touche"] = 1
+
+
+        tirs.append(tir)
+        perso["canshoot"] = False
+        perso["cooldown"] = 0
+
+    if perso["canshoot"] == False:
+        perso["cooldown"] += 1
+        if perso["cooldown"] > 8 :
+            perso["canshoot"] = True
+
+
+
+    for t in tirs:
+        if t["direction"] == 0:
+                t["rect"].y += - 20
+        if t["direction"] == 1:
+                t["rect"].x += + 20
+        if t["direction"] == 2:
+                t["rect"].y += + 20
+        if t["direction"] == 3:
+                t["rect"].x += - 20
+
+    tempTab = []
+    for t in tirs:
+        if not(t["rect"].x > perso["rect"].x+largeur/2 or t["rect"].x < perso["rect"].x - largeur/2 or t["rect"].y > perso["rect"].y + hauteur/2 or t["rect"].y<perso["rect"].y - hauteur/2) and t["touche"]==1 :
+            tempTab.append(t)
+    tirs = tempTab
 #Changement fenetre chat/Inventory
     if CurrentWindow == 'Chat' and cdinv == 20 and pygame.mouse.get_pressed() == (True,False,False):
         if (rectIconeBag).collidepoint(pygame.mouse.get_pos()):
@@ -1069,6 +1120,8 @@ while continuer:
                 img = imagefish02
             if not img == 0 :
                 Position(myRect)
+    for t in tirs:
+        fenetre.blit(imageCarquois, (t["rect"].x-xf,t["rect"].y-yf))
     # if rectCarquois.get_rect().collidepoint(pygame.mouse.get_pos()) and :
 
     fenetre.blit(imagePerso, (perso["rect"].x - xf, perso["rect"].y -yf))
