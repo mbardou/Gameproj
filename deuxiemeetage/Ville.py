@@ -122,6 +122,12 @@ imagePnjdown08 = pygame.image.load("pictures/pnj8left.png").convert_alpha()
 imagePnjright08 = pygame.image.load("pictures/pnj8right.png").convert_alpha()
 imagePnjleft08 = pygame.image.load("pictures/pnj8down.png").convert_alpha()
 imageTree06 = pygame.image.load("pictures/tree7.png").convert_alpha()
+imagePont05a = pygame.image.load("pictures/pont5a.png").convert_alpha()
+imagePont05b = pygame.image.load("pictures/pont5b.png").convert_alpha()
+imagePont05c = pygame.image.load("pictures/pont5c.png").convert_alpha()
+imagePont05d = pygame.image.load("pictures/pont5d.png").convert_alpha()
+imagePont05e = pygame.image.load("pictures/pont5e.png").convert_alpha()
+imagePont05f = pygame.image.load("pictures/pont5f.png").convert_alpha()
 
 
 
@@ -490,8 +496,7 @@ largeurcaseTable = 33
 hauteurcaseTable = 33
 
 
-def Position():
-    myRect = img.get_rect()
+def Position(myRect):
     myRect.x = j*largeurCase -xf
     myRect.y = i*hauteurCase -yf
     if not ((myRect.x < 0 or myRect.x > largeur ) or ( myRect.y > hauteur or myRect.y < 0)) :
@@ -708,6 +713,8 @@ while continuer:
 
 # On Attribut un chiffre à une image qu'on placera dans une case dans la grille initialisé ci-dessus
     #FOND
+    myRect = imageFond.get_rect()
+
     for i in range(len(grilleFond)) :
         for j in range(len(grilleFond[i])) :
             img = 0
@@ -749,8 +756,9 @@ while continuer:
 
 
 
+
             if not img == 0 :
-                Position()
+                Position(myRect)
 
     #PLATEFORMES
     for i in range(len(grillePlateforme)) :
@@ -779,8 +787,21 @@ while continuer:
             if grillePlateforme[i][j] == 8 :
                 img = imageBonfire01
 
+            if grillePlateforme[i][j] == 9 :
+                img = imagePont05a
+            if grillePlateforme[i][j] == 10 :
+                img = imagePont05b
+            if grillePlateforme[i][j] == 11 :
+                img = imagePont05c
+            if grillePlateforme[i][j] == 12 :
+                img = imagePont05d
+            if grillePlateforme[i][j] == 13 :
+                img = imagePont05e
+            if grillePlateforme[i][j] == 14 :
+                img = imagePont05f
+
             if not img == 0 :
-                Position()
+                Position(myRect)
 
     #DECORS
     for i in range(len(grilledecors)) :
@@ -1013,7 +1034,10 @@ while continuer:
             if grilledecors[i][j] == 65 :
                 img = imageBuisson03
             if grilledecors[i][j] == 66 :
-                img = imagePnjright08
+                rectDecors66 = imagePnjright08.get_rect()
+                rectDecors66.x = j*largeurcaseDecors -xf
+                rectDecors66.y = i*largeurcaseDecors -yf
+                fenetre.blit(imagePnjright08, rectDecors66)
             if grilledecors[i][j] == 67 :
                 img = imagePnjdown08
             if grilledecors[i][j] == 68 :
@@ -1029,7 +1053,7 @@ while continuer:
 
 
             if not img == 0 :
-                Position()
+                Position(myRect)
 
 
     for i in range(len(grilletable)) :
@@ -1044,7 +1068,7 @@ while continuer:
             if grilletable[i][j] == 4 :
                 img = imagefish02
             if not img == 0 :
-                Position()
+                Position(myRect)
     # if rectCarquois.get_rect().collidepoint(pygame.mouse.get_pos()) and :
 
     fenetre.blit(imagePerso, (perso["rect"].x - xf, perso["rect"].y -yf))
@@ -1263,7 +1287,7 @@ qu'ils ne valaient
 pas un clou !"""
                 chatcd = 0
 
-    elif touches[pygame.K_RETURN] and rectPersounvirgulecinq.colliderect(rectDecors22) :
+    elif touches[pygame.K_RETURN] and rectPersounvirgulecinq.colliderect(rectDecors66) :
         Chat = 'bonjour petite! une friandise ?'
 
 
