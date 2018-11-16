@@ -211,7 +211,63 @@ imagesPerso["up"].append(temp)
 temp = pygame.image.load("pictures/persoframes/prot064.png").convert_alpha()
 imagesPerso["up"].append(temp)
 #_______________________________________________________________________________
+imagesCGblob = {}
 
+imagesCGblob["proj"]=[]
+temp = pygame.image.load("pictures/CGblob01.png").convert_alpha()
+imagesCGblob["proj"].append(temp)
+temp = pygame.image.load("pictures/CG02.png").convert_alpha()
+imagesCGblob["proj"].append(temp)
+
+
+
+imagesBlob = {}
+
+imagesBlob["left"]=[]
+imagesBlob["right"]=[]
+
+temp = pygame.image.load("blobframes/idle/blob01.png").convert_alpha()
+imagesBlob["left"].append(temp)
+temp = pygame.image.load("blobframes/idle/blob02.png").convert_alpha()
+imagesBlob["left"].append(temp)
+temp = pygame.image.load("blobframes/idle/blob03.png").convert_alpha()
+imagesBlob["left"].append(temp)
+temp = pygame.image.load("blobframes/idle/blob04.png").convert_alpha()
+imagesBlob["left"].append(temp)
+temp = pygame.image.load("blobframes/idle/blob05.png").convert_alpha()
+imagesBlob["left"].append(temp)
+temp = pygame.image.load("blobframes/idle/blob06.png").convert_alpha()
+imagesBlob["left"].append(temp)
+temp = pygame.image.load("blobframes/idle/blob07.png").convert_alpha()
+imagesBlob["left"].append(temp)
+temp = pygame.image.load("blobframes/idle/blob08.png").convert_alpha()
+imagesBlob["left"].append(temp)
+
+
+imageCGblob = pygame.image.load("pictures/CGblob01.png").convert_alpha()
+
+
+imagesBlobf = {}
+
+imagesBlobf["left"]=[]
+imagesBlobf["right"]=[]
+
+temp = pygame.image.load("blobframes/idle/blobf01.png").convert_alpha()
+imagesBlobf["left"].append(temp)
+temp = pygame.image.load("blobframes/idle/blobf02.png").convert_alpha()
+imagesBlobf["left"].append(temp)
+temp = pygame.image.load("blobframes/idle/blobf03.png").convert_alpha()
+imagesBlobf["left"].append(temp)
+temp = pygame.image.load("blobframes/idle/blobf04.png").convert_alpha()
+imagesBlobf["left"].append(temp)
+temp = pygame.image.load("blobframes/idle/blobf05.png").convert_alpha()
+imagesBlobf["left"].append(temp)
+temp = pygame.image.load("blobframes/idle/blobf06.png").convert_alpha()
+imagesBlobf["left"].append(temp)
+temp = pygame.image.load("blobframes/idle/blobf07.png").convert_alpha()
+imagesBlobf["left"].append(temp)
+temp = pygame.image.load("blobframes/idle/blobf08.png").convert_alpha()
+imagesBlobf["left"].append(temp)
 
 #Dico image Wolf________________________________________________________________
 
@@ -554,7 +610,8 @@ with open("table.txt") as f :
         grilletable.append(newLine)
 
 #_______________________________________________________________________________
-
+score_font = pygame.font.Font(None, 30)
+couleur_font = (255,0,0)
 xf = 0
 yf = 0
 
@@ -570,7 +627,43 @@ CurrentWindow = 'Chat'
 hpBarMax = 200
 hp = 200
 hpHealed = 0
+cdmg = 50
+dedouble = 0
+i=0
+
+ianimeblobf = 0
+ianimeblob = 0
+ianimeblobCG = 0
+imageblob = imagesBlob["left"][ianimeblob]
+imageblobf = imagesBlobf["left"][ianimeblobf]
+imagePerso = imagesPerso["up"][ianime]
+rectCGblob = imageCGblob.get_rect()
+pvblob = 50
 tirs = []
+blobs = []
+tirsblob = []
+
+rectBlob = imageblob.get_rect()
+blob = {}
+
+blob["nom"] = "Bob"
+blob["pv"] = pvblob
+blob["rect"] = rectBlob
+blob["nbBlob"] = 2
+blob["vitesse"] = 4
+cdblob = 20
+dirblob = 0
+newblobx = 0
+newbloby = 0
+newnbBlob = 0
+rectBlob01 = imageblob.get_rect()
+rectBlob02 = imageblob.get_rect()
+maskPerso = pygame.mask.from_surface(imagePerso)
+maskBlob = pygame.mask.from_surface(imageblob)
+blob["rect"].x = 2000
+blob["rect"].y = 600
+blobs.append(blob)
+rectbone = imageCGblob.get_rect()
 
 while continuer:
     horloge.tick(30)
@@ -591,6 +684,162 @@ while continuer:
             rectInventory.y = (hauteur)-(rectInventory.h)
             rectChatbox.y = (hauteur)-(rectChatbox.h)
             fenetre=pygame.display.set_mode((largeur,hauteur), FULLSCREEN)
+    for b in blobs :
+        if rectPerso.x > b["rect"].x:
+            b["rect"].x += b["vitesse"]
+        if rectPerso.x < b["rect"].x :
+            b["rect"].x -= b["vitesse"]
+        if rectPerso.y > b["rect"].y:
+            b["rect"].y += b["vitesse"]
+        if rectPerso.y < b["rect"].y:
+            b["rect"].y -= b["vitesse"]
+
+    for ti in tirsblob :
+        if ti["direction"] == 4:
+                ti["rect"].y -=  20
+        if ti["direction"] == 5:
+                ti["rect"].x +=  15
+                ti["rect"].y -= 15
+        if ti["direction"] == 6:
+                ti["rect"].x += 20
+        if ti["direction"] == 7:
+                ti["rect"].x +=  15
+                ti["rect"].y += 15
+        if ti["direction"] == 8:
+                ti["rect"].y += 20
+        if ti["direction"] == 9:
+                ti["rect"].x -=  15
+                ti["rect"].y += 15
+        if ti["direction"] == 10:
+                ti["rect"].x -= 20
+        if ti["direction"] == 11:
+                ti["rect"].x -=  15
+                ti["rect"].y -= 15
+
+    for t in tirsblob :
+        if t["rect"].colliderect(perso["rect"]):
+            hp-=10
+
+    tempTablob = []
+    for ti in tirsblob:
+        if not(ti["rect"].x > 1024 or ti["rect"].x < 0 or ti["rect"].y > 768 or ti["rect"].y<0) :
+            tempTablob.append(ti)
+    tirsblob = tempTablob
+
+    for b in blobs :
+        if  cdblob == 20 and b["nom"] == "fürher":
+            if ((perso["rect"].x > b["rect"].x and (perso["rect"].x - b["rect"].x) < 300) or (perso["rect"].x < b["rect"].x and (b["rect"].x - perso["rect"].x) < 300)) :
+                cdblob = 0
+                rectbone = imageCGblob.get_rect()
+                rectbone.x = b["rect"].x
+                rectbone.y = b["rect"].y
+                if perso["rect"].x < b["rect"].x and perso["rect"].y < b["rect"].y:
+                    dirblob = 11
+                if perso["rect"].x < b["rect"].x and perso["rect"].y == b["rect"].y:
+                    dirblob = 10
+                if perso["rect"].x < b["rect"].x and perso["rect"].y > b["rect"].y:
+                    dirblob = 9
+                if perso["rect"].x == b["rect"].x and perso["rect"].y > b["rect"].y:
+                    dirblob = 8
+                if perso["rect"].x > b["rect"].x and perso["rect"].y > b["rect"].y:
+                    dirblob = 7
+                if perso["rect"].x > b["rect"].x and perso["rect"].y == b["rect"].y:
+                    dirblob = 6
+                if perso["rect"].x > b["rect"].x and perso["rect"].y < b["rect"].y:
+                    dirblob = 5
+                if perso["rect"].x == b["rect"].x and perso["rect"].y < b["rect"].y:
+                    dirblob = 4
+
+                tirblob = {}
+                tirblob["canhit"] = True
+                tirblob["rect"] = rectbone
+                tirblob["direction"] = dirblob
+
+
+
+                tirsblob.append(tirblob)
+    if cdblob < 20 :
+        cdblob +=1
+
+
+    for blob in blobs :
+        if maskPerso.overlap(maskBlob, (blob["rect"].left - perso["rect"].left, blob["rect"].top - perso["rect"].top)) != None:
+            if cdmg == 50 :
+                hp -= 10
+                cdmg = 0
+    if cdmg < 50 :
+        cdmg +=1
+    #Affiche le score en bas à droite quand le projectil et le blob ce touche
+    for t in tirs:
+        for blob in blobs :
+            if t["rect"].colliderect(blob["rect"]) :
+                if t["canhit"] == True:
+                    blob["pv"] -= 10
+                    t["canhit"] = False
+                    t["touche"] = 0
+    temptablob = []
+    for b in blobs :
+        if b["pv"] <= 0 :
+            b["nbBlob"] -= 1
+            if b["nbBlob"] >=1:
+                dedouble = 1
+
+    if dedouble == 1 :
+        for b in blobs:
+            if b["pv"] <= 0  and b["nbBlob"] >= 1:
+                newblobx = b["rect"].x + 20
+                newbloby = b["rect"].y + 20
+                newnbBlob = b["nbBlob"]
+        b01 = {}
+        b01["nom"] = "fürher"
+        b01["rect"] = rectBlob01
+        b01["rect"].x = newblobx
+        b01["rect"].y = newbloby
+        b01["nbBlob"] = newnbBlob
+        b01["pv"] = 80
+        b01["vitesse"] = 2
+        blobs.append(b01)
+
+        b02 = {}
+        b02["nom"] = "Blobby"
+        b02["rect"] = rectBlob02
+        b02["rect"].x = newblobx-30
+        b02["rect"].y = newbloby-30
+        b02["nbBlob"] = newnbBlob
+        b02["pv"] = 40
+        b02["vitesse"] = 6
+        blobs.append(b02)
+
+        print(str(blobs))
+
+    dedouble = 0
+
+    for blob in blobs :
+        if blob["pv"] > 0 and blob["nbBlob"] >= 1 :
+            temptablob.append(blob)
+    blobs = temptablob
+        # fenetre.blit(imageFond, rectFond)
+        # display.update(rectBlob)
+        #modification du score
+    #     score_surface = score_font.render("Score : {:5d} points".format(points), 1, couleur_font)
+
+
+    score_surface = score_font.render("Pvblob : {:5d} Pvblob".format(blob["pv"]), 1, couleur_font)
+
+
+    if i%3==0 :
+        ianimeblob = (ianimeblob+1)%len(imagesBlob["left"])
+        imageblob = imagesBlob["left"][ianimeblob]
+        ianimeblobCG = (ianimeblobCG+1)%len(imagesCGblob["proj"])
+        imageCGblob = imagesCGblob["proj"][ianimeblobCG]
+        # ianimebone = (ianimebone+1)%len(imagesbone["proj"])
+        # imagebone = imagesbone["proj"][ianimebone]
+        ianimeblobf = (ianimeblobf+1)%len(imagesBlobf["left"])
+        imageblobf = imagesBlobf["left"][ianimeblobf]
+
+
+
+
 
 
     if cdecran<50 :
@@ -1123,7 +1372,15 @@ while continuer:
     for t in tirs:
         fenetre.blit(imageCarquois, (t["rect"].x-xf,t["rect"].y-yf))
     # if rectCarquois.get_rect().collidepoint(pygame.mouse.get_pos()) and :
+    for blob in blobs :
+            if blob["nom"] == "fürher" :
+                fenetre.blit(imageblobf, (blob["rect"].x-xf,blob["rect"].y-yf))
+            else :
+                fenetre.blit(imageblob, (blob["rect"].x-xf,blob["rect"].y-yf))
 
+            for ti in tirsblob:
+                if ti["direction"] > -1:
+                    fenetre.blit(imageCGblob, (ti["rect"].x-xf,ti["rect"].y-yf))
     fenetre.blit(imagePerso, (perso["rect"].x - xf, perso["rect"].y -yf))
 
 
