@@ -664,11 +664,29 @@ blob["rect"].x = 2000
 blob["rect"].y = 600
 blobs.append(blob)
 rectbone = imageCGblob.get_rect()
-
+tab = []
+lvl = 0
 while continuer:
     horloge.tick(30)
     timer+=1
     touches = pygame.key.get_pressed()
+
+    if (RangerQuest==2 and lvl== 0):
+        lvl = 1
+        # grillePlateforme = tab
+        with open("stairs01.txt") as f :
+            for line in f :
+                tabLigne = line.split()
+                newLine = []
+                for c in tabLigne :
+                    newLine.append(int(c))
+                grillePlateforme.append(newLine)
+
+        grilletable = tab
+        # grilleFond = tab
+        grilledecors = tab
+        print("nimp")
+
     if touches[pygame.K_TAB] and cdecran ==50 :
         cdcdecran =0
         modeecran = (modeecran + 1)%2
@@ -722,7 +740,7 @@ while continuer:
 
     tempTablob = []
     for ti in tirsblob:
-        if not(ti["rect"].x > 1024 or ti["rect"].x < 0 or ti["rect"].y > 768 or ti["rect"].y<0) :
+        if not(ti["rect"].x > perso["rect"].x+largeur/2 or ti["rect"].x < perso["rect"].x - largeur/2  or ti["rect"].y > perso["rect"].y + hauteur/2 or ti["rect"].y<perso["rect"].y - hauteur/2) :
             tempTablob.append(ti)
     tirsblob = tempTablob
 
@@ -865,9 +883,9 @@ while continuer:
         if timer%5==0 :
             ianime = (ianime+1)%len(imagesPerso["down"])
             imagePerso = imagesPerso["down"][ianime]
-        if not(grillePlateforme[int((perso["rect"].y+HauteurPerso)/hauteurCase)][int((perso["rect"].x)/largeurCase)]==0) :
+        if not(grillePlateforme[int((perso["rect"].y+HauteurPerso+100)/hauteurCase)][int((perso["rect"].x)/largeurCase)]==0) :
             perso["rect"].y+=25
-        elif not(grilleFond[int((perso["rect"].y)/hauteurCase)][int((perso["rect"].x-6)/largeurCase)]==0) :
+        elif not(grilleFond[int((perso["rect"].y+100)/hauteurCase)][int((perso["rect"].x-6)/largeurCase)]==0) :
             perso["rect"].y+=25
         #else: perso["rect"].y=perso["rect"].y
 
@@ -1346,12 +1364,6 @@ while continuer:
                 img = imageTree06
 
 
-
-
-
-
-
-
             if not img == 0 :
                 Position(myRect)
 
@@ -1657,6 +1669,8 @@ pas un clou !"""
                     rectCane.x = 10+(j*largeurCaseInv)
                     rectCane.y = (rectInventory.y+20)+(i*hauteurCaseInv)
                     fenetre.blit(imageCane, rectCane)
+
+
 #Health Bar contour
     pygame.draw.rect(fenetre, (200, 0,255), pygame.Rect(largeur-233, hauteur-(hauteur-35), hpBarMax+4, 14),4)
     #HealthBar
