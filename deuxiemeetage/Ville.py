@@ -4,6 +4,12 @@ from pygame.locals import *
 from pygame import *
 import random
 pygame.init()
+pygame.mixer.init()
+# volume = pygame.mixer.music.get_volume() #Retourne la valeur du volume, entre 0 et 1
+# pygame.mixer.music.set_volume(0.5) #Met le volume à 0.5 (moitié)
+sontir = pygame.mixer.Sound("sound/shoot.ogg")
+son = pygame.mixer.music.load("sound/skyrim.wav")
+pygame.mixer.music.play(-1)
 largeur = 1920
 hauteur = 1080
 modeecran = 0
@@ -11,6 +17,11 @@ cdecran = 50
 LargeurPerso = 30
 HauteurPerso = 50
 fontChat = pygame.font.SysFont("monospace", 15)
+fontChien = pygame.font.SysFont("monospace", 100)
+fontCat = pygame.font.SysFont("monospace", 20)
+fontPuppy = pygame.font.SysFont("monospace", 20)
+
+
 # fenetre=pygame.display.set_mode((largeur,hauteur))
 # fenetre=pygame.display.set_mode((largeur,hauteur),HWSURFACE|DOUBLEBUF|RESIZABLE)
 fenetre=pygame.display.set_mode((largeur,hauteur), FULLSCREEN)
@@ -96,6 +107,8 @@ rectIconeBag = imageIconeBag.get_rect()
 imageInventory = pygame.image.load("pictures/Inventory.png").convert_alpha()
 rectInventory = imageInventory.get_rect()
 rectInventory.y = (hauteur)-(rectInventory.h)
+# rectInventory.x = 200
+# rectInventory.y = 700
 imageIconeChat = pygame.image.load("pictures/ChatIcon.png").convert_alpha()
 rectIconeChat = imageIconeChat.get_rect()
 imageHealthPot01 = pygame.image.load("pictures/pt01.png").convert_alpha()
@@ -128,8 +141,15 @@ imagePont05c = pygame.image.load("pictures/pont5c.png").convert_alpha()
 imagePont05d = pygame.image.load("pictures/pont5d.png").convert_alpha()
 imagePont05e = pygame.image.load("pictures/pont5e.png").convert_alpha()
 imagePont05f = pygame.image.load("pictures/pont5f.png").convert_alpha()
-rectCarquois2 = imageCarquois.get_rect()
+imageArrow01 = pygame.image.load("pictures/arrow2.png").convert_alpha()
+imageArrow01r = pygame.image.load("pictures/arrow2right.png").convert_alpha()
+imageArrow01l = pygame.image.load("pictures/arrow2left.png").convert_alpha()
+imageArrow01d = pygame.image.load("pictures/arrow2down.png").convert_alpha()
+imageRune01 = pygame.image.load("pictures/rune3.png").convert_alpha()
 
+# rectCarquois2 = imageArrow01.get_rect()
+
+# imageArrow02 = pygame.transform.rotate(imageArrow01,90)
 
 # animation de l'ouverture du coffre_____________________________________________________
 
@@ -552,6 +572,11 @@ grilletable = []
 largeurcaseTable = 33
 hauteurcaseTable = 33
 
+grilleStairs = []
+
+largeurcaseTable = 33
+hauteurcaseTable = 33
+
 
 def Position(myRect):
     myRect.x = j*largeurCase -xf
@@ -609,6 +634,7 @@ with open("table.txt") as f :
             newLine.append(int(c))
         grilletable.append(newLine)
 
+
 #_______________________________________________________________________________
 score_font = pygame.font.Font(None, 30)
 couleur_font = (255,0,0)
@@ -618,7 +644,7 @@ yf = 0
 Heal = 0
 Chat = ''
 chatcd = 20
-continuer=1
+continuer=0
 timer=1
 RangerQuest = 0
 fishermanQuest = 0
@@ -643,6 +669,8 @@ tirs = []
 blobs = []
 tirsblob = []
 
+
+
 rectBlob = imageblob.get_rect()
 blob = {}
 
@@ -661,1024 +689,1103 @@ rectBlob02 = imageblob.get_rect()
 maskPerso = pygame.mask.from_surface(imagePerso)
 maskBlob = pygame.mask.from_surface(imageblob)
 blob["rect"].x = 2000
-blob["rect"].y = 600
+blob["rect"].y = 800
 blobs.append(blob)
 rectbone = imageCGblob.get_rect()
 tab = []
 lvl = 0
-while continuer:
-    horloge.tick(30)
-    timer+=1
-    touches = pygame.key.get_pressed()
-
-    if (RangerQuest==2 and lvl== 0):
-        lvl = 1
-        # grillePlateforme = tab
-        with open("stairs01.txt") as f :
-            for line in f :
-                tabLigne = line.split()
-                newLine = []
-                for c in tabLigne :
-                    newLine.append(int(c))
-                grillePlateforme.append(newLine)
-
-        grilletable = tab
-        # grilleFond = tab
-        grilledecors = tab
-        print("nimp")
-
-    if touches[pygame.K_TAB] and cdecran ==50 :
-        cdcdecran =0
-        modeecran = (modeecran + 1)%2
-        if modeecran == 0 :
-            largeur = 1024
-            hauteur = 768
-            rectInventory.y = (hauteur)-(rectInventory.h)
-            rectChatbox.y = (hauteur)-(rectChatbox.h)
-            fenetre=pygame.display.set_mode((largeur,hauteur), FULLSCREEN)
-        else :
-            largeur = 1920
-            hauteur = 1080
-            rectInventory.y = (hauteur)-(rectInventory.h)
-            rectChatbox.y = (hauteur)-(rectChatbox.h)
-            fenetre=pygame.display.set_mode((largeur,hauteur), FULLSCREEN)
-    for b in blobs :
-        if rectPerso.x > b["rect"].x:
-            b["rect"].x += b["vitesse"]
-        if rectPerso.x < b["rect"].x :
-            b["rect"].x -= b["vitesse"]
-        if rectPerso.y > b["rect"].y:
-            b["rect"].y += b["vitesse"]
-        if rectPerso.y < b["rect"].y:
-            b["rect"].y -= b["vitesse"]
-
-    for ti in tirsblob :
-        if ti["direction"] == 4:
-                ti["rect"].y -=  20
-        if ti["direction"] == 5:
-                ti["rect"].x +=  15
-                ti["rect"].y -= 15
-        if ti["direction"] == 6:
-                ti["rect"].x += 20
-        if ti["direction"] == 7:
-                ti["rect"].x +=  15
-                ti["rect"].y += 15
-        if ti["direction"] == 8:
-                ti["rect"].y += 20
-        if ti["direction"] == 9:
-                ti["rect"].x -=  15
-                ti["rect"].y += 15
-        if ti["direction"] == 10:
-                ti["rect"].x -= 20
-        if ti["direction"] == 11:
-                ti["rect"].x -=  15
-                ti["rect"].y -= 15
-
-    for t in tirsblob :
-        if t["rect"].colliderect(perso["rect"]):
-            hp-=10
-
-    tempTablob = []
-    for ti in tirsblob:
-        if not(ti["rect"].x > perso["rect"].x+largeur/2 or ti["rect"].x < perso["rect"].x - largeur/2  or ti["rect"].y > perso["rect"].y + hauteur/2 or ti["rect"].y<perso["rect"].y - hauteur/2) :
-            tempTablob.append(ti)
-    tirsblob = tempTablob
-
-    for b in blobs :
-        if  cdblob == 20 and b["nom"] == "fürher":
-            if ((perso["rect"].x > b["rect"].x and (perso["rect"].x - b["rect"].x) < 300) or (perso["rect"].x < b["rect"].x and (b["rect"].x - perso["rect"].x) < 300)) :
-                cdblob = 0
-                rectbone = imageCGblob.get_rect()
-                rectbone.x = b["rect"].x
-                rectbone.y = b["rect"].y
-                if perso["rect"].x < b["rect"].x and perso["rect"].y < b["rect"].y:
-                    dirblob = 11
-                if perso["rect"].x < b["rect"].x and perso["rect"].y == b["rect"].y:
-                    dirblob = 10
-                if perso["rect"].x < b["rect"].x and perso["rect"].y > b["rect"].y:
-                    dirblob = 9
-                if perso["rect"].x == b["rect"].x and perso["rect"].y > b["rect"].y:
-                    dirblob = 8
-                if perso["rect"].x > b["rect"].x and perso["rect"].y > b["rect"].y:
-                    dirblob = 7
-                if perso["rect"].x > b["rect"].x and perso["rect"].y == b["rect"].y:
-                    dirblob = 6
-                if perso["rect"].x > b["rect"].x and perso["rect"].y < b["rect"].y:
-                    dirblob = 5
-                if perso["rect"].x == b["rect"].x and perso["rect"].y < b["rect"].y:
-                    dirblob = 4
-
-                tirblob = {}
-                tirblob["canhit"] = True
-                tirblob["rect"] = rectbone
-                tirblob["direction"] = dirblob
+menu = 1
+jouer = 1
+game = 1
+#
+# mob1 = {}
+#
+# mob1["nom"] = "Caster"
+# mob1["pv"] = pvCaster
+# mob1["rect"] = rectMob1
+imageBG = pygame.image.load("pictures/BG.png").convert_alpha()
+rectBackground = imageBG.get_rect()
 
 
+# son.fadeout(300)
+while game :
 
-                tirsblob.append(tirblob)
-    if cdblob < 20 :
-        cdblob +=1
+    while menu :
+        # if jouer == 1 :
+        #     pygame.mixer.music.play()
+        touches = pygame.key.get_pressed()
+        if touches[pygame.K_RETURN] :
+            menu = 0
+            continuer = 1
+
+        fenetre.blit(imageBG, rectBackground)
+        fenetre.blit(fontChien.render("Dragonless Dungeon",1,(255,255,255)),(420,155))
+        fenetre.blit(fontPuppy.render("<ENTRER> Continuer la partie",1,(0,0,0)),(800, 580))
+        fenetre.blit(fontPuppy.render("<Y> Quitter le jeu",1,(0,0,0)),(860, 600))
+        pygame.display.flip()
+        if touches[pygame.K_y]:
+            menu = 0
+            game = 0
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                menu = 0
+                game = 0
+    while continuer and  not menu:
+        jouer = 0
+        if jouer == 0 :
+            pygame.mixer.music.stop()
+        horloge.tick(30)
+        timer+=1
+        touches = pygame.key.get_pressed()
+
+        if (RangerQuest==2 and lvl== 0):
+            lvl = 1
+            # grillePlateforme = tab
+            with open("stairs01.txt") as f :
+                for line in f :
+                    tabLigne = line.split()
+                    newLine = []
+                    for c in tabLigne :
+                        newLine.append(int(c))
+                    grillePlateforme.append(newLine)
+
+            grilletable = tab
+            # grilleFond = tab
+            grilledecors = tab
+
+        if touches[pygame.K_TAB] and cdecran ==50 :
+            cdcdecran =0
+            modeecran = (modeecran + 1)%2
+            if modeecran == 0 :
+                largeur = 1024
+                hauteur = 768
+                rectInventory.y = (hauteur)-(rectInventory.h)
+                rectChatbox.y = (hauteur)-(rectChatbox.h)
+                fenetre=pygame.display.set_mode((largeur,hauteur), FULLSCREEN)
+            else :
+                largeur = 1920
+                hauteur = 1080
+                rectInventory.y = (hauteur)-(rectInventory.h)
+                rectChatbox.y = (hauteur)-(rectChatbox.h)
+                fenetre=pygame.display.set_mode((largeur,hauteur), FULLSCREEN)
+        for b in blobs :
+            if rectPerso.x > b["rect"].x:
+                b["rect"].x += b["vitesse"]
+            if rectPerso.x < b["rect"].x :
+                b["rect"].x -= b["vitesse"]
+            if rectPerso.y > b["rect"].y:
+                b["rect"].y += b["vitesse"]
+            if rectPerso.y < b["rect"].y:
+                b["rect"].y -= b["vitesse"]
+
+        for ti in tirsblob :
+            if ti["direction"] == 4:
+                    ti["rect"].y -=  20
+            if ti["direction"] == 5:
+                    ti["rect"].x +=  15
+                    ti["rect"].y -= 15
+            if ti["direction"] == 6:
+                    ti["rect"].x += 20
+            if ti["direction"] == 7:
+                    ti["rect"].x +=  15
+                    ti["rect"].y += 15
+            if ti["direction"] == 8:
+                    ti["rect"].y += 20
+            if ti["direction"] == 9:
+                    ti["rect"].x -=  15
+                    ti["rect"].y += 15
+            if ti["direction"] == 10:
+                    ti["rect"].x -= 20
+            if ti["direction"] == 11:
+                    ti["rect"].x -=  15
+                    ti["rect"].y -= 15
+
+        for t in tirsblob :
+            if t["rect"].colliderect(perso["rect"]):
+                hp-=10
+
+        tempTablob = []
+        for ti in tirsblob:
+            if not(ti["rect"].x > perso["rect"].x+largeur/2 or ti["rect"].x < perso["rect"].x - largeur/2  or ti["rect"].y > perso["rect"].y + hauteur/2 or ti["rect"].y<perso["rect"].y - hauteur/2) :
+                tempTablob.append(ti)
+        tirsblob = tempTablob
+
+        for b in blobs :
+            if  cdblob == 20 and b["nom"] == "fürher":
+                if ((perso["rect"].x > b["rect"].x and (perso["rect"].x - b["rect"].x) < 300) or (perso["rect"].x < b["rect"].x and (b["rect"].x - perso["rect"].x) < 300)) :
+                    cdblob = 0
+                    rectbone = imageCGblob.get_rect()
+                    rectbone.x = b["rect"].x
+                    rectbone.y = b["rect"].y
+                    if perso["rect"].x < b["rect"].x and perso["rect"].y < b["rect"].y:
+                        dirblob = 11
+                    if perso["rect"].x < b["rect"].x and perso["rect"].y == b["rect"].y:
+                        dirblob = 10
+                    if perso["rect"].x < b["rect"].x and perso["rect"].y > b["rect"].y:
+                        dirblob = 9
+                    if perso["rect"].x == b["rect"].x and perso["rect"].y > b["rect"].y:
+                        dirblob = 8
+                    if perso["rect"].x > b["rect"].x and perso["rect"].y > b["rect"].y:
+                        dirblob = 7
+                    if perso["rect"].x > b["rect"].x and perso["rect"].y == b["rect"].y:
+                        dirblob = 6
+                    if perso["rect"].x > b["rect"].x and perso["rect"].y < b["rect"].y:
+                        dirblob = 5
+                    if perso["rect"].x == b["rect"].x and perso["rect"].y < b["rect"].y:
+                        dirblob = 4
+
+                    tirblob = {}
+                    tirblob["canhit"] = True
+                    tirblob["rect"] = rectbone
+                    tirblob["direction"] = dirblob
 
 
-    for blob in blobs :
-        if maskPerso.overlap(maskBlob, (blob["rect"].left - perso["rect"].left, blob["rect"].top - perso["rect"].top)) != None:
-            if cdmg == 50 :
-                hp -= 10
-                cdmg = 0
-    if cdmg < 50 :
-        cdmg +=1
-    #Affiche le score en bas à droite quand le projectil et le blob ce touche
-    for t in tirs:
+
+                    tirsblob.append(tirblob)
+        if cdblob < 20 :
+            cdblob +=1
+
+
         for blob in blobs :
-            if t["rect"].colliderect(blob["rect"]) :
-                if t["canhit"] == True:
-                    blob["pv"] -= 10
-                    t["canhit"] = False
-                    t["touche"] = 0
-    temptablob = []
-    for b in blobs :
-        if b["pv"] <= 0 :
-            b["nbBlob"] -= 1
-            if b["nbBlob"] >=1:
-                dedouble = 1
+            if maskPerso.overlap(maskBlob, (blob["rect"].left - perso["rect"].left, blob["rect"].top - perso["rect"].top)) != None:
+                if cdmg == 50 :
+                    hp -= 10
+                    cdmg = 0
+        if cdmg < 50 :
+            cdmg +=1
+        #Affiche le score en bas à droite quand le projectil et le blob ce touche
+        for t in tirs:
+            for blob in blobs :
+                if t["rect"].colliderect(blob["rect"]) :
+                    if t["canhit"] == True:
+                        blob["pv"] -= 10
+                        t["canhit"] = False
+                        t["touche"] = 0
+        temptablob = []
+        for b in blobs :
+            if b["pv"] <= 0 :
+                b["nbBlob"] -= 1
+                if b["nbBlob"] >=1:
+                    dedouble = 1
 
-    if dedouble == 1 :
-        for b in blobs:
-            if b["pv"] <= 0  and b["nbBlob"] >= 1:
-                newblobx = b["rect"].x + 20
-                newbloby = b["rect"].y + 20
-                newnbBlob = b["nbBlob"]
-        b01 = {}
-        b01["nom"] = "fürher"
-        b01["rect"] = rectBlob01
-        b01["rect"].x = newblobx
-        b01["rect"].y = newbloby
-        b01["nbBlob"] = newnbBlob
-        b01["pv"] = 80
-        b01["vitesse"] = 2
-        blobs.append(b01)
+        if dedouble == 1 :
+            for b in blobs:
+                if b["pv"] <= 0  and b["nbBlob"] >= 1:
+                    newblobx = b["rect"].x + 20
+                    newbloby = b["rect"].y + 20
+                    newnbBlob = b["nbBlob"]
+            b01 = {}
+            b01["nom"] = "fürher"
+            b01["rect"] = rectBlob01
+            b01["rect"].x = newblobx
+            b01["rect"].y = newbloby
+            b01["nbBlob"] = newnbBlob
+            b01["pv"] = 80
+            b01["vitesse"] = 2
+            blobs.append(b01)
 
-        b02 = {}
-        b02["nom"] = "Blobby"
-        b02["rect"] = rectBlob02
-        b02["rect"].x = newblobx-30
-        b02["rect"].y = newbloby-30
-        b02["nbBlob"] = newnbBlob
-        b02["pv"] = 40
-        b02["vitesse"] = 6
-        blobs.append(b02)
+            b02 = {}
+            b02["nom"] = "Blobby"
+            b02["rect"] = rectBlob02
+            b02["rect"].x = newblobx-30
+            b02["rect"].y = newbloby-30
+            b02["nbBlob"] = newnbBlob
+            b02["pv"] = 40
+            b02["vitesse"] = 6
+            blobs.append(b02)
 
-        print(str(blobs))
+            print(str(blobs))
 
-    dedouble = 0
+        dedouble = 0
 
-    for blob in blobs :
-        if blob["pv"] > 0 and blob["nbBlob"] >= 1 :
-            temptablob.append(blob)
-    blobs = temptablob
-        # fenetre.blit(imageFond, rectFond)
-        # display.update(rectBlob)
-        #modification du score
-    #     score_surface = score_font.render("Score : {:5d} points".format(points), 1, couleur_font)
-
-
-    score_surface = score_font.render("Pvblob : {:5d} Pvblob".format(blob["pv"]), 1, couleur_font)
-
-
-    if i%3==0 :
-        ianimeblob = (ianimeblob+1)%len(imagesBlob["left"])
-        imageblob = imagesBlob["left"][ianimeblob]
-        ianimeblobCG = (ianimeblobCG+1)%len(imagesCGblob["proj"])
-        imageCGblob = imagesCGblob["proj"][ianimeblobCG]
-        # ianimebone = (ianimebone+1)%len(imagesbone["proj"])
-        # imagebone = imagesbone["proj"][ianimebone]
-        ianimeblobf = (ianimeblobf+1)%len(imagesBlobf["left"])
-        imageblobf = imagesBlobf["left"][ianimeblobf]
+        for blob in blobs :
+            if blob["pv"] > 0 and blob["nbBlob"] >= 1 and lvl == 0:
+                temptablob.append(blob)
+        blobs = temptablob
+            # fenetre.blit(imageFond, rectFond)
+            # display.update(rectBlob)
+            #modification du score
+        #     score_surface = score_font.render("Score : {:5d} points".format(points), 1, couleur_font)
 
 
+        score_surface = score_font.render("Pvblob : {:5d} Pvblob".format(blob["pv"]), 1, couleur_font)
+
+
+        if i%3==0 :
+            ianimeblob = (ianimeblob+1)%len(imagesBlob["left"])
+            imageblob = imagesBlob["left"][ianimeblob]
+            ianimeblobCG = (ianimeblobCG+1)%len(imagesCGblob["proj"])
+            imageCGblob = imagesCGblob["proj"][ianimeblobCG]
+            # ianimebone = (ianimebone+1)%len(imagesbone["proj"])
+            # imagebone = imagesbone["proj"][ianimebone]
+            ianimeblobf = (ianimeblobf+1)%len(imagesBlobf["left"])
+            imageblobf = imagesBlobf["left"][ianimeblobf]
 
 
 
 
-    if cdecran<50 :
-        cdecran+=1
-    if touches[pygame.K_ESCAPE] :
-        continuer=0
-#Zone test ____________________________________________________________________
-    if touches[pygame.K_F1] and hp > 0 :
-        hp -= 1
-
-# Deplacements du perso
-    if touches[pygame.K_UP] :
-        if timer%5==0 :
-            ianime = (ianime+1)%len(imagesPerso["up"])
-            imagePerso = imagesPerso["up"][ianime]
-        if not(grillePlateforme[int((perso["rect"].y+HauteurPerso/2)/hauteurCase)][int((perso["rect"].x)/largeurCase)]==0) :
-            perso["rect"].y-=25
-        elif not(grilleFond[int((perso["rect"].y)/hauteurCase)][int((perso["rect"].x-6)/largeurCase)]==0) :
-            perso["rect"].y-=25
-        #else: perso["rect"].y=perso["rect"].y
-
-    if touches[pygame.K_DOWN] :
-        if timer%5==0 :
-            ianime = (ianime+1)%len(imagesPerso["down"])
-            imagePerso = imagesPerso["down"][ianime]
-        if not(grillePlateforme[int((perso["rect"].y+HauteurPerso+100)/hauteurCase)][int((perso["rect"].x)/largeurCase)]==0) :
-            perso["rect"].y+=25
-        elif not(grilleFond[int((perso["rect"].y+100)/hauteurCase)][int((perso["rect"].x-6)/largeurCase)]==0) :
-            perso["rect"].y+=25
-        #else: perso["rect"].y=perso["rect"].y
 
 
-    if touches[pygame.K_RIGHT] :
-        if timer%5==0 :
-            ianime = (ianime+1)%len(imagesPerso["right"])
-            imagePerso = imagesPerso["right"][ianime]
-        if int(perso["rect"].y) > int(hauteur/2) :
-            if not(grillePlateforme[int((perso["rect"].y)/hauteurCase)][int((perso["rect"].x+LargeurPerso)/largeurCase)]==0) :
-                perso["rect"].x+=25
-            elif not(grilleFond[int((perso["rect"].y)/hauteurCase)][int((perso["rect"].x-6)/largeurCase)]==0) :
-                perso["rect"].x+=25
-        else:
-            if not(grillePlateforme[int((perso["rect"].y)/hauteurCase)+1][int((perso["rect"].x+LargeurPerso)/largeurCase)]==0) :
-                perso["rect"].x+=25
-            elif not(grilleFond[int((perso["rect"].y)/hauteurCase)][int((perso["rect"].x-6)/largeurCase)]==0) :
-                perso["rect"].x+=25
-        #else: perso["rect"].x=perso["rect"].x
+        if cdecran<50 :
+            cdecran+=1
+        if touches[pygame.K_ESCAPE] :
+            menu=1
+            continuer=0
+            jouer = 1
+    #Zone test ____________________________________________________________________
+        if touches[pygame.K_F1] and hp > 0 :
+            hp -= 1
 
-    if touches[pygame.K_LEFT] :
-        if timer%5==0 :
-            ianime = (ianime+1)%len(imagesPerso["left"])
-            imagePerso = imagesPerso["left"][ianime]
-        if int(perso["rect"].y) > int(hauteur/2) :
-            if not(grillePlateforme[int((perso["rect"].y)/hauteurCase)][int((perso["rect"].x-6)/largeurCase)]==0) :
-                perso["rect"].x-=25
-            elif not(grilleFond[int((perso["rect"].y)/hauteurCase)][int((perso["rect"].x-6)/largeurCase)]==0) :
-                perso["rect"].x-=25
-        else:
-            if not(grillePlateforme[int((perso["rect"].y)/hauteurCase)+1][int((perso["rect"].x-6)/largeurCase)]==0) :
-                perso["rect"].x-=25
-            elif not(grilleFond[int((perso["rect"].y)/hauteurCase)][int((perso["rect"].x-6)/largeurCase)]==0) :
-                perso["rect"].x-=25
-        #else: perso["rect"].x=perso["rect"].x
-
-
-    if touches[pygame.K_SPACE] and perso["canshoot"] :
-        rectCarquois2 = imageCarquois.get_rect()
-        rectCarquois2.x = perso["rect"].x
-        rectCarquois2.y = perso["rect"].y
-
+    # Deplacements du perso
         if touches[pygame.K_UP] :
-            dirbone = 0
-        elif touches[pygame.K_RIGHT] :
-            dirbone = 1
-        elif touches[pygame.K_DOWN] :
-            dirbone = 2
-        elif touches[pygame.K_LEFT] :
-            dirbone = 3
-        else :
-            dirbone = 4
+            if timer%4==0 :
+                ianime = (ianime+1)%len(imagesPerso["up"])
+                imagePerso = imagesPerso["up"][ianime]
+            if not(grillePlateforme[int((perso["rect"].y+HauteurPerso/2)/hauteurCase)][int((perso["rect"].x)/largeurCase)]==0) :
+                perso["rect"].y-=25
+            elif not(grilleFond[int((perso["rect"].y)/hauteurCase)][int((perso["rect"].x-6)/largeurCase)]==0) :
+                perso["rect"].y-=25
+            #else: perso["rect"].y=perso["rect"].y
+
+        if touches[pygame.K_DOWN] :
+            if timer%4==0 :
+                ianime = (ianime+1)%len(imagesPerso["down"])
+                imagePerso = imagesPerso["down"][ianime]
+            if not(grillePlateforme[int((perso["rect"].y+HauteurPerso)/hauteurCase)][int((perso["rect"].x)/largeurCase)]==0) :
+                perso["rect"].y+=25
+            elif not(grilleFond[int((perso["rect"].y)/hauteurCase)][int((perso["rect"].x-6)/largeurCase)]==0) :
+                perso["rect"].y+=25
+            #else: perso["rect"].y=perso["rect"].y
 
 
-        tir = {}
-        tir["canhit"] = True
-        tir["rect"] = rectCarquois2
-        tir["direction"] = dirbone
-        tir["touche"] = 1
+        if touches[pygame.K_RIGHT] :
+            if timer%4==0 :
+                ianime = (ianime+1)%len(imagesPerso["right"])
+                imagePerso = imagesPerso["right"][ianime]
+            if int(perso["rect"].y) > int(hauteur/2) :
+                if not(grillePlateforme[int((perso["rect"].y)/hauteurCase)][int((perso["rect"].x+LargeurPerso)/largeurCase)]==0) :
+                    perso["rect"].x+=25
+                elif not(grilleFond[int((perso["rect"].y)/hauteurCase)][int((perso["rect"].x-6)/largeurCase)]==0) :
+                    perso["rect"].x+=25
+            else:
+                if not(grillePlateforme[int((perso["rect"].y)/hauteurCase)+1][int((perso["rect"].x+LargeurPerso)/largeurCase)]==0) :
+                    perso["rect"].x+=25
+                elif not(grilleFond[int((perso["rect"].y)/hauteurCase)][int((perso["rect"].x-6)/largeurCase)]==0) :
+                    perso["rect"].x+=25
+            #else: perso["rect"].x=perso["rect"].x
+
+        if touches[pygame.K_LEFT] :
+            if timer%4==0 :
+                ianime = (ianime+1)%len(imagesPerso["left"])
+                imagePerso = imagesPerso["left"][ianime]
+            if int(perso["rect"].y) > int(hauteur/2) :
+                if not(grillePlateforme[int((perso["rect"].y)/hauteurCase)][int((perso["rect"].x-6)/largeurCase)]==0) :
+                    perso["rect"].x-=25
+                elif not(grilleFond[int((perso["rect"].y)/hauteurCase)][int((perso["rect"].x-6)/largeurCase)]==0) :
+                    perso["rect"].x-=25
+            else:
+                if not(grillePlateforme[int((perso["rect"].y)/hauteurCase)+1][int((perso["rect"].x-6)/largeurCase)]==0) :
+                    perso["rect"].x-=25
+                elif not(grilleFond[int((perso["rect"].y)/hauteurCase)][int((perso["rect"].x-6)/largeurCase)]==0) :
+                    perso["rect"].x-=25
+            #else: perso["rect"].x=perso["rect"].x
 
 
-        tirs.append(tir)
-        perso["canshoot"] = False
-        perso["cooldown"] = 0
-
-    if perso["canshoot"] == False:
-        perso["cooldown"] += 1
-        if perso["cooldown"] > 8 :
-            perso["canshoot"] = True
+        if touches[pygame.K_SPACE] and perso["canshoot"] :
+            jouer = 1
 
 
+            if touches[pygame.K_UP] :
+                dirbone = 0
+                sontir.play()
+                rectCarquois2 = imageArrow01.get_rect()
+                rectCarquois2.x = perso["rect"].x
+                rectCarquois2.y = perso["rect"].y
+            elif touches[pygame.K_RIGHT] :
+                dirbone = 1
+                sontir.play()
+                rectCarquois2 = imageArrow01r.get_rect()
+                rectCarquois2.x = perso["rect"].x
+                rectCarquois2.y = perso["rect"].y
+            elif touches[pygame.K_DOWN] :
+                dirbone = 2
+                sontir.play()
+                rectCarquois2 = imageArrow01d.get_rect()
+                rectCarquois2.x = perso["rect"].x
+                rectCarquois2.y = perso["rect"].y
+            elif touches[pygame.K_LEFT] :
+                dirbone = 3
+                sontir.play()
+                rectCarquois2 = imageArrow01l.get_rect()
+                rectCarquois2.x = perso["rect"].x
+                rectCarquois2.y = perso["rect"].y
+            else :
+                dirbone = 4
+                rectCarquois2 = imageRune01.get_rect()
+                rectCarquois2.x = perso["rect"].x - rectCarquois2.w/2 + perso["rect"].w -13
+                rectCarquois2.y = perso["rect"].y - rectCarquois2.h/2 + perso["rect"].h/2 +8
 
-    for t in tirs:
-        if t["direction"] == 0:
-                t["rect"].y += - 20
-        if t["direction"] == 1:
-                t["rect"].x += + 20
-        if t["direction"] == 2:
-                t["rect"].y += + 20
-        if t["direction"] == 3:
-                t["rect"].x += - 20
 
-    tempTab = []
-    for t in tirs:
-        if not(t["rect"].x > perso["rect"].x+largeur/2 or t["rect"].x < perso["rect"].x - largeur/2 or t["rect"].y > perso["rect"].y + hauteur/2 or t["rect"].y<perso["rect"].y - hauteur/2) and t["touche"]==1 :
-            tempTab.append(t)
-    tirs = tempTab
-#Changement fenetre chat/Inventory
-    if CurrentWindow == 'Chat' and cdinv == 20 and pygame.mouse.get_pressed() == (True,False,False):
-        if (rectIconeBag).collidepoint(pygame.mouse.get_pos()):
-            CurrentWindow = 'Bag'
-            cdinv = 0
-    elif CurrentWindow == 'Bag' and cdinv == 20 and pygame.mouse.get_pressed() == (True,False,False):
-        if (rectIconeChat).collidepoint(pygame.mouse.get_pos()):
+            tir = {}
+            tir["canhit"] = True
+            tir["rect"] = rectCarquois2
+            tir["direction"] = dirbone
+            tir["touche"] = 1
+
+
+            tirs.append(tir)
+            perso["canshoot"] = False
+            perso["cooldown"] = 0
+
+        if perso["canshoot"] == False:
+            perso["cooldown"] += 1
+            if perso["cooldown"] > 8 :
+                perso["canshoot"] = True
+
+
+
+        for t in tirs:
+            if t["direction"] == 0:
+                    t["rect"].y += - 20
+            if t["direction"] == 1:
+                    t["rect"].x += + 20
+            if t["direction"] == 2:
+                    t["rect"].y += + 20
+            if t["direction"] == 3:
+                    t["rect"].x += - 20
+
+        tempTab = []
+        for t in tirs:
+            if not(t["rect"].x > perso["rect"].x+largeur/2 or t["rect"].x < perso["rect"].x - largeur/2 or t["rect"].y > perso["rect"].y + hauteur/2 or t["rect"].y<perso["rect"].y - hauteur/2) and t["touche"]==1 :
+                tempTab.append(t)
+        tirs = tempTab
+    #Changement fenetre chat/Inventory
+        if CurrentWindow == 'Chat' and cdinv == 20 and pygame.mouse.get_pressed() == (True,False,False):
+            if (rectIconeBag).collidepoint(pygame.mouse.get_pos()):
+                CurrentWindow = 'Bag'
+                cdinv = 0
+        elif CurrentWindow == 'Bag' and cdinv == 20 and pygame.mouse.get_pressed() == (True,False,False):
+            if (rectIconeChat).collidepoint(pygame.mouse.get_pos()):
+                CurrentWindow = 'Chat'
+                cdinv = 0
+    #Utilisation potion
+        tempTab = []
+        if pygame.mouse.get_pressed() == (True,False,False):
+            if (objet["rect"]).collidepoint(pygame.mouse.get_pos()):
+                print(str(hp))
+                done = False
+                for objet in objets :
+                    if not(done) and objet["CodeItem"] == 1 and objet["nbItem"] > 0 :
+                        Heal = 50
+                        done = True
+                        # grilleInventaire[objet["i"]][objet["j"]] = 0
+                        objet["nbItem"] -= 1
+                    if objet["nbItem"] > 0 :
+                        tempTab.append(objet)
+                    else :
+                        grilleInventaire[objet["i"]][objet["j"]] = 0
+                objets = tempTab
+
+        if Heal > 0 :
+            Heal -= 1
+            # hpHealed = 50
+            # if hpHealed > 0 :
+            hpHealed-=1
+            if hp < 200:
+                hp = hp+1
+        # print(str(cdinv))
+
+        if touches[pygame.K_i] and CurrentWindow == 'Bag' and cdinv == 20:
             CurrentWindow = 'Chat'
             cdinv = 0
-#Utilisation potion
-    tempTab = []
-    if pygame.mouse.get_pressed() == (True,False,False):
-        if (objet["rect"]).collidepoint(pygame.mouse.get_pos()):
-            print(str(hp))
-            done = False
-            for objet in objets :
-                if not(done) and objet["CodeItem"] == 1 and objet["nbItem"] > 0 :
-                    Heal = 50
-                    done = True
-                    # grilleInventaire[objet["i"]][objet["j"]] = 0
-                    objet["nbItem"] -= 1
-                if objet["nbItem"] > 0 :
-                    tempTab.append(objet)
+        elif touches[pygame.K_i] and CurrentWindow == 'Chat' and cdinv == 20:
+            CurrentWindow = 'Bag'
+            cdinv = 0
+
+        if cdinv < 20 :
+            cdinv+=1
+
+        xf = perso["rect"].x -largeur/2
+        yf = perso["rect"].y -hauteur/2
+
+        rectPersounvirgulecinq.x =  perso["rect"].x - xf
+        rectPersounvirgulecinq.y = perso["rect"].y -yf
+        # pygame.draw.rect(fenetre, (0, 0, 255), perso["rect"])
+        # pygame.draw.rect(fenetre, (0, 255, 0), rectPersounvirgulecinq)
+        # rectPersounvirgulecinq.x = largeur/2
+        # rectPersounvirgulecinq.y = hauteur/2
+
+    # On Attribut un chiffre à une image qu'on placera dans une case dans la grille initialisé ci-dessus
+        #FOND
+        myRect = imageFond.get_rect()
+
+        for i in range(len(grilleFond)) :
+            for j in range(len(grilleFond[i])) :
+                img = 0
+                if grilleFond[i][j] == 0 :
+                    img = imageFond
+
+                if grilleFond[i][j] == 1 :
+                    img = imageFond02
+
+                if grilleFond[i][j] == 2 :
+                    img = imageFond03
+
+                if grilleFond[i][j] == 3 :
+                    img = imageFond04
+
+                if grilleFond[i][j] == 4 :
+                    img = imageFond05
+
+                if grilleFond[i][j] == 5 :
+                    img = imageFond06
+
+                if grilleFond[i][j] == 6 :
+                    img = imageFond07
+
+                if grilleFond[i][j] == 7 :
+                    img = imageFond08
+
+                if grilleFond[i][j] == 8 :
+                    img = imageFond09
+
+                if grilleFond[i][j] == 9 :
+                    img = imageFond10
+
+                if grilleFond[i][j] == 10 :
+                    img = imageFond11
+
+                if grilleFond[i][j] == 11 :
+                    img = imageFond12
+
+                if not img == 0 :
+                    Position(myRect)
+
+        #PLATEFORMES
+        for i in range(len(grillePlateforme)) :
+            for j in range(len(grillePlateforme[i])) :
+                img = 0
+                if grillePlateforme[i][j] == 1 :
+                    img = imagePont01
+
+                if grillePlateforme[i][j] == 2 :
+                    img = imageMarketplace01
+
+                if grillePlateforme[i][j] == 3 :
+                    img = imageMarketplace01
+
+                if grillePlateforme[i][j] == 4 :
+                    img = imageFond
+
+                if grillePlateforme[i][j] == 5 :
+                    img = imagePontvertical01
+
+                if grillePlateforme[i][j] == 6 :
+                    img = imageIlot01
+
+                if grillePlateforme[i][j] == 7 :
+                    img = imagePont03
+                if grillePlateforme[i][j] == 8 :
+                    img = imageBonfire01
+
+                if grillePlateforme[i][j] == 9 :
+                    img = imagePont05a
+                if grillePlateforme[i][j] == 10 :
+                    img = imagePont05b
+                if grillePlateforme[i][j] == 11 :
+                    img = imagePont05c
+                if grillePlateforme[i][j] == 12 :
+                    img = imagePont05d
+                if grillePlateforme[i][j] == 13 :
+                    img = imagePont05e
+                if grillePlateforme[i][j] == 14 :
+                    img = imagePont05f
+
+                if not img == 0 :
+                    Position(myRect)
+
+        #DECORS
+        for i in range(len(grilledecors)) :
+            for j in range(len(grilledecors[i])) :
+                img = 0
+                if grilledecors[i][j] == 1 :
+                    img = imagePuit01
+
+                if grilledecors[i][j] == 2 :
+                    img = imageBigboat01
+
+                if grilledecors[i][j] == 3 :
+                    img = imageBoat01
+
+                if grilledecors[i][j] == 4 :
+                    img = imageBoat02
+
+                if grilledecors[i][j] == 5 :
+                    img = imageHorloge01
+
+                if grilledecors[i][j] == 6 :
+                    img = imageMarket01
+
+                if grilledecors[i][j] == 7 :
+                    img = imageMarket02
+
+                if grilledecors[i][j] == 8 :
+                    img = imageWheatbag01
+
+                if grilledecors[i][j] == 9 :
+                    img = imageRondin01
+
+                if grilledecors[i][j] == 10 :
+                    img = imageBanc01
+
+                if grilledecors[i][j] == 11 :
+                    img = imageLampe01
+
+                if grilledecors[i][j] == 12 :
+                    img = imageTonneau01
+
+                if grilledecors[i][j] == 13 :
+                    img = imageForge01
+
+                if grilledecors[i][j] == 14 :
+                    img = imageGreatmarket01
+
+                if grilledecors[i][j] == 15 :
+                    img = imageBarrier01
+
+                if grilledecors[i][j] == 16 :
+                    img = imageTablegrande01
+
+                if grilledecors[i][j] == 17 :
+                    img = imageChariot01
+
+                if grilledecors[i][j] == 18 :
+                    img = imageChariot02
+
+                if grilledecors[i][j] == 19 :
+                    rectDecors19 = imagePnj01.get_rect()
+                    rectDecors19.x = j*largeurcaseDecors -xf
+                    rectDecors19.y = i*largeurcaseDecors -yf
+                    fenetre.blit(imagePnj01, rectDecors19)
+
+                if grilledecors[i][j] == 20 :
+                    rectDecors20 = imagePnj02.get_rect()
+                    rectDecors20.x = j*largeurcaseDecors -xf
+                    rectDecors20.y = i*largeurcaseDecors -yf
+                    fenetre.blit(imagePnj02, rectDecors20)
+
+                if grilledecors[i][j] == 21 :
+                    rectDecors21 = imagePnj03.get_rect()
+                    rectDecors21.x = j*largeurcaseDecors -xf
+                    rectDecors21.y = i*largeurcaseDecors -yf
+                    fenetre.blit(imagePnj03, rectDecors21)
+
+                if grilledecors[i][j] == 22 :
+                    rectDecors22 = imagePnj04.get_rect()
+                    rectDecors22.x = j*largeurcaseDecors -xf
+                    rectDecors22.y = i*largeurcaseDecors -yf
+                    fenetre.blit(imagePnj04, rectDecors22)
+
+                if grilledecors[i][j] == 23 :
+                    img = imageNenu01
+
+                if grilledecors[i][j] == 24 :
+                    img = imageNenu02
+
+                if grilledecors[i][j] == 25 :
+                    img = imageNenu03
+
+                if grilledecors[i][j] == 26 :
+                    img = imageMarket03
+
+                if grilledecors[i][j] == 27 :
+                    img = imageBuisson02
+
+                if grilledecors[i][j] == 28 :
+                    img = imageSupplies01
+
+                if grilledecors[i][j] == 29 :
+                    img = imagePnj04bas
+
+                if grilledecors[i][j] == 30 :
+                    img = imagePnj05
+
+                if grilledecors[i][j] == 31 :
+                    img = imagePnj04left
+
+                if grilledecors[i][j] == 32 :
+                    img = imagePnj06
+
+                if grilledecors[i][j] == 33 :
+                    img = imageCadavre01
+
+                if grilledecors[i][j] == 34 :
+                    img = imageiotdefleur01
+
+                if grilledecors[i][j] == 35 :
+                    img = imageLitpaille01
+
+                if grilledecors[i][j] == 36 :
+                    rectDecors36 = imageCoffre.get_rect()
+                    rectDecors36.x = j*largeurcaseDecors -xf
+                    rectDecors36.y = i*hauteurcaseDecors -yf
+                    fenetre.blit(imageCoffre, rectDecors36)
+                    if touches[pygame.K_c] and rectPersounvirgulecinq.colliderect(rectDecors36) :
+                        if timer%2==0:
+                            icoffre = (icoffre+1)%len(imagesCoffre["ouvert"])
+                            imageCoffre = imagesCoffre["ouvert"][icoffre]
+                    elif not(rectPersounvirgulecinq.colliderect(rectDecors36)) :
+                        imageCoffre = imagesCoffre["fermer"][icoffre]
+
+                if grilledecors[i][j] == 37 :
+                    rectDecors37 = imageTreesiooky01
+
+                if grilledecors[i][j] == 38 :
+                    rectDecors38 = imageWolf.get_rect()
+                    rectDecors38.x = j*largeurcaseDecors -xf
+                    rectDecors38.y = i*largeurcaseDecors -yf
+                    fenetre.blit(imageWolf, rectDecors38)
+                    if touches[pygame.K_c] and rectPersounvirgulecinq.colliderect(rectDecors38) :
+                        if timer%2==0:
+                            iwolf = (iwolf+1)%len(imagesWolf["sleepleft"])
+                            imageWolf = imagesWolf["sleepleft"][iwolf]
+
+                if grilledecors[i][j] == 39 :
+                    rectDecors = imageCarquois
+                    rectCarquois = imageCarquois.get_rect()
+                    rectCarquois.x = j*largeurcaseDecors -xf
+                    rectCarquois.y = i*largeurcaseDecors -yf
+                    fenetre.blit(imageCarquois, rectCarquois)
+                    if touches[pygame.K_RETURN] and rectPersounvirgulecinq.colliderect(rectCarquois) :
+                        RangerQuest = 1
+                        grilledecors[i][j] = 0
+                        getReward(1,2)
+                if grilledecors[i][j] == 40 :
+                    rectCane = imageCane.get_rect()
+                    rectCane.x = j*largeurcaseDecors -xf
+                    rectCane.y = i*largeurcaseDecors -yf
+                    fenetre.blit(imageCane, rectCane)
+                    if touches[pygame.K_RETURN] and rectPersounvirgulecinq.colliderect(rectCane) :
+                        fishermanQuest = 2
+                        grilledecors[i][j] = 0
+                        getReward(1,3)
+
+                if grilledecors[i][j] == 41 :
+                    img = imageBarrier02
+
+                if grilledecors[i][j] == 42 :
+                    rectDecors42 = imageTrash.get_rect()
+                    rectDecors42.x = j*largeurcaseDecors -xf
+                    rectDecors42.y = i*largeurcaseDecors -yf
+                    fenetre.blit(imageTrash, rectDecors42)
+                    if touches[pygame.K_c] and rectPersounvirgulecinq.colliderect(rectDecors42) :
+                        if timer%2==0:
+                            itrash = (itrash+1)%len(imagesTrash["ouvert"])
+                            imageTrash = imagesTrash["ouvert"][itrash]
+                    elif not(rectPersounvirgulecinq.colliderect(rectDecors42)) :
+                        imageTrash = imagesTrash["fermer"][itrash]
+
+                if grilledecors[i][j] == 43 :
+                    img = imageCaisse01
+                if grilledecors[i][j] == 44 :
+                    img = imageTree02
+                if grilledecors[i][j] == 45 :
+                    img = imageTonneau02
+                if grilledecors[i][j] == 46 :
+                    img = imagePortebarrier
+                if grilledecors[i][j] == 47 :
+                    img = imageBarrier03
+                if grilledecors[i][j] == 48 :
+                    img = imageBarrier04
+                if grilledecors[i][j] == 49 :
+                    img = imageTombe01
+                if grilledecors[i][j] == 50 :
+                    img = imageLampe02
+                if grilledecors[i][j] == 51 :
+                    img = imageCampement01
+                if grilledecors[i][j] == 52 :
+                    img = imageHerbe01
+                if grilledecors[i][j] == 53 :
+                    img = imageTree03
+                if grilledecors[i][j] == 54 :
+                    img = imageBonfire01
+                if grilledecors[i][j] == 55 :
+                    img = imageTree04
+                if grilledecors[i][j] == 56 :
+                    img = imageTree05
+                if grilledecors[i][j] == 57 :
+                    rectDecors57 = imagePnj07.get_rect()
+                    rectDecors57.x = j*largeurcaseDecors -xf
+                    rectDecors57.y = i*largeurcaseDecors -yf
+                    fenetre.blit(imagePnj07, rectDecors57)
+                if grilledecors[i][j] == 58 :
+                    img = imageFlaquedeau01
+                if grilledecors[i][j] == 59 :
+                    img = imageTombe02
+                if grilledecors[i][j] == 60 :
+                    img = imageTombe03
+                if grilledecors[i][j] == 61 :
+                    img = imageTombe04
+                if grilledecors[i][j] == 62 :
+                    img = imageRondincut01
+                # if grilledecors[i][j] == 63 :
+                #     img = imageRondincut02
+                if grilledecors[i][j] == 64 :
+                    img = imageSquelette01
+                if grilledecors[i][j] == 65 :
+                    img = imageBuisson03
+                if grilledecors[i][j] == 66 :
+                    rectDecors66 = imagePnjright08.get_rect()
+                    rectDecors66.x = j*largeurcaseDecors -xf
+                    rectDecors66.y = i*largeurcaseDecors -yf
+                    fenetre.blit(imagePnjright08, rectDecors66)
+                if grilledecors[i][j] == 67 :
+                    img = imagePnjdown08
+                if grilledecors[i][j] == 68 :
+                    img = imagePnjleft08
+                if grilledecors[i][j] == 69 :
+                    img = imageTree06
+
+
+                if not img == 0 :
+                    Position(myRect)
+
+
+        for i in range(len(grilletable)) :
+            for j in range(len(grilletable[i])) :
+                img = 0
+                if grilletable[i][j] == 1 :
+                    img = imagePotato01
+                if grilletable[i][j] == 2 :
+                    img = imageWatermelon01
+                if grilletable[i][j] == 3 :
+                    img = imagefish01
+                if grilletable[i][j] == 4 :
+                    img = imagefish02
+                if not img == 0 :
+                    Position(myRect)
+        for t in tirs:
+            if t["direction"] == 0 :
+                fenetre.blit(imageArrow01, (t["rect"].x-xf,t["rect"].y-yf))
+            if t["direction"] == 1 :
+                fenetre.blit(imageArrow01l, (t["rect"].x-xf,t["rect"].y-yf))
+            if t["direction"] == 2 :
+                fenetre.blit(imageArrow01d, (t["rect"].x-xf,t["rect"].y-yf))
+            if t["direction"] == 3 :
+                fenetre.blit(imageArrow01r, (t["rect"].x-xf,t["rect"].y-yf))
+            if t["direction"] == 4 :
+                fenetre.blit(imageRune01, (t["rect"].x-xf,t["rect"].y-yf))
+        # if rectCarquois.get_rect().collidepoint(pygame.mouse.get_pos()) and :
+        for blob in blobs :
+                if blob["nom"] == "fürher" :
+                    fenetre.blit(imageblobf, (blob["rect"].x-xf,blob["rect"].y-yf))
                 else :
-                    grilleInventaire[objet["i"]][objet["j"]] = 0
-            objets = tempTab
+                    fenetre.blit(imageblob, (blob["rect"].x-xf,blob["rect"].y-yf))
 
-    if Heal > 0 :
-        Heal -= 1
-        # hpHealed = 50
-        # if hpHealed > 0 :
-        hpHealed-=1
-        if hp < 200:
-            hp = hp+1
-    # print(str(cdinv))
+                for ti in tirsblob:
+                    if ti["direction"] > -1:
+                        fenetre.blit(imageCGblob, (ti["rect"].x-xf,ti["rect"].y-yf))
+        fenetre.blit(imagePerso, (perso["rect"].x - xf, perso["rect"].y -yf))
 
-    if touches[pygame.K_RCTRL] and CurrentWindow == 'Bag' and cdinv == 20:
-        CurrentWindow = 'Chat'
-        cdinv = 0
-    elif touches[pygame.K_RCTRL] and CurrentWindow == 'Chat' and cdinv == 20:
-        CurrentWindow = 'Bag'
-        cdinv = 0
 
-    if cdinv < 20 :
-        cdinv+=1
-
-    xf = perso["rect"].x -largeur/2
-    yf = perso["rect"].y -hauteur/2
-
-    rectPersounvirgulecinq.x =  perso["rect"].x - xf
-    rectPersounvirgulecinq.y = perso["rect"].y -yf
-    # pygame.draw.rect(fenetre, (0, 0, 255), perso["rect"])
-    # pygame.draw.rect(fenetre, (0, 255, 0), rectPersounvirgulecinq)
-    # rectPersounvirgulecinq.x = largeur/2
-    # rectPersounvirgulecinq.y = hauteur/2
-
-# On Attribut un chiffre à une image qu'on placera dans une case dans la grille initialisé ci-dessus
-    #FOND
-    myRect = imageFond.get_rect()
-
-    for i in range(len(grilleFond)) :
-        for j in range(len(grilleFond[i])) :
-            img = 0
-            if grilleFond[i][j] == 0 :
-                img = imageFond
-
-            if grilleFond[i][j] == 1 :
-                img = imageFond02
-
-            if grilleFond[i][j] == 2 :
-                img = imageFond03
-
-            if grilleFond[i][j] == 3 :
-                img = imageFond04
-
-            if grilleFond[i][j] == 4 :
-                img = imageFond05
-
-            if grilleFond[i][j] == 5 :
-                img = imageFond06
-
-            if grilleFond[i][j] == 6 :
-                img = imageFond07
-
-            if grilleFond[i][j] == 7 :
-                img = imageFond08
-
-            if grilleFond[i][j] == 8 :
-                img = imageFond09
-
-            if grilleFond[i][j] == 9 :
-                img = imageFond10
-
-            if grilleFond[i][j] == 10 :
-                img = imageFond11
-
-            if grilleFond[i][j] == 11 :
-                img = imageFond12
-
-
-
-
-            if not img == 0 :
-                Position(myRect)
-
-    #PLATEFORMES
-    for i in range(len(grillePlateforme)) :
-        for j in range(len(grillePlateforme[i])) :
-            img = 0
-            if grillePlateforme[i][j] == 1 :
-                img = imagePont01
-
-            if grillePlateforme[i][j] == 2 :
-                img = imageMarketplace01
-
-            if grillePlateforme[i][j] == 3 :
-                img = imageMarketplace01
-
-            if grillePlateforme[i][j] == 4 :
-                img = imageFond
-
-            if grillePlateforme[i][j] == 5 :
-                img = imagePontvertical01
-
-            if grillePlateforme[i][j] == 6 :
-                img = imageIlot01
-
-            if grillePlateforme[i][j] == 7 :
-                img = imagePont03
-            if grillePlateforme[i][j] == 8 :
-                img = imageBonfire01
-
-            if grillePlateforme[i][j] == 9 :
-                img = imagePont05a
-            if grillePlateforme[i][j] == 10 :
-                img = imagePont05b
-            if grillePlateforme[i][j] == 11 :
-                img = imagePont05c
-            if grillePlateforme[i][j] == 12 :
-                img = imagePont05d
-            if grillePlateforme[i][j] == 13 :
-                img = imagePont05e
-            if grillePlateforme[i][j] == 14 :
-                img = imagePont05f
-
-            if not img == 0 :
-                Position(myRect)
-
-    #DECORS
-    for i in range(len(grilledecors)) :
-        for j in range(len(grilledecors[i])) :
-            img = 0
-            if grilledecors[i][j] == 1 :
-                img = imagePuit01
-
-            if grilledecors[i][j] == 2 :
-                img = imageBigboat01
-
-            if grilledecors[i][j] == 3 :
-                img = imageBoat01
-
-            if grilledecors[i][j] == 4 :
-                img = imageBoat02
-
-            if grilledecors[i][j] == 5 :
-                img = imageHorloge01
-
-            if grilledecors[i][j] == 6 :
-                img = imageMarket01
-
-            if grilledecors[i][j] == 7 :
-                img = imageMarket02
-
-            if grilledecors[i][j] == 8 :
-                img = imageWheatbag01
-
-            if grilledecors[i][j] == 9 :
-                img = imageRondin01
-
-            if grilledecors[i][j] == 10 :
-                img = imageBanc01
-
-            if grilledecors[i][j] == 11 :
-                img = imageLampe01
-
-            if grilledecors[i][j] == 12 :
-                img = imageTonneau01
-
-            if grilledecors[i][j] == 13 :
-                img = imageForge01
-
-            if grilledecors[i][j] == 14 :
-                img = imageGreatmarket01
-
-            if grilledecors[i][j] == 15 :
-                img = imageBarrier01
-
-            if grilledecors[i][j] == 16 :
-                img = imageTablegrande01
-
-            if grilledecors[i][j] == 17 :
-                img = imageChariot01
-
-            if grilledecors[i][j] == 18 :
-                img = imageChariot02
-
-            if grilledecors[i][j] == 19 :
-                rectDecors19 = imagePnj01.get_rect()
-                rectDecors19.x = j*largeurcaseDecors -xf
-                rectDecors19.y = i*largeurcaseDecors -yf
-                fenetre.blit(imagePnj01, rectDecors19)
-
-            if grilledecors[i][j] == 20 :
-                rectDecors20 = imagePnj02.get_rect()
-                rectDecors20.x = j*largeurcaseDecors -xf
-                rectDecors20.y = i*largeurcaseDecors -yf
-                fenetre.blit(imagePnj02, rectDecors20)
-
-            if grilledecors[i][j] == 21 :
-                rectDecors21 = imagePnj03.get_rect()
-                rectDecors21.x = j*largeurcaseDecors -xf
-                rectDecors21.y = i*largeurcaseDecors -yf
-                fenetre.blit(imagePnj03, rectDecors21)
-
-            if grilledecors[i][j] == 22 :
-                rectDecors22 = imagePnj04.get_rect()
-                rectDecors22.x = j*largeurcaseDecors -xf
-                rectDecors22.y = i*largeurcaseDecors -yf
-                fenetre.blit(imagePnj04, rectDecors22)
-
-            if grilledecors[i][j] == 23 :
-                img = imageNenu01
-
-            if grilledecors[i][j] == 24 :
-                img = imageNenu02
-
-            if grilledecors[i][j] == 25 :
-                img = imageNenu03
-
-            if grilledecors[i][j] == 26 :
-                img = imageMarket03
-
-            if grilledecors[i][j] == 27 :
-                img = imageBuisson02
-
-            if grilledecors[i][j] == 28 :
-                img = imageSupplies01
-
-            if grilledecors[i][j] == 29 :
-                img = imagePnj04bas
-
-            if grilledecors[i][j] == 30 :
-                img = imagePnj05
-
-            if grilledecors[i][j] == 31 :
-                img = imagePnj04left
-
-            if grilledecors[i][j] == 32 :
-                img = imagePnj06
-
-            if grilledecors[i][j] == 33 :
-                img = imageCadavre01
-
-            if grilledecors[i][j] == 34 :
-                img = imageiotdefleur01
-
-            if grilledecors[i][j] == 35 :
-                img = imageLitpaille01
-
-            if grilledecors[i][j] == 36 :
-                rectDecors36 = imageCoffre.get_rect()
-                rectDecors36.x = j*largeurcaseDecors -xf
-                rectDecors36.y = i*hauteurcaseDecors -yf
-                fenetre.blit(imageCoffre, rectDecors36)
-                if touches[pygame.K_SPACE] and rectPersounvirgulecinq.colliderect(rectDecors36) :
-                    if timer%2==0:
-                        icoffre = (icoffre+1)%len(imagesCoffre["ouvert"])
-                        imageCoffre = imagesCoffre["ouvert"][icoffre]
-                elif not(rectPersounvirgulecinq.colliderect(rectDecors36)) :
-                    imageCoffre = imagesCoffre["fermer"][icoffre]
-
-            if grilledecors[i][j] == 37 :
-                rectDecors37 = imageTreesiooky01
-
-            if grilledecors[i][j] == 38 :
-                rectDecors38 = imageWolf.get_rect()
-                rectDecors38.x = j*largeurcaseDecors -xf
-                rectDecors38.y = i*largeurcaseDecors -yf
-                fenetre.blit(imageWolf, rectDecors38)
-                if touches[pygame.K_SPACE] and rectPersounvirgulecinq.colliderect(rectDecors38) :
-                    if timer%2==0:
-                        iwolf = (iwolf+1)%len(imagesWolf["sleepleft"])
-                        imageWolf = imagesWolf["sleepleft"][iwolf]
-
-            if grilledecors[i][j] == 39 :
-                rectDecors = imageCarquois
-                rectCarquois = imageCarquois.get_rect()
-                rectCarquois.x = j*largeurcaseDecors -xf
-                rectCarquois.y = i*largeurcaseDecors -yf
-                fenetre.blit(imageCarquois, rectCarquois)
-                if touches[pygame.K_RETURN] and rectPersounvirgulecinq.colliderect(rectCarquois) :
-                    RangerQuest = 1
-                    grilledecors[i][j] = 0
-                    getReward(1,2)
-            if grilledecors[i][j] == 40 :
-                rectCane = imageCane.get_rect()
-                rectCane.x = j*largeurcaseDecors -xf
-                rectCane.y = i*largeurcaseDecors -yf
-                fenetre.blit(imageCane, rectCane)
-                if touches[pygame.K_RETURN] and rectPersounvirgulecinq.colliderect(rectCane) :
-                    fishermanQuest = 2
-                    grilledecors[i][j] = 0
-                    getReward(1,3)
-
-            if grilledecors[i][j] == 41 :
-                img = imageBarrier02
-
-            if grilledecors[i][j] == 42 :
-                rectDecors42 = imageTrash.get_rect()
-                rectDecors42.x = j*largeurcaseDecors -xf
-                rectDecors42.y = i*largeurcaseDecors -yf
-                fenetre.blit(imageTrash, rectDecors42)
-                if touches[pygame.K_SPACE] and rectPersounvirgulecinq.colliderect(rectDecors42) :
-                    if timer%2==0:
-                        itrash = (itrash+1)%len(imagesTrash["ouvert"])
-                        imageTrash = imagesTrash["ouvert"][itrash]
-                elif not(rectPersounvirgulecinq.colliderect(rectDecors42)) :
-                    imageTrash = imagesTrash["fermer"][itrash]
-
-            if grilledecors[i][j] == 43 :
-                img = imageCaisse01
-            if grilledecors[i][j] == 44 :
-                img = imageTree02
-            if grilledecors[i][j] == 45 :
-                img = imageTonneau02
-            if grilledecors[i][j] == 46 :
-                img = imagePortebarrier
-            if grilledecors[i][j] == 47 :
-                img = imageBarrier03
-            if grilledecors[i][j] == 48 :
-                img = imageBarrier04
-            if grilledecors[i][j] == 49 :
-                img = imageTombe01
-            if grilledecors[i][j] == 50 :
-                img = imageLampe02
-            if grilledecors[i][j] == 51 :
-                img = imageCampement01
-            if grilledecors[i][j] == 52 :
-                img = imageHerbe01
-            if grilledecors[i][j] == 53 :
-                img = imageTree03
-            if grilledecors[i][j] == 54 :
-                img = imageBonfire01
-            if grilledecors[i][j] == 55 :
-                img = imageTree04
-            if grilledecors[i][j] == 56 :
-                img = imageTree05
-            if grilledecors[i][j] == 57 :
-                rectDecors57 = imagePnj07.get_rect()
-                rectDecors57.x = j*largeurcaseDecors -xf
-                rectDecors57.y = i*largeurcaseDecors -yf
-                fenetre.blit(imagePnj07, rectDecors57)
-            if grilledecors[i][j] == 58 :
-                img = imageFlaquedeau01
-            if grilledecors[i][j] == 59 :
-                img = imageTombe02
-            if grilledecors[i][j] == 60 :
-                img = imageTombe03
-            if grilledecors[i][j] == 61 :
-                img = imageTombe04
-            if grilledecors[i][j] == 62 :
-                img = imageRondincut01
-            # if grilledecors[i][j] == 63 :
-            #     img = imageRondincut02
-            if grilledecors[i][j] == 64 :
-                img = imageSquelette01
-            if grilledecors[i][j] == 65 :
-                img = imageBuisson03
-            if grilledecors[i][j] == 66 :
-                rectDecors66 = imagePnjright08.get_rect()
-                rectDecors66.x = j*largeurcaseDecors -xf
-                rectDecors66.y = i*largeurcaseDecors -yf
-                fenetre.blit(imagePnjright08, rectDecors66)
-            if grilledecors[i][j] == 67 :
-                img = imagePnjdown08
-            if grilledecors[i][j] == 68 :
-                img = imagePnjleft08
-            if grilledecors[i][j] == 69 :
-                img = imageTree06
-
-
-            if not img == 0 :
-                Position(myRect)
-
-
-    for i in range(len(grilletable)) :
-        for j in range(len(grilletable[i])) :
-            img = 0
-            if grilletable[i][j] == 1 :
-                img = imagePotato01
-            if grilletable[i][j] == 2 :
-                img = imageWatermelon01
-            if grilletable[i][j] == 3 :
-                img = imagefish01
-            if grilletable[i][j] == 4 :
-                img = imagefish02
-            if not img == 0 :
-                Position(myRect)
-    for t in tirs:
-        fenetre.blit(imageCarquois, (t["rect"].x-xf,t["rect"].y-yf))
-    # if rectCarquois.get_rect().collidepoint(pygame.mouse.get_pos()) and :
-    for blob in blobs :
-            if blob["nom"] == "fürher" :
-                fenetre.blit(imageblobf, (blob["rect"].x-xf,blob["rect"].y-yf))
-            else :
-                fenetre.blit(imageblob, (blob["rect"].x-xf,blob["rect"].y-yf))
-
-            for ti in tirsblob:
-                if ti["direction"] > -1:
-                    fenetre.blit(imageCGblob, (ti["rect"].x-xf,ti["rect"].y-yf))
-    fenetre.blit(imagePerso, (perso["rect"].x - xf, perso["rect"].y -yf))
-
-
-    if touches[pygame.K_RETURN] and rectPersounvirgulecinq.colliderect(rectDecors19) :
-            RanChat = random.randint(1,10)
-            if RanChat == 1 and chatcd > 20 :
-                Chat = """bienvenue a mon échoppe !"""
-                chatcd = 0
-            elif RanChat == 2 and chatcd > 20 :
-                Chat = """fruits & légumes frais ! !"""
-                chatcd = 0
-            elif RanChat == 3 and chatcd > 20 :
-                Chat = """Le maire du bourg est étrange
-en ce moment... Tu devrais
-peut-êtreparler avec sa fille."""
-                chatcd = 0
-            elif RanChat == 4 and chatcd > 20 :
-                Chat = """La mer est calme, Les légumes
-arrivent encore frais en
-ce moment ! Pourvu que ça
-dure..."""
-                chatcd = 0
-            elif RanChat == 5 and chatcd > 20 :
-                Chat = """Les DJ ont le sens de l'esthétique
-n'est-ce pas ?"""
-                chatcd = 0
-            elif RanChat == 6 and chatcd > 20 :
-                Chat = """Mes tomates sont bien rouges !
-moins de 10% de peinture
-garanti !"""
-                chatcd = 0
-            elif RanChat == 7 and chatcd > 20 :
-                Chat = """Si on m'avait prévenue que de
-tenir une échope dans un jeu
-était si difficile..."""
-                chatcd = 0
-            elif RanChat == 8 and chatcd > 20 :
-                Chat = """Avant, j'étais décoratrice
-d'intérieur. Puis j'ai
-reçu une flèche dans
-le genou..."""
-                chatcd = 0
-            elif RanChat == 9 and chatcd > 20 :
-                Chat = """Pssst... N'achètes pas de
-poisson a ce type là-bas...
-soit sa marchandise n'est pas
-fraîche, soit c'est le marchand
-..."""
-                chatcd = 0
-            elif RanChat == 10 and chatcd > 20 :
-                Chat = """Tu est nouveau dans ce bourg
-n'est-ce pas ?"""
-                chatcd = 0
-
-    elif touches[pygame.K_RETURN] and rectPersounvirgulecinq.colliderect(rectDecors57) :
+        if touches[pygame.K_RETURN] and rectPersounvirgulecinq.colliderect(rectDecors19) :
                 RanChat = random.randint(1,10)
                 if RanChat == 1 and chatcd > 20 :
-                    Chat = """Vous là bas,
-il serait préférable pour vous
-de rebrousser chemin
-..."""
+                    Chat = """bienvenue a mon échoppe !"""
                     chatcd = 0
                 elif RanChat == 2 and chatcd > 20 :
-                    Chat = """Suite aux plaintes des habitants,
-mon supérieur ...
-m'a ordonné d'enquêter
-sur ce cimetière ..."""
+                    Chat = """fruits & légumes frais ! !"""
                     chatcd = 0
                 elif RanChat == 3 and chatcd > 20 :
-                    Chat = """Quelque chose à reveiller les morts
-...
-Ils en rodent partout
-dans ces lieux """
+                    Chat = """Le maire du bourg est étrange
+    en ce moment... Tu devrais
+    peut-êtreparler avec sa fille."""
                     chatcd = 0
                 elif RanChat == 4 and chatcd > 20 :
-                    Chat = """Certains tombent en mer
-...
-et leur corps flottent
-tout le long du village """
+                    Chat = """La mer est calme, Les légumes
+    arrivent encore frais en
+    ce moment ! Pourvu que ça
+    dure..."""
                     chatcd = 0
                 elif RanChat == 5 and chatcd > 20 :
-                    Chat = """ M m m MOI, p pe PEUR
-...
-JE SUIS UN COURAGEUX chevalier,
-je réglerai ce problème
-u u une fois que
-...
-j'aurais finis thé"""
+                    Chat = """Les DJ ont le sens de l'esthétique
+    n'est-ce pas ?"""
+                    chatcd = 0
+                elif RanChat == 6 and chatcd > 20 :
+                    Chat = """Mes tomates sont bien rouges !
+    moins de 10% de peinture
+    garanti !"""
+                    chatcd = 0
+                elif RanChat == 7 and chatcd > 20 :
+                    Chat = """Si on m'avait prévenue que de
+    tenir une échope dans un jeu
+    était si difficile..."""
+                    chatcd = 0
+                elif RanChat == 8 and chatcd > 20 :
+                    Chat = """Avant, j'étais décoratrice
+    d'intérieur. Puis j'ai
+    reçu une flèche dans
+    le genou..."""
+                    chatcd = 0
+                elif RanChat == 9 and chatcd > 20 :
+                    Chat = """Pssst... N'achètes pas de
+    poisson a ce type là-bas...
+    soit sa marchandise n'est pas
+    fraîche, soit c'est le marchand
+    ..."""
+                    chatcd = 0
+                elif RanChat == 10 and chatcd > 20 :
+                    Chat = """Tu est nouveau dans ce bourg
+    n'est-ce pas ?"""
                     chatcd = 0
 
-    elif touches[pygame.K_RETURN] and rectPersounvirgulecinq.colliderect(rectDecors20) :
-        RanChat = random.randint(1,10)
-        if RangerQuest == 1:
-            chatcd = 0
-            Chat = """Merci !!! Tu viens de sauver plus
-de vies que tu ne l'imagines...
-Vous obtenez 1 potion de santé"""
-            getReward(1,1)
-            RangerQuest = 2
-        else:
-            if RanChat == 1 and chatcd > 20 :
-                Chat = """..."""
-                chatcd = 0
-            elif RanChat == 2 and chatcd > 20 :
-                Chat = """Tu le sens aussi, n'est-ce pas ?
-Quelquechose flotte dans l'air..."""
-                chatcd = 0
-            elif RanChat == 3 and chatcd > 20 :
-                Chat = """ne juge pas sur les apparences,
-la mer a beau être calme,
-elle est toujours prête a se
-déchainer"""
-                chatcd = 0
-            elif RanChat == 4 and chatcd > 20 :
-                Chat = """J'espère pouvoir enfin
-me reposer, avant que les choses
-ne dégénèrent encore..."""
-                chatcd = 0
-            elif RanChat == 5 and chatcd > 20 :
-                Chat = """Je viens d'un endroit lointain;
-des forêts luxurieuses y
-couvrent les plaines gelées...
-Ah, ma maison, ma famille..."""
-                chatcd = 0
-            elif RanChat == 6 and chatcd > 20 :
-                Chat = """Profites du calme de ce bourg
-tant que tu le peux..."""
-                chatcd = 0
-            elif RanChat == 7 and chatcd > 20 :
-                Chat = """..."""
-                chatcd = 0
-            elif RanChat == 8 and chatcd > 20 :
-                Chat = """Hey, toi, tu pourrais me ramener
-mon carquois ? je l'ai oublié aux
-abords de la cité alors que je
-campais !"""
-                chatcd = 0
-            elif RanChat == 9 and chatcd > 20 :
-                Chat = """Le ciel est dégagé aujourd'hui.
-Au moins, nous vivrons un jour
-de plus."""
-                chatcd = 0
-            elif RanChat == 10 and chatcd > 20 and RangerQuest >= 1:
-                Chat = """Merci !!! Tu viens de sauver plus
-de vies que tu ne l'imagines..."""
-                chatcd = 0
-    if touches[pygame.K_RETURN] and rectPersounvirgulecinq.colliderect(rectDecors21) :
+        elif touches[pygame.K_RETURN] and rectPersounvirgulecinq.colliderect(rectDecors57) :
+                    RanChat = random.randint(1,10)
+                    if RanChat == 1 and chatcd > 20 :
+                        Chat = """Vous là bas,
+    il serait préférable pour vous
+    de rebrousser chemin
+    ..."""
+                        chatcd = 0
+                    elif RanChat == 2 and chatcd > 20 :
+                        Chat = """Suite aux plaintes des habitants,
+    mon supérieur ...
+    m'a ordonné d'enquêter
+    sur ce cimetière ..."""
+                        chatcd = 0
+                    elif RanChat == 3 and chatcd > 20 :
+                        Chat = """Quelque chose à reveiller les morts
+    ...
+    Ils en rodent partout
+    dans ces lieux """
+                        chatcd = 0
+                    elif RanChat == 4 and chatcd > 20 :
+                        Chat = """Certains tombent en mer
+    ...
+    et leur corps flottent
+    tout le long du village """
+                        chatcd = 0
+                    elif RanChat == 5 and chatcd > 20 :
+                        Chat = """ M m m MOI, p pe PEUR
+    ...
+    JE SUIS UN COURAGEUX chevalier,
+    je réglerai ce problème
+    u u une fois que
+    ...
+    j'aurais finis thé"""
+                        chatcd = 0
+
+        elif touches[pygame.K_RETURN] and rectPersounvirgulecinq.colliderect(rectDecors20) :
             RanChat = random.randint(1,10)
-            if fishermanQuest == 2:
+            if RangerQuest == 1:
                 chatcd = 0
-                Chat = """Merci ! le plus dur n'est pas
-de l'attrapper, mais de le vendre!
-j'en ai mal au dos! Maintenant
-prends cette canne, et attrapes
-moi n'importe quoi !"""
+                Chat = """Merci !!! Tu viens de sauver plus
+    de vies que tu ne l'imagines...
+    Vous obtenez 1 potion de santé"""
+                getReward(1,1)
+                RangerQuest = 2
+            else:
+                if RanChat == 1 and chatcd > 20 :
+                    Chat = """..."""
+                    chatcd = 0
+                elif RanChat == 2 and chatcd > 20 :
+                    Chat = """Tu le sens aussi, n'est-ce pas ?
+    Quelquechose flotte dans l'air..."""
+                    chatcd = 0
+                elif RanChat == 3 and chatcd > 20 :
+                    Chat = """ne juge pas sur les apparences,
+    la mer a beau être calme,
+    elle est toujours prête a se
+    déchainer"""
+                    chatcd = 0
+                elif RanChat == 4 and chatcd > 20 :
+                    Chat = """J'espère pouvoir enfin
+    me reposer, avant que les choses
+    ne dégénèrent encore..."""
+                    chatcd = 0
+                elif RanChat == 5 and chatcd > 20 :
+                    Chat = """Je viens d'un endroit lointain;
+    des forêts luxurieuses y
+    couvrent les plaines gelées...
+    Ah, ma maison, ma famille..."""
+                    chatcd = 0
+                elif RanChat == 6 and chatcd > 20 :
+                    Chat = """Profites du calme de ce bourg
+    tant que tu le peux..."""
+                    chatcd = 0
+                elif RanChat == 7 and chatcd > 20 :
+                    Chat = """..."""
+                    chatcd = 0
+                elif RanChat == 8 and chatcd > 20 :
+                    Chat = """Hey, toi, tu pourrais me ramener
+    mon carquois ? je l'ai oublié aux
+    abords de la cité alors que je
+    campais !"""
+                    chatcd = 0
+                elif RanChat == 9 and chatcd > 20 :
+                    Chat = """Le ciel est dégagé aujourd'hui.
+    Au moins, nous vivrons un jour
+    de plus."""
+                    chatcd = 0
+                elif RanChat == 10 and chatcd > 20 and RangerQuest >= 1:
+                    Chat = """Merci !!! Tu viens de sauver plus
+    de vies que tu ne l'imagines..."""
+                    chatcd = 0
+        if touches[pygame.K_RETURN] and rectPersounvirgulecinq.colliderect(rectDecors21) :
+                RanChat = random.randint(1,10)
+                if fishermanQuest == 2:
+                    chatcd = 0
+                    Chat = """Merci ! le plus dur n'est pas
+    de l'attrapper, mais de le vendre!
+    j'en ai mal au dos! Maintenant
+    prends cette canne, et attrapes
+    moi n'importe quoi !"""
 
-                fishermanQuest = 3
-
-
-            if RanChat == 1 and chatcd > 20 :
-                Chat = """L'air est frais aujourd'hui !"""
-                chatcd = 0
-            elif RanChat == 2 and chatcd > 20 :
-                Chat = """La mer n'a jamais été
-aussi calme ! Les poissons
-sautent presque dans nos bras !"""
-                chatcd = 0
-            elif RanChat == 3 and chatcd > 20 :
-                Chat = """Y'a peut-être pas d'arrêtes
-dans le beefsteak mais mon
-poisson est riche en Oméga 3 !"""
-                chatcd = 0
-            elif RanChat == 4 and chatcd > 20 and fishermanQuest <= 1:
-                Chat = """Comment ça tu ne sais pas
-pêcher ? Va me chercher ma canne
-et je t'apprendrai les secrets
-du métier !"""
-                fishermanQuest = 1
-
-                chatcd = 0
-            elif RanChat == 5 and chatcd > 20 :
-                Chat = """IL EST FRAIS MON POISSON !"""
-                chatcd = 0
-
-            elif RanChat == 6 and chatcd > 20 and fishermanQuest <= 1:
-                Chat = """Comment ça tu ne sais pas
-pêcher ? Va me chercher ma canne
-et je t'apprendrai les secrets
-du métier !"""
-                fishermanQuest = 1
-                chatcd = 0
-
-            elif RanChat == 7 and chatcd > 20 :
-                Chat = """Hey toi ! tu veux voir mon
-plus grand secret ? La voici:
-Une botte secrète de 65cm de
-long ! imagine les péniches
-de la bête !!!"""
-                chatcd = 0
-            elif RanChat == 8 and chatcd > 20 :
-                Chat = """Tu penses que les poissons
-pierre existaient déjà durant
-l'âge de pierre ?"""
-                chatcd = 0
-            elif RanChat == 9 and chatcd > 20 :
-                Chat = """Devines : les oursins sont
-les petits des ours
-ou des oursons ?"""
-                chatcd = 0
-            elif RanChat == 10 and chatcd > 20 :
-                Chat = """J'ai pêché un requin marteau
-l'année dèrniere. On m'a dit
-qu'ils ne valaient
-pas un clou !"""
-                chatcd = 0
-
-    elif touches[pygame.K_RETURN] and rectPersounvirgulecinq.colliderect(rectDecors66) :
-        Chat = 'bonjour petite! une friandise ?'
+                    fishermanQuest = 3
 
 
-    if chatcd < 21 :
-        chatcd +=1
-    if CurrentWindow == 'Chat':
-        rectIconeBag.x = rectChatbox.x+274
-        rectIconeBag.y = rectChatbox.y+30
-        label = fontChat.render(Chat, 1, (255,255,255))
-        fenetre.blit(imageChatbox, rectChatbox)
-        x,y = rectChatbox.x+10,rectChatbox.y+20
-        fenetre.blit(imageIconeBag, rectIconeBag)
-        for ligne in Chat.splitlines():
-            x,y = fenetre.blit(fontChat.render(ligne,1,(255,255,255)),(x,y)).bottomleft
-            # fenetre.blit(label, (rectChatbox.x+10, rectChatbox.y+50))
-    elif CurrentWindow == 'Bag':
-        rectIconeChat.x = rectInventory.x+274
-        rectIconeChat.y = rectInventory.y+30
-        fenetre.blit(imageInventory, rectInventory)
-        fenetre.blit(imageIconeChat, rectIconeChat)
+                if RanChat == 1 and chatcd > 20 :
+                    Chat = """L'air est frais aujourd'hui !"""
+                    chatcd = 0
+                elif RanChat == 2 and chatcd > 20 :
+                    Chat = """La mer n'a jamais été
+    aussi calme ! Les poissons
+    sautent presque dans nos bras !"""
+                    chatcd = 0
+                elif RanChat == 3 and chatcd > 20 :
+                    Chat = """Y'a peut-être pas d'arrêtes
+    dans le beefsteak mais mon
+    poisson est riche en Oméga 3 !"""
+                    chatcd = 0
+                elif RanChat == 4 and chatcd > 20 and fishermanQuest <= 1:
+                    Chat = """Comment ça tu ne sais pas
+    pêcher ? Va me chercher ma canne
+    et je t'apprendrai les secrets
+    du métier !"""
+                    fishermanQuest = 1
 
-        for i in range(len(grilleInventaire)) :
-            for j in range(len(grilleInventaire[i])) :
-                if grilleInventaire[i][j] == 1 :
-                    for objet in objets :
-                        if objet["CodeItem"] == 1:
+                    chatcd = 0
+                elif RanChat == 5 and chatcd > 20 :
+                    Chat = """IL EST FRAIS MON POISSON !"""
+                    chatcd = 0
 
-                            objet["rect"] = imageHealthPot01.get_rect()
-                            objet["i"] = i
-                            objet["j"] = j
-                            objet["rect"].x = 10+(j*largeurCaseInv)
-                            objet["rect"].y = (rectInventory.y+20)+(i*hauteurCaseInv)
-                            fenetre.blit(imageHealthPot01, objet["rect"])
-                # elif grilleInventaire[i][j] == 2 :
-                #     for objet in objets :
-                #         if objet["CodeItem"] == 2:
-                #             print(str(grilleInventaire[0][0]))
-                #
-                #             objet["rect"] = imageCarquois.get_rect()
-                #             objet["i"] = i
-                #             objet["j"] = j
-                #             objet["rect"].x = 10+(j*largeurCaseInv)
-                #             objet["rect"].y = (rectInventory.y+20)+(i*hauteurCaseInv)
-                #             fenetre.blit(imageCarquois, objet["rect"])
-                elif grilleInventaire[i][j] == 2 :
-                    rectCarquois = imageCarquois.get_rect()
-                    objet["i"] = i
-                    objet["j"] = j
-                    rectCarquois.x = 10+(j*largeurCaseInv)
-                    rectCarquois.y = (rectInventory.y+20)+(i*hauteurCaseInv)
-                    fenetre.blit(imageCarquois, rectCarquois)
+                elif RanChat == 6 and chatcd > 20 and fishermanQuest <= 1:
+                    Chat = """Comment ça tu ne sais pas
+    pêcher ? Va me chercher ma canne
+    et je t'apprendrai les secrets
+    du métier !"""
+                    fishermanQuest = 1
+                    chatcd = 0
 
-                elif grilleInventaire[i][j] == 3 :
-                    rectCane = imageCane.get_rect()
-                    objet["i"] = i
-                    objet["j"] = j
-                    rectCane.x = 10+(j*largeurCaseInv)
-                    rectCane.y = (rectInventory.y+20)+(i*hauteurCaseInv)
-                    fenetre.blit(imageCane, rectCane)
+                elif RanChat == 7 and chatcd > 20 :
+                    Chat = """Hey toi ! tu veux voir mon
+    plus grand secret ? La voici:
+    Une botte secrète de 65cm de
+    long ! imagine les péniches
+    de la bête !!!"""
+                    chatcd = 0
+                elif RanChat == 8 and chatcd > 20 :
+                    Chat = """Tu penses que les poissons
+    pierre existaient déjà durant
+    l'âge de pierre ?"""
+                    chatcd = 0
+                elif RanChat == 9 and chatcd > 20 :
+                    Chat = """Devines : les oursins sont
+    les petits des ours
+    ou des oursons ?"""
+                    chatcd = 0
+                elif RanChat == 10 and chatcd > 20 :
+                    Chat = """J'ai pêché un requin marteau
+    l'année dèrniere. On m'a dit
+    qu'ils ne valaient
+    pas un clou !"""
+                    chatcd = 0
+
+        elif touches[pygame.K_RETURN] and rectPersounvirgulecinq.colliderect(rectDecors66) :
+            Chat = 'bonjour petite! une friandise ?'
 
 
-#Health Bar contour
-    pygame.draw.rect(fenetre, (200, 0,255), pygame.Rect(largeur-233, hauteur-(hauteur-35), hpBarMax+4, 14),4)
-    #HealthBar
-    pygame.draw.rect(fenetre, (255, 0, 0), pygame.Rect(largeur-230, hauteur-(hauteur-38), hp, 10))
-    pygame.display.flip()
+        if chatcd < 21 :
+            chatcd +=1
+        if CurrentWindow == 'Chat':
+            rectIconeBag.x = rectChatbox.x+274
+            rectIconeBag.y = rectChatbox.y+30
+            label = fontChat.render(Chat, 1, (255,255,255))
+            fenetre.blit(imageChatbox, rectChatbox)
+            x,y = rectChatbox.x+10,rectChatbox.y+20
+            fenetre.blit(imageIconeBag, rectIconeBag)
+            for ligne in Chat.splitlines():
+                x,y = fenetre.blit(fontChat.render(ligne,1,(255,255,255)),(x,y)).bottomleft
+                # fenetre.blit(label, (rectChatbox.x+10, rectChatbox.y+50))
+        elif CurrentWindow == 'Bag':
+            rectIconeChat.x = rectInventory.x+274
+            rectIconeChat.y = rectInventory.y+30
+            fenetre.blit(imageInventory, rectInventory)
+            fenetre.blit(imageIconeChat, rectIconeChat)
 
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            continuer = 0
+            for i in range(len(grilleInventaire)) :
+                for j in range(len(grilleInventaire[i])) :
+                    if grilleInventaire[i][j] == 1 :
+                        for objet in objets :
+                            if objet["CodeItem"] == 1:
+
+                                objet["rect"] = imageHealthPot01.get_rect()
+                                objet["i"] = i
+                                objet["j"] = j
+                                objet["rect"].x = 10+(j*largeurCaseInv)
+                                objet["rect"].y = (rectInventory.y+20)+(i*hauteurCaseInv)
+                                fenetre.blit(imageHealthPot01, objet["rect"])
+                    # elif grilleInventaire[i][j] == 2 :
+                    #     for objet in objets :
+                    #         if objet["CodeItem"] == 2:
+                    #             print(str(grilleInventaire[0][0]))
+                    #
+                    #             objet["rect"] = imageCarquois.get_rect()
+                    #             objet["i"] = i
+                    #             objet["j"] = j
+                    #             objet["rect"].x = 10+(j*largeurCaseInv)
+                    #             objet["rect"].y = (rectInventory.y+20)+(i*hauteurCaseInv)
+                    #             fenetre.blit(imageCarquois, objet["rect"])
+                    elif grilleInventaire[i][j] == 2 :
+                        rectCarquois = imageCarquois.get_rect()
+                        objet["i"] = i
+                        objet["j"] = j
+                        rectCarquois.x = 10+(j*largeurCaseInv)
+                        rectCarquois.y = (rectInventory.y+20)+(i*hauteurCaseInv)
+                        fenetre.blit(imageCarquois, rectCarquois)
+
+                    elif grilleInventaire[i][j] == 3 :
+                        rectCane = imageCane.get_rect()
+                        objet["i"] = i
+                        objet["j"] = j
+                        rectCane.x = 10+(j*largeurCaseInv)
+                        rectCane.y = (rectInventory.y+20)+(i*hauteurCaseInv)
+                        fenetre.blit(imageCane, rectCane)
+
+
+    #Health Bar contour
+        fenetre.blit(fontCat.render("Déplacement : Fleches directionnelles",1,(255,255,0)),(200, 300))
+        fenetre.blit(fontCat.render("Tir : ESPACE ",1,(255,255,0)),(200, 320))
+        fenetre.blit(fontCat.render("Interaction PNJ : ENTRER",1,(255,255,0)),(200, 340))
+        fenetre.blit(fontCat.render("Interaction avec certains Objets : C",1,(255,255,0)),(200, 360))
+        fenetre.blit(fontCat.render("Ouvrir/Fermer Inventaire : I",1,(255,255,0)),(200, 380))
+        fenetre.blit(fontCat.render("Perdre des PV : F1",1,(255,255,0)),(200, 400))
+        fenetre.blit(fontCat.render("Potion : L_CLIC",1,(255,255,0)),(200, 420))
+        # fenetre.blit(fontCat.render("Changer de résolution : TAB",1,(255,255,0)),(200, 440))
+        fenetre.blit(fontCat.render("Quitter le jeu : Echap puis Y",1,(255,255,0)),(200, 440))
+
+
+
+
+
+        pygame.draw.rect(fenetre, (200, 0,255), pygame.Rect(largeur-233, hauteur-(hauteur-35), hpBarMax+4, 14),4)
+        #HealthBar
+        pygame.draw.rect(fenetre, (255, 0, 0), pygame.Rect(largeur-230, hauteur-(hauteur-38), hp, 10))
+        pygame.display.flip()
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                continuer = 0
+                game = 0
 
 pygame.quit()
