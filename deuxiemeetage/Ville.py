@@ -20,6 +20,7 @@ fontChat = pygame.font.SysFont("monospace", 15)
 fontChien = pygame.font.SysFont("monospace", 100)
 fontCat = pygame.font.SysFont("monospace", 20)
 fontPuppy = pygame.font.SysFont("monospace", 20)
+fontkitty = pygame.font.SysFont("monospace", 100)
 
 
 # fenetre=pygame.display.set_mode((largeur,hauteur))
@@ -146,7 +147,16 @@ imageArrow01r = pygame.image.load("pictures/arrow2right.png").convert_alpha()
 imageArrow01l = pygame.image.load("pictures/arrow2left.png").convert_alpha()
 imageArrow01d = pygame.image.load("pictures/arrow2down.png").convert_alpha()
 imageRune01 = pygame.image.load("pictures/rune3.png").convert_alpha()
-
+imagesol01a = pygame.image.load("pictures/sol1a.png").convert_alpha()
+imagesol01b = pygame.image.load("pictures/sol1b.png").convert_alpha()
+imagesol01c = pygame.image.load("pictures/sol1c.png").convert_alpha()
+imagesol01d = pygame.image.load("pictures/sol1d.png").convert_alpha()
+imagesol01e = pygame.image.load("pictures/sol1e.png").convert_alpha()
+imagesol01f = pygame.image.load("pictures/sol1f.png").convert_alpha()
+imagesol01g = pygame.image.load("pictures/sol1g.png").convert_alpha()
+imagesol01h = pygame.image.load("pictures/sol1h.png").convert_alpha()
+imagesol01i = pygame.image.load("pictures/sol1i.png").convert_alpha()
+imagesol01j = pygame.image.load("pictures/sol1j.png").convert_alpha()
 # rectCarquois2 = imageArrow01.get_rect()
 
 # imageArrow02 = pygame.transform.rotate(imageArrow01,90)
@@ -653,6 +663,8 @@ CurrentWindow = 'Chat'
 hpBarMax = 200
 hp = 200
 hpHealed = 0
+hpAffiche = hp
+hpcolor = (255, 0, 0)
 cdmg = 50
 dedouble = 0
 i=0
@@ -672,6 +684,7 @@ tirsblob = []
 
 
 rectBlob = imageblob.get_rect()
+rectBlob2 = imageblob.get_rect()
 blob = {}
 
 blob["nom"] = "Bob"
@@ -697,6 +710,7 @@ lvl = 0
 menu = 1
 jouer = 1
 game = 1
+win = 0
 #
 # mob1 = {}
 #
@@ -714,7 +728,98 @@ while game :
         # if jouer == 1 :
         #     pygame.mixer.music.play()
         touches = pygame.key.get_pressed()
-        if touches[pygame.K_RETURN] :
+        if (not continuer  and game==-1 and touches[pygame.K_RETURN]):
+            if lvl == 1:
+                grillePlateforme = []
+                with open("plateforme.txt") as f :
+                    for line in f :
+                        tabLigne = line.split()
+                        newLine = []
+                        for c in tabLigne :
+                            newLine.append(int(c))
+                        grillePlateforme.append(newLine)
+
+                grilleFond = []
+
+                with open("fondville.txt") as f :
+                    for line in f :
+                        tabLigne = line.split()
+                        newLine = []
+                        for c in tabLigne :
+                            newLine.append(int(c))
+                        grilleFond.append(newLine)
+                grilletable = []
+                with open("table.txt") as f :
+                    for line in f :
+                        tabLigne = line.split()
+                        newLine = []
+                        for c in tabLigne :
+                            newLine.append(int(c))
+                        grilletable.append(newLine)
+                grilledecors = []
+                with open("decorsville.txt") as f:
+                    for line in f:
+                        tabLigne = line.split()
+                        newLine=[]
+                        for c in tabLigne :
+                            newLine.append(int(c))
+                        grilledecors.append(newLine)
+            perso["rect"].x= 1300
+            perso["rect"].y= 750
+            grilleInventaire = []
+            grilleInventaire.append([0,0,0,0,0,0])
+            grilleInventaire.append([0,0,0,0,0,0])
+            xf = 0
+            yf = 0
+
+            Heal = 0
+            Chat = ''
+            chatcd = 20
+            continuer=0
+            timer=1
+            RangerQuest = 0
+            fishermanQuest = 0
+            cdinv = 20
+            CurrentWindow = 'Chat'
+            hpBarMax = 200
+            hp = 200
+            hpHealed = 0
+            hpAffiche = hp
+            hpcolor = (255, 0, 0)
+            cdmg = 50
+            dedouble = 0
+            i=0
+
+            ianimeblobf = 0
+            ianimeblob = 0
+            ianimeblobCG = 0
+            pvblob = 50
+            tirs = []
+            blob = {}
+
+            blobs = []
+            tirsblob = []
+            blob["nom"] = "Bob"
+            blob["pv"] = pvblob
+            blob["rect"] = rectBlob
+            blob["nbBlob"] = 2
+            blob["vitesse"] = 4
+            cdblob = 20
+            dirblob = 0
+            newblobx = 0
+            newbloby = 0
+            newnbBlob = 0
+            blob["rect"].x = 2000
+            blob["rect"].y = 800
+            blobs.append(blob)
+
+
+            tab = []
+            lvl = 0
+            menu = 1
+            jouer = 1
+            game = 1
+        elif touches[pygame.K_RETURN] :
             menu = 0
             continuer = 1
 
@@ -726,6 +831,7 @@ while game :
         if touches[pygame.K_y]:
             menu = 0
             game = 0
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 menu = 0
@@ -740,7 +846,7 @@ while game :
 
         if (RangerQuest==2 and lvl== 0):
             lvl = 1
-            # grillePlateforme = tab
+            grillePlateforme = []
             with open("stairs01.txt") as f :
                 for line in f :
                     tabLigne = line.split()
@@ -749,6 +855,48 @@ while game :
                         newLine.append(int(c))
                     grillePlateforme.append(newLine)
 
+            grilleFond = []
+
+            with open("fond2.txt") as f :
+                for line in f :
+                    tabLigne = line.split()
+                    newLine = []
+                    for c in tabLigne :
+                        newLine.append(int(c))
+                    grilleFond.append(newLine)
+            blobs = []
+
+            blob = {}
+
+            blob["nom"] = "Bob"
+            blob["pv"] = 100
+            blob["rect"] = rectBlob
+            blob["nbBlob"] = 2
+            blob["vitesse"] = 4
+            blob["rect"].x = 1300
+            blob["rect"].y = 600
+            cdblob = 20
+            dirblob = 0
+            newblobx = 0
+            newbloby = 0
+            newnbBlob = 0
+
+
+            blobs.append(blob)
+            blob2 = {}
+            blob2["nom"] = "Bob"
+            blob2["pv"] = pvblob
+            blob2["rect"] = rectBlob2
+            blob2["nbBlob"] = 2
+            blob2["vitesse"] = 4
+            cdblob = 20
+            dirblob = 0
+            newblobx = 0
+            newbloby = 0
+            newnbBlob = 0
+            blob2["rect"].x = 450
+            blob2["rect"].y = 200
+            blobs.append(blob2)
             grilletable = tab
             # grilleFond = tab
             grilledecors = tab
@@ -899,7 +1047,7 @@ while game :
         dedouble = 0
 
         for blob in blobs :
-            if blob["pv"] > 0 and blob["nbBlob"] >= 1 and lvl == 0:
+            if blob["pv"] > 0 and blob["nbBlob"] >= 1:
                 temptablob.append(blob)
         blobs = temptablob
             # fenetre.blit(imageFond, rectFond)
@@ -962,32 +1110,40 @@ while game :
             if timer%4==0 :
                 ianime = (ianime+1)%len(imagesPerso["right"])
                 imagePerso = imagesPerso["right"][ianime]
-            if int(perso["rect"].y) > int(hauteur/2) :
-                if not(grillePlateforme[int((perso["rect"].y)/hauteurCase)][int((perso["rect"].x+LargeurPerso)/largeurCase)]==0) :
+            if not(grillePlateforme[int(((perso["rect"].y)+rectPerso.h)/hauteurCase)][int((perso["rect"].x+LargeurPerso)/largeurCase)]==0) :
                     perso["rect"].x+=25
-                elif not(grilleFond[int((perso["rect"].y)/hauteurCase)][int((perso["rect"].x-6)/largeurCase)]==0) :
+            elif not(grilleFond[int(((perso["rect"].y)+rectPerso.h)/hauteurCase)][int(((perso["rect"].x-6+LargeurPerso))/largeurCase)]==0) :
                     perso["rect"].x+=25
-            else:
-                if not(grillePlateforme[int((perso["rect"].y)/hauteurCase)+1][int((perso["rect"].x+LargeurPerso)/largeurCase)]==0) :
-                    perso["rect"].x+=25
-                elif not(grilleFond[int((perso["rect"].y)/hauteurCase)][int((perso["rect"].x-6)/largeurCase)]==0) :
-                    perso["rect"].x+=25
+            # if int(perso["rect"].y) > int(hauteur/2) :
+            #     if not(grillePlateforme[int((perso["rect"].y)/hauteurCase)][int((perso["rect"].x+LargeurPerso)/largeurCase)]==0) :
+            #         perso["rect"].x+=25
+            #     elif not(grilleFond[int((perso["rect"].y)/hauteurCase)][int((perso["rect"].x-6)/largeurCase)]==0) :
+            #         perso["rect"].x+=25
+            # else:
+            #     if not(grillePlateforme[int((perso["rect"].y)/hauteurCase)+1][int((perso["rect"].x+LargeurPerso)/largeurCase)]==0) :
+            #         perso["rect"].x+=25
+            #     elif not(grilleFond[int((perso["rect"].y)/hauteurCase)][int((perso["rect"].x-6)/largeurCase)]==0) :
+            #         perso["rect"].x+=25
             #else: perso["rect"].x=perso["rect"].x
 
         if touches[pygame.K_LEFT] :
             if timer%4==0 :
                 ianime = (ianime+1)%len(imagesPerso["left"])
                 imagePerso = imagesPerso["left"][ianime]
-            if int(perso["rect"].y) > int(hauteur/2) :
-                if not(grillePlateforme[int((perso["rect"].y)/hauteurCase)][int((perso["rect"].x-6)/largeurCase)]==0) :
+            if not(grillePlateforme[int(((perso["rect"].y)+rectPerso.h)/hauteurCase)][int((perso["rect"].x-LargeurPerso)/largeurCase)]==0) :
                     perso["rect"].x-=25
-                elif not(grilleFond[int((perso["rect"].y)/hauteurCase)][int((perso["rect"].x-6)/largeurCase)]==0) :
+            elif not(grilleFond[int(((perso["rect"].y)+rectPerso.h)/hauteurCase)][int(((perso["rect"].x-6)-LargeurPerso)/largeurCase)]==0) :
                     perso["rect"].x-=25
-            else:
-                if not(grillePlateforme[int((perso["rect"].y)/hauteurCase)+1][int((perso["rect"].x-6)/largeurCase)]==0) :
-                    perso["rect"].x-=25
-                elif not(grilleFond[int((perso["rect"].y)/hauteurCase)][int((perso["rect"].x-6)/largeurCase)]==0) :
-                    perso["rect"].x-=25
+            # if int(perso["rect"].y) > int(hauteur/2) :
+            #     if not(grillePlateforme[int((perso["rect"].y)/hauteurCase)][int((perso["rect"].x-6)/largeurCase)]==0) :
+            #         perso["rect"].x-=25
+            #     elif not(grilleFond[int((perso["rect"].y)/hauteurCase)][int((perso["rect"].x-6)/largeurCase)]==0) :
+            #         perso["rect"].x-=25
+            # else:
+            #     if not(grillePlateforme[int((perso["rect"].y)/hauteurCase)+1][int((perso["rect"].x-6)/largeurCase)]==0) :
+            #         perso["rect"].x-=25
+            #     elif not(grilleFond[int((perso["rect"].y)/hauteurCase)][int((perso["rect"].x-6)/largeurCase)]==0) :
+            #         perso["rect"].x-=25
             #else: perso["rect"].x=perso["rect"].x
 
 
@@ -1157,6 +1313,27 @@ while game :
 
                 if grilleFond[i][j] == 11 :
                     img = imageFond12
+
+                if grilleFond[i][j] == 12 :
+                    img = imagesol01a
+                if grilleFond[i][j] == 13 :
+                    img = imagesol01b
+                if grilleFond[i][j] == 14 :
+                    img = imagesol01c
+                if grilleFond[i][j] == 15 :
+                    img = imagesol01d
+                if grilleFond[i][j] == 16 :
+                    img = imagesol01e
+                if grilleFond[i][j] == 17 :
+                    img = imagesol01f
+                if grilleFond[i][j] == 18 :
+                    img = imagesol01g
+                if grilleFond[i][j] == 19 :
+                    img = imagesol01h
+                if grilleFond[i][j] == 20 :
+                    img = imagesol01i
+                if grilleFond[i][j] == 21 :
+                    img = imagesol01j
 
                 if not img == 0 :
                     Position(myRect)
@@ -1778,9 +1955,66 @@ while game :
 
 
 
+        # pygame.draw.rect(fenetre, (200, 0,255), pygame.Rect(largeur-233, hauteur-(hauteur-35), hpBarMax+4, 14),4)
+        # #HealthBar
+        #
+        # pygame.draw.rect(fenetre, (255, 0, 0), pygame.Rect(largeur-230, hauteur-(hauteur-38), hp, 10))
+        #Health Bar contour
         pygame.draw.rect(fenetre, (200, 0,255), pygame.Rect(largeur-233, hauteur-(hauteur-35), hpBarMax+4, 14),4)
         #HealthBar
-        pygame.draw.rect(fenetre, (255, 0, 0), pygame.Rect(largeur-230, hauteur-(hauteur-38), hp, 10))
+        if hp == hpBarMax:
+            hpcolor = (0,255,0)
+        else: hpcolor = (255,0,0)
+        if hp < 0 :
+            hpAffiche = 0
+        else :
+            hpAffiche = hp
+        pygame.draw.rect(fenetre, hpcolor, pygame.Rect(largeur-230, hauteur-(hauteur-38), hpAffiche, 10))
+        if lvl == 1 and len(blobs) == 0:
+            fenetre.blit(imageBG, rectBackground)
+            fenetre.blit(fontkitty.render("CONGRATULATIONS",1,(255,255,255)),(420,155))
+            win = 1
+            game = -1
+
+        if hp <= 0 :
+            if lvl == 1:
+                grillePlateforme = []
+                with open("plateforme.txt") as f :
+                    for line in f :
+                        tabLigne = line.split()
+                        newLine = []
+                        for c in tabLigne :
+                            newLine.append(int(c))
+                        grillePlateforme.append(newLine)
+
+                grilleFond = []
+
+                with open("fondville.txt") as f :
+                    for line in f :
+                        tabLigne = line.split()
+                        newLine = []
+                        for c in tabLigne :
+                            newLine.append(int(c))
+                        grilleFond.append(newLine)
+                grilletable = []
+                with open("table.txt") as f :
+                    for line in f :
+                        tabLigne = line.split()
+                        newLine = []
+                        for c in tabLigne :
+                            newLine.append(int(c))
+                        grilletable.append(newLine)
+                grilledecors = []
+                with open("decorsville.txt") as f:
+                    for line in f:
+                        tabLigne = line.split()
+                        newLine=[]
+                        for c in tabLigne :
+                            newLine.append(int(c))
+                        grilledecors.append(newLine)
+            continuer = 0
+            game = -1
+            menu = 1
         pygame.display.flip()
 
         for event in pygame.event.get():
